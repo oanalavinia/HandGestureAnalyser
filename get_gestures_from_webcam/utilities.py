@@ -78,16 +78,10 @@ def get_fingers(landmarks, is_reversed):
 
     # The image is reversed?
     if thumb_up_oriented and fist_closed:
-        gesture = "thumb down"
+        gesture = "thumbs down"
 
     if not thumb_up_oriented and fist_closed:
-        gesture = "thumb up"
-
-    # if not(thump_up and thumb_up_oriented) and (not index_up and not third_up and not pinky_up):
-    #     gesture = "ok"
-    #
-    # if not (keypoints[17]['y'] > keypoints[5]['y'] and not thumb_up_oriented):
-    #     gesture = "thumbs down"
+        gesture = "thumbs up"
 
     return gesture
 

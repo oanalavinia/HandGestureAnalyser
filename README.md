@@ -5,7 +5,7 @@ from the input gesture. For this analysis, the data will be modeled using a Reso
 Simple users will conect to the application with camera on and they could see, by request, gestures data resulted until that point.
 Also, an Admin user could get a JSON-LD with the analysed gestures statistics from all the conected users.  
 
-# Project members
+### Project members
 Baisan Razvan
 Florean Oana-Lavinia
 Gafitescu Petru-Marian
