@@ -6,6 +6,6 @@ Simple users will conect to the application with camera on and they could see, b
 Also, an Admin user could get a JSON-LD with the analysed gestures statistics from all the conected users.  
 
 ### Project members
-Baisan Razvan
-Florean Oana-Lavinia
-Gafitescu Petru-Marian
+- Baisan Razvan
+- Florean Oana-Lavinia
+- Gafitescu Petru-Marian
