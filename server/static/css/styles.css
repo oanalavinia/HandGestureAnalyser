@@ -17,6 +17,10 @@ body {
     color: white;
 }
 
+.answer {
+    margin: 2%;
+}
+
 .video_feed {
     display: block;
     margin-left: auto;

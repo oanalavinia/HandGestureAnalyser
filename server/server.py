@@ -36,12 +36,9 @@ def questions():
         return qs.create_question_game()
     else:
         gestures.save_data()
-        print(request.form.getlist('answersTime[]'))
-        print(request.form.getlist('correctAnswers[]'))
         user_answers = qs.get_correct_answers(request.form.getlist('answersTime[]'))
-        checked_answers = qs.check_answers(user_answers, request.form.getlist('correctAnswers[]'))
         print(user_answers)
-        return json.dumps({'status': 'OK', 'results': checked_answers})
+        return json.dumps({'status': 'OK', 'results': user_answers})
 
 
 if __name__ == '__main__':

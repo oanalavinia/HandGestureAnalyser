@@ -4,6 +4,7 @@ from datetime import datetime
 from get_gestures_from_webcam import utilities as ut
 from owl_testing import test_owl as owl
 
+
 def useScript():
     cap = cv2.VideoCapture(0)
     get_gestures(cap)
@@ -22,8 +23,7 @@ def get_gestures(cap):
     temporary_wave_gestures = []
     last_hand_x_position = 0
     wave_frames = 0
-    wave_gesture_time = datetime.now().replace(second=datetime.now().second - 10)
-
+    wave_gesture_time = datetime.now()
     while cap.isOpened():
         success, image = cap.read()
         if not success:
@@ -104,7 +104,7 @@ def get_gestures(cap):
 
 
 def save_data():
-    print("here")
+    print("saving data..")
     owl.fiiGezr.save(file="../rdf_data/test.xml", format="rdfxml")
 
 
