@@ -7,6 +7,8 @@ with fiiGezr:
 
     class Data(Thing): pass
 
+    class User(Thing): pass
+
     class Gesture(Thing): pass
 
     class Wave(Gesture): pass
@@ -106,6 +108,16 @@ with fiiGezr:
         domain = [Gesture]
         range = [Rule]
         inverse_property = is_caused_by
+
+
+    class makes_gesture(ObjectProperty):
+        domain = [User]
+        range = [Gesture]
+
+
+    class has_gesture_time(DataProperty):
+        domain = [Gesture]
+        range = [datetime.datetime]
 
     def create_hand(points_list):
         #0
@@ -238,33 +250,33 @@ with fiiGezr:
 
         return hand
 
-new_hand = create_hand([
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0),
-    (0,0)
-])
-
-reg_1 = Wave("12:20")
-reg_1.gesture_time = "22-01-2012 12:03"
+# new_hand = create_hand([
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0),
+#     (0,0)
+# ])
 #
-# close_camera = CloseCamera("close_camera")
-
-fiiGezr.save(file="schema", format="rdfxml")
+# reg_1 = Wave("12:20")
+# reg_1.gesture_time = "22-01-2012 12:03"
+# #
+# # close_camera = CloseCamera("close_camera")
+#
+# fiiGezr.save(file="schema", format="rdfxml")

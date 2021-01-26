@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 from datetime import datetime
 from get_gestures_from_webcam import utilities as ut
+from owl_testing import test_owl as owl
 
 def useScript():
     cap = cv2.VideoCapture(0)
@@ -10,6 +11,7 @@ def useScript():
 
 
 def get_gestures(cap):
+    user1 = owl.User()
     mp_drawing = mp.solutions.drawing_utils
     mp_hands = mp.solutions.hands
 
@@ -75,6 +77,7 @@ def get_gestures(cap):
             if wave_gesture:
                 gesture = "wave"
                 wave_gesture_time = datetime.now()
+
             if len(last_gestures) > 59:
                 last_gestures.pop(0)
             last_gestures.append(gesture)
@@ -84,9 +87,14 @@ def get_gestures(cap):
         # Make an average from the last 50 frames. If a wave gesture was registered, consider only this one for 3 seconds.
         if wave_gesture_time and (datetime.now() - wave_gesture_time).seconds < 3:
             gesture = "wave"
+
         else:
             gesture = ut.most_frequent(last_gestures)
 
+        # Create rdf instance
+        gest = owl.Gesture()
+        gest.has_gesture_time.append(datetime.now())
+        user1.makes_gesture.append(gest)
         (_, encodedImage) = cv2.imencode(".jpg",
                                          cv2.putText(image, gesture, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0),
                                                      2, cv2.LINE_AA))
@@ -95,6 +103,11 @@ def get_gestures(cap):
                bytearray(encodedImage) + b'\r\n')
 
     hands.close()
+
+
+def save_data():
+    print("here")
+    owl.fiiGezr.save(file="rdf_data/test.xml", format="rdfxml")
 
 
 useScript()
