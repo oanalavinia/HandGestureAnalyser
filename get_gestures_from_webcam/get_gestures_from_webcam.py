@@ -92,9 +92,7 @@ def get_gestures(cap):
             gesture = ut.most_frequent(last_gestures)
 
         # Create rdf instance
-        gest = owl.Gesture()
-        gest.has_gesture_time.append(datetime.now())
-        user1.makes_gesture.append(gest)
+        create_rdf_instances(gesture, user1)
         (_, encodedImage) = cv2.imencode(".jpg",
                                          cv2.putText(image, gesture, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0),
                                                      2, cv2.LINE_AA))
@@ -107,7 +105,38 @@ def get_gestures(cap):
 
 def save_data():
     print("here")
-    owl.fiiGezr.save(file="rdf_data/test.xml", format="rdfxml")
+    owl.fiiGezr.save(file="../rdf_data/test.xml", format="rdfxml")
 
+
+def create_rdf_instances(gesture, user):
+    gest = get_gesture_instance(gesture)
+    if gest:
+        gest.has_gesture_time.append(datetime.now())
+        user.makes_gesture.append(gest)
+
+
+def get_gesture_instance(gesture):
+    if gesture =='wave':
+        return owl.Wave()
+    elif gesture =='thumbsUp':
+        return owl.ThumbsUp()
+    elif gesture =='thumbsDown':
+        return owl.ThumbsDown()
+    elif gesture == 'one':
+        return owl.One()
+    elif gesture == 'two':
+        return owl.Two()
+    elif gesture == 'peace':
+        return owl.Peace()
+    elif gesture == 'three':
+        return owl.Three()
+    elif gesture == 'four':
+        return owl.Four()
+    elif gesture == 'five':
+        return owl.Five()
+    elif gesture == 'fist':
+        return owl.Fist()
+    else:
+        return None
 
 useScript()

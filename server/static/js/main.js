@@ -18,6 +18,8 @@ $(document).on('click', '#start_question_game', function() {
                 {
                     'quizId': $('#question_modal').data('quizId'),
                     'answersTime': $('#question_modal').data('answersTime')
+                }, function(data) {
+                    console.log(data);
                 });
             }
         });

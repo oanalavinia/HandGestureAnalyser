@@ -16,19 +16,15 @@ def create_question_game():
     return json.dumps(response['results'])
 
 
-def get_answers_times(answerTimes):
-    for answerTime in answerTimes:
-        print(int(answerTime))
-        print(datetime.datetime.fromtimestamp(int(answerTime)))
-
-
 def get_correct_answers(answer_timestamps):
-    for answer_timestamp in answer_timestamps:
+    answers = []
+    for indx, answer_timestamp in enumerate(answer_timestamps):
         answer_time = datetime.datetime.fromtimestamp(int(answer_timestamp))
         end_answer_time = answer_time + datetime.timedelta(0, 4)
-        print("start: {} end: {}".format(answer_time, end_answer_time))
-        qrs.query_answers(answer_time, end_answer_time)
-
+        # print("start: {} end: {}".format(answer_time, end_answer_time))
+        answer = qrs.query_answers(answer_time, end_answer_time)
+        answers.append(answer)
+    return answers
 
 
 use_script()

@@ -12,8 +12,8 @@ with fiiGezr:
     class Gesture(Thing): pass
 
     class Wave(Gesture): pass
-    class ThumbUp(Gesture): pass
-    class ThumbDown(Gesture): pass
+    class ThumbsUp(Gesture): pass
+    class ThumbsDown(Gesture): pass
     class Fist(Gesture): pass
     class One(Gesture): pass
     class Two(Gesture): pass

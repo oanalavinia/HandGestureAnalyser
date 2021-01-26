@@ -38,8 +38,9 @@ def questions():
         gestures.save_data()
         print(request.form.get('answersTime'))
         # qs.get_answers(request.form.getlist('answersTime[]'))
-        qs.get_correct_answers(request.form.getlist('answersTime[]'))
-        return json.dumps({'status': 'OK'})
+        answers = qs.get_correct_answers(request.form.getlist('answersTime[]'))
+        print(answers)
+        return json.dumps({'status': 'OK', 'answers': answers})
 
 
 if __name__ == '__main__':

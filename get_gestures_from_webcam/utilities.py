@@ -19,10 +19,10 @@ def get_gestures(landmarks, is_reversed):
         gesture = "fist"
 
     if thumb_up_oriented and not thumb_in_fist and four_fingers_closed:
-        gesture = "thumb down"
+        gesture = "thumbsDown"
 
     if not thumb_up_oriented and not thumb_in_fist and four_fingers_closed:
-        gesture = "thumb up"
+        gesture = "thumbsUp"
 
     return gesture
 
@@ -103,22 +103,22 @@ def get_fingers_orientation(landmarks, is_reversed):
 def check_count_gestures(thumb_up, index_up, second_up, third_up, pinky_up):
     gesture = "none"
     if sum([index_up, second_up, third_up, pinky_up]) == 1 and not thumb_up:
-        gesture = "1"
+        gesture = "one"
 
     if sum([thumb_up, index_up, second_up, third_up, pinky_up]) == 2:
-        gesture = "2"
+        gesture = "two"
 
     if index_up and second_up and not (thumb_up or third_up or pinky_up):
-        gesture = "2 / peace"
+        gesture = "peace"
 
     if sum([thumb_up, index_up, second_up, third_up, pinky_up]) == 3:
-        gesture = "3"
+        gesture = "three"
 
     if sum([thumb_up, index_up, second_up, third_up, pinky_up]) == 4:
-        gesture = "4"
+        gesture = "four"
 
     if index_up and second_up and third_up and pinky_up and thumb_up:
-        gesture = "5 / paper"
+        gesture = "five"
 
     return gesture
 
