@@ -119,6 +119,11 @@ with fiiGezr:
         domain = [Gesture]
         range = [datetime.datetime]
 
+
+    class has_gesture_name(DataProperty):
+        domain = [Gesture]
+        range = [str]
+
     def create_hand(points_list):
         #0
         wrist = Wrist()

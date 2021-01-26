@@ -4,7 +4,6 @@ import datetime
 from scripts import queries as qrs
 
 
-
 def use_script():
     create_question_game()
 
@@ -14,6 +13,17 @@ def create_question_game():
     response = my_api.request(3, Category.General, Diffculty.Easy, Type.True_False)
 
     return json.dumps(response['results'])
+
+
+def check_answers(user_answers, correct_answers):
+    after_corecting = []
+    for indx, user_answer in enumerate(user_answers):
+        if (user_answer == 'thumbsUp' and user_answers[indx] is True) or (
+                user_answer == 'thumbsDown' and user_answers[indx] is False):
+            after_corecting.append(True)
+        else:
+            after_corecting.append(False)
+    return after_corecting
 
 
 def get_correct_answers(answer_timestamps):

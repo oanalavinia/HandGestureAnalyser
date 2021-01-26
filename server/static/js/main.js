@@ -7,6 +7,7 @@ $(document).on('click', '#start_question_game', function() {
     $('#question_modal').removeData();
     $('#question_modal').data('answersTime', [])
     $('#question_modal').data('quizId', Date.now())
+    $('#question_modal').data('correctAnswers', [])
     $.get('/questions', function(data) {
         response = JSON.parse(data);
         askQuestion(response.shift()).then(function nextQuestion() {
@@ -17,9 +18,10 @@ $(document).on('click', '#start_question_game', function() {
                 $.post('/questions',
                 {
                     'quizId': $('#question_modal').data('quizId'),
-                    'answersTime': $('#question_modal').data('answersTime')
-                }, function(data) {
-                    console.log(data);
+                    'answersTime': $('#question_modal').data('answersTime'),
+                    'correctAnswers': $('#question_modal').data('correctAnswers')
+                }).done(function(data) {
+                    console.log(data)
                 });
             }
         });
@@ -31,10 +33,16 @@ function askQuestion(questionContent) {
     $('#question_content').text(questionContent.question);
     return $.Deferred(function() {
         var deferred = this;
+//        Save time when question has startedr
         var startTime = new Date() / 1000 | 0;
         var previousTimes = $('#question_modal').data('answersTime');
         previousTimes.push(startTime)
         $('#question_modal').data('answersTime', previousTimes)
+//        Save correct answer.
+        var correctAnswers = $('#question_modal').data('correctAnswers');
+        correctAnswers.push(questionContent.correct_answer)
+        $('#question_modal').data('correctAnswers', correctAnswers)
+//        Update question.
         setTimeout(function() {
             $('#question_content').text(' ');
             $('.question_container').prop('hidden', true);

@@ -112,6 +112,7 @@ def create_rdf_instances(gesture, user):
     gest = get_gesture_instance(gesture)
     if gest:
         gest.has_gesture_time.append(datetime.now())
+        gest.has_gesture_name.append(gesture)
         user.makes_gesture.append(gest)
 
 
