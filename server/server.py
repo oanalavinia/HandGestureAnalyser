@@ -37,16 +37,18 @@ def video_feed():
 
 @app.route("/questions", methods=['GET', 'POST'])
 def questions():
+    # gestures.save_data()
     if request.method == 'GET':
         return qs.create_question_game()
     else:
-        gestures.save_data()
+        # gestures.save_data()
         user_answers = qs.get_correct_answers(request.form.getlist('answersTime[]'))
         return json.dumps({'status': 'OK', 'results': user_answers})
 
 
 @app.route('/check_wave')
 def check_wave():
+    gestures.save_data()
     close_camera = qr.check_close_camera(datetime.now())
     return json.dumps({'closeCamera': close_camera})
 

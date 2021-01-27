@@ -27,6 +27,7 @@ with fiiGezr:
 
     class Rule(Thing): pass
     class CloseCamera(Rule): pass
+    class OpenBrowser(Rule): pass
 
     class is_caused_by(ObjectProperty):
         domain = [Rule]

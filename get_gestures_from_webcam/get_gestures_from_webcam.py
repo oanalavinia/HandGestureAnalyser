@@ -106,9 +106,9 @@ def get_gestures(cap, recording_start_time):
         # We save data every 10 seconds.
         if (datetime.now() - recording_start_time).seconds > 10:
             recording_start_time = datetime.now()
-            save_data()
+            # save_data()
             last_10_gesture = qrs.query_last_10s_gestures(datetime.now())
-            save_data()
+            # save_data()
 
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
                bytearray(encodedImage) + b'\r\n')

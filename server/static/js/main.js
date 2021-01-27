@@ -85,14 +85,15 @@ setInterval(function() {
             }
         });
     }
-}, 8000)
+}, 10000)
 
 // Close camera data recording.
 $(document).on('click', '#close_camera_button', function() {
     $('#close_camera_modal').data('is_camera_closed', true);
     $.post('/do_close_camera', {'do_close_camera': true}).done(function() {
         $('#open_camera_button').prop('hidden', false);
-        $('#maybe_start_quiz').prop('aria-disabled', "true");
+        $('#maybe_start_quiz')[0].setAttribute('aria-disabled', true);
+        $('#maybe_start_quiz').addClass('disabled');
     });
 });
 
@@ -101,5 +102,7 @@ $(document).on('click', '#open_camera_button', function() {
     $('#close_camera_modal').data('is_camera_closed', false);
     $.post('/do_close_camera', {'do_close_camera': false}).done(function() {
         $('#open_camera_button').prop('hidden', true);
+        $('#maybe_start_quiz')[0].setAttribute('aria-disabled', false);
+        $('#maybe_start_quiz').removeClass('disabled');
     });
 });
