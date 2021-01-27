@@ -34,6 +34,30 @@ def query_answers(answer_time, end_answer_time):
     else:
         return []
 
+def queryGesturesInSession(start_time):
+    g = rdflib.Graph()
+    g.parse("../rdf_data/test.xml")
+
+    query_str = """
+               PREFIX gezr: <http://fiigezr.org/fiiGezr.owl#>
+               SELECT ?x ?name
+               WHERE {
+                  ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
+                  ?x gezr:has_gesture_time ?data .
+                  ?x gezr:has_gesture_name ?name .
+                  FILTER (?data > '""" + start_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
+                  && ?data < '""" + datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime)
+               }"""
+    qres = g.query(query_str)
+
+    gestures = []
+    for row in qres:
+        gestures.append(str(row.asdict()['name']))
+    counts = dict()
+    for gesture in gestures:
+        counts[gesture] = counts.get(gesture,0)+1
+    return counts
+
 
 def query_last_10s_gestures(current_time):
     start_time = current_time - datetime.timedelta(0, 10)

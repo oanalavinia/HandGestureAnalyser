@@ -5,15 +5,18 @@ import cv2
 from flask import Flask
 from flask import Response
 from flask import render_template
-from flask import request, session
+from flask import request, session, send_file
 import json
+from io import BytesIO
 from datetime import datetime
 from get_gestures_from_webcam import get_gestures_from_webcam as gestures
 from scripts import questions as qs
 from scripts import queries as qr
+from scripts import statistics as st
 
 app = Flask(__name__)
-# app.secret_key = '5b7373780e35434090c87dc4c9d15a2d'
+
+app.secret_key = '5b7373780e35434090c87dc4c9d15a2d'
 
 
 def serve_streams(recording_start_time):
@@ -25,7 +28,22 @@ def serve_streams(recording_start_time):
 
 @app.route("/")
 def index():
+    session['startTime'] = datetime.now()
     return render_template("index.html")
+
+
+@app.route("/statistics")
+def statistics():
+    binary_image = st.getGestures(session['startTime'])
+    img_io = BytesIO()
+    rgb_im = binary_image.convert('RGB')
+    rgb_im.save(img_io, 'JPEG', quality=70)
+    img_io.seek(0)
+    return send_file(
+        img_io,
+        mimetype='image/jpeg',
+        as_attachment=False,
+        attachment_filename='statistics.jpeg')
 
 
 @app.route("/video_feed")
