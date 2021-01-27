@@ -120,7 +120,8 @@ def save_data():
     global record
     if record is not None and record is True:
         print("saving data..")
-        owl.fiiGezr.save(file="../rdf_data/test.xml", format="rdfxml")
+        with open("../rdf_data/test.xml", 'wb') as f:
+            owl.fiiGezr.save(file=f, format="rdfxml")
 
 
 def create_rdf_instances(gesture, user):

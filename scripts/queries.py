@@ -36,7 +36,8 @@ def query_answers(answer_time, end_answer_time):
 
 def queryGesturesInSession(start_time):
     g = rdflib.Graph()
-    g.parse("../rdf_data/test.xml")
+    f = open("../rdf_data/test.xml", "r")
+    g.parse(f, format="application/rdf+xml")
 
     query_str = """
                PREFIX gezr: <http://fiigezr.org/fiiGezr.owl#>
@@ -96,8 +97,7 @@ def query_last_10s_gestures(current_time):
     if len(times) > 0 and len(gestures) > 0:
         if times[0] > 100 and gestures[0] == 'wave':
             create_close_camera_rule(g, gestures[0])
-
-        if times[0] > 100 and gestures[0] == 'five':
+        elif times[0] > 100 and gestures[0] == 'five':
             create_open_browser_rule(g, gestures[0])
 
 
@@ -207,7 +207,7 @@ def check_close_camera(current_time):
 
 # Testing last 10s gestures.
 # answer_time = datetime.datetime.fromtimestamp(int(1611740765))
-date_time_str = '2020-01-27 08:15:27.243860'
-answer_time = datetime.datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
-print(answer_time)
-check_close_camera(answer_time)
+# date_time_str = '2020-01-27 08:15:27.243860'
+# answer_time = datetime.datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
+# print(answer_time)
+# check_close_camera(answer_time)
