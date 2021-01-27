@@ -74,3 +74,32 @@ function askQuestion(questionContent) {
         }, 10000);
     });
 }
+
+setInterval(function() {
+    if ($('#close_camera_modal').data('is_camera_closed') == false) {
+        $.get('/check_wave').done(function(data) {
+            console.log(JSON.parse(data));
+            if(JSON.parse(data).closeCamera) {
+                var myModal = new bootstrap.Modal(document.getElementById('close_camera_modal'));
+                myModal.show();
+            }
+        });
+    }
+}, 8000)
+
+// Close camera data recording.
+$(document).on('click', '#close_camera_button', function() {
+    $('#close_camera_modal').data('is_camera_closed', true);
+    $.post('/do_close_camera', {'do_close_camera': true}).done(function() {
+        $('#open_camera_button').prop('hidden', false);
+        $('#maybe_start_quiz').prop('aria-disabled', "true");
+    });
+});
+
+// Open camera data recording.
+$(document).on('click', '#open_camera_button', function() {
+    $('#close_camera_modal').data('is_camera_closed', false);
+    $.post('/do_close_camera', {'do_close_camera': false}).done(function() {
+        $('#open_camera_button').prop('hidden', true);
+    });
+});

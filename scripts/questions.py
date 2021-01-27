@@ -14,7 +14,8 @@ def create_question_game():
 def get_correct_answers(answer_timestamps):
     answers = []
     for indx, answer_timestamp in enumerate(answer_timestamps):
-        answer_time = datetime.datetime.fromtimestamp(int(answer_timestamp))
+        # We don't consider the first 2 seconds.
+        answer_time = datetime.datetime.fromtimestamp(int(answer_timestamp)) + datetime.timedelta(0, 2)
         end_answer_time = answer_time + datetime.timedelta(0, 10)
         answer = qrs.query_answers(answer_time, end_answer_time)
         answers.append(bool_from_gesture(answer))

@@ -28,6 +28,39 @@ with fiiGezr:
     class Rule(Thing): pass
     class CloseCamera(Rule): pass
 
+    class is_caused_by(ObjectProperty):
+        domain = [Rule]
+        range = [Gesture]
+
+    class causes_rule(ObjectProperty):
+        domain = [Gesture]
+        range = [Rule]
+        inverse_property = is_caused_by
+
+
+    class makes_gesture(ObjectProperty):
+        domain = [User]
+        range = [Gesture]
+
+
+    class has_gesture_time(DataProperty):
+        domain = [Gesture]
+        range = [datetime.datetime]
+
+
+    class has_rule_time(DataProperty):
+        domain = [Rule]
+        range = [datetime.datetime]
+
+
+    class has_gesture_name(DataProperty):
+        domain = [Gesture]
+        range = [str]
+
+    class has_gesture(DataProperty):
+        domain = [Rule]
+        range = [str]
+
     class Point(Thing): pass
 
     class has_for_x(DataProperty, FunctionalProperty):
@@ -98,31 +131,6 @@ with fiiGezr:
     class has_for_pinky_finger(ObjectProperty):
         domain = [Hand]
         range = [PinkyFinger]
-
-
-    class is_caused_by(ObjectProperty):
-        domain = [Rule]
-        range = [Gesture]
-
-    class causes_rule(ObjectProperty):
-        domain = [Gesture]
-        range = [Rule]
-        inverse_property = is_caused_by
-
-
-    class makes_gesture(ObjectProperty):
-        domain = [User]
-        range = [Gesture]
-
-
-    class has_gesture_time(DataProperty):
-        domain = [Gesture]
-        range = [datetime.datetime]
-
-
-    class has_gesture_name(DataProperty):
-        domain = [Gesture]
-        range = [str]
 
     def create_hand(points_list):
         #0
@@ -254,34 +262,3 @@ with fiiGezr:
         hand.has_for_pinky_finger = [pinky_finger]
 
         return hand
-
-# new_hand = create_hand([
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0),
-#     (0,0)
-# ])
-#
-# reg_1 = Wave("12:20")
-# reg_1.gesture_time = "22-01-2012 12:03"
-# #
-# # close_camera = CloseCamera("close_camera")
-#
-# fiiGezr.save(file="schema", format="rdfxml")

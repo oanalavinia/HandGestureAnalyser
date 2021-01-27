@@ -1,7 +1,7 @@
 import rdflib
 import datetime
-import re
 from get_gestures_from_webcam import utilities
+from owl_testing import test_owl as owl
 
 
 def query_answers(answer_time, end_answer_time):
@@ -30,8 +30,108 @@ def query_answers(answer_time, end_answer_time):
         return []
 
 
-# For testing a specific time, not to be deleted
+def query_last_10s_gestures(current_time):
+    start_time = current_time - datetime.timedelta(0, 10)
+    print("query last 10s gestures start time: {}".format(start_time))
+    g = rdflib.Graph()
+    g.parse("../rdf_data/test.xml")
+    query_str = """
+               PREFIX gezr: <http://fiigezr.org/fiiGezr.owl#>
+               SELECT ?x ?name (count(distinct ?x) as ?count)
+               WHERE {
+                  ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
+                  ?x gezr:has_gesture_time ?data .
+                  ?x gezr:has_gesture_name ?name .
+                  FILTER (?data > '""" + start_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
+                  && ?data < '""" + current_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime)
+               }
+               GROUP BY ?name
+               ORDER BY DESC(?count)
+               """
+    qres = g.query(query_str)
+
+    gestures = []
+    times = []
+    instances = []
+    for row in qres:
+        # print("name '{}' count {} x {}".format(row.asdict()['name'], row.asdict()['count'], row.asdict()['x']))
+        times.append(int(row.asdict()['count']))
+        gestures.append(str(row.asdict()['name']))
+        instances.append(row[0])
+
+    print("found gestures: {}".format(gestures))
+
+    if len(gestures) > 0 and gestures[0] == 'wave':
+        create_close_camera_rule(g, gestures[0])
+
+
+def create_close_camera_rule(g, gesture):
+    camera_rule = owl.CloseCamera()
+    camera_rule.has_gesture.append(gesture)
+    query_str = """
+                    PREFIX gezr: <http://fiigezr.org/fiiGezr.owl#>
+                    CONSTRUCT {
+                      ?x gezr:causes_rule ?r
+                    }
+                    WHERE {
+                      ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
+                      ?r rdf:type/rdfs:subClassOf* gezr:Rule .
+                      ?x gezr:has_gesture_name ?name .
+                      ?r gezr:has_gesture ?name .
+                    }
+                """
+    qres = g.query(query_str)
+    for row in qres:
+        # Create camera rule.
+        camera_rule.has_rule_time.append(datetime.datetime.now())
+        # print("wave '{}' prop {} rule {}".format(row[0], row[1], row[2]))
+        # Get existing wave and bind it to the rule.
+        wave = owl.Wave(str(row[0])[31:])
+        wave.causes_rule.append(camera_rule)
+        camera_rule.is_caused_by.append(wave)
+        break
+
+
+def check_close_camera(current_time):
+    start_time = current_time - datetime.timedelta(0, 5)
+    # print("check close camera rule start time: {}".format(start_time))
+    g = rdflib.Graph()
+    g.parse("../rdf_data/test.xml")
+    query_str = """
+                   PREFIX gezr: <http://fiigezr.org/fiiGezr.owl#>
+                   SELECT (count(distinct ?r) as ?count)
+                   WHERE {
+                      ?r rdf:type/rdfs:subClassOf* gezr:Rule .
+                      ?r gezr:has_rule_time ?data .
+                      FILTER (?data > '""" + start_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
+                      && ?data < '""" + current_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime)
+                   }
+                   """
+    qres = g.query(query_str)
+
+    result = None
+    for row in qres:
+        result = int(row[0])
+        break
+
+    if result and result > 0:
+        return True
+    return False
+
+# For testing a specific answer, not to be deleted.
 # answer_time = datetime.datetime.fromtimestamp(int(1611686427))
 # print(answer_time)
 # end_answer_time = answer_time + datetime.timedelta(0, 20)
 # query_answers(answer_time, end_answer_time)
+
+# Testing last 10s gestures.
+# answer_time = datetime.datetime.fromtimestamp(int(1611740765))
+# print(answer_time)
+# query_last_10s_gestures(answer_time)
+
+# Testing last 10s gestures.
+# answer_time = datetime.datetime.fromtimestamp(int(1611740765))
+date_time_str = '2020-01-27 08:15:27.243860'
+answer_time = datetime.datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
+print(answer_time)
+check_close_camera(answer_time)

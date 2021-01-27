@@ -26,13 +26,15 @@
     </nav>
 
     <div class="card text-white bg-danger mb-3 question_container" style="max-width: 18rem;" hidden>
-      <div class="card-header">Answer in 4 seconds</div>
+      <div class="card-header">Answer in 10 seconds</div>
       <div class="card-body">
         <h5 class="card-title" id="question_content">Danger card title</h5>
       </div>
     </div>
 
-    <img src="{{ url_for('video_feed') }}" class="video_feed">
+    <img src="{{ url_for('video_feed') }}" class="video_feed" id="video_feed">
+
+    <button class='btn btn-primary' id='open_camera_button' hidden>Start camera recording</button>
 
 <!--    Modal for questions-->
     <div class="modal fade" id="question_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -69,6 +71,25 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--  Modal for closing camera-->
+    <div class="modal fade" id="close_camera_modal" tabindex="-1" aria-hidden="true" data-is_camera_closed=false>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Check your answers</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Do you want to stop recording data? Games will not be available at
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" id="close_camera_button" data-bs-dismiss="modal">Yes</button>
           </div>
         </div>
       </div>

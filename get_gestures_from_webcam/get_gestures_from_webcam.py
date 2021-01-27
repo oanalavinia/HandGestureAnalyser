@@ -3,18 +3,21 @@ import mediapipe as mp
 from datetime import datetime
 from get_gestures_from_webcam import utilities as ut
 from owl_testing import test_owl as owl
+from scripts import queries as qrs
+
+# def useScript():
+#     cap = cv2.VideoCapture(0)
+#     get_gestures(cap)
+#     cap.release()
+
+global record
 
 
-def useScript():
-    cap = cv2.VideoCapture(0)
-    get_gestures(cap)
-    cap.release()
-
-
-def get_gestures(cap):
+def get_gestures(cap, recording_start_time):
     user1 = owl.User()
     mp_drawing = mp.solutions.drawing_utils
     mp_hands = mp.solutions.hands
+    record = True
 
     hands = mp_hands.Hands(
         min_detection_confidence=0.5, min_tracking_confidence=0.5)
@@ -24,6 +27,7 @@ def get_gestures(cap):
     last_hand_x_position = 0
     wave_frames = 0
     wave_gesture_time = datetime.now()
+    set_record(True)
     while cap.isOpened():
         success, image = cap.read()
         if not success:
@@ -84,7 +88,8 @@ def get_gestures(cap):
         else:
             last_gestures = ['none']
 
-        # Make an average from the last 50 frames. If a wave gesture was registered, consider only this one for 3 seconds.
+        # Make an average from the last 50 frames. If a wave gesture was registered, consider only this one for 3
+        # seconds.
         if wave_gesture_time and (datetime.now() - wave_gesture_time).seconds < 3:
             gesture = "wave"
 
@@ -93,9 +98,17 @@ def get_gestures(cap):
 
         # Create rdf instance
         create_rdf_instances(gesture, user1)
+
         (_, encodedImage) = cv2.imencode(".jpg",
                                          cv2.putText(image, gesture, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0),
                                                      2, cv2.LINE_AA))
+
+        # We save data every 10 seconds.
+        if (datetime.now() - recording_start_time).seconds > 10:
+            recording_start_time = datetime.now()
+            save_data()
+            last_10_gesture = qrs.query_last_10s_gestures(datetime.now())
+            save_data()
 
         yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
                bytearray(encodedImage) + b'\r\n')
@@ -104,8 +117,10 @@ def get_gestures(cap):
 
 
 def save_data():
-    print("saving data..")
-    owl.fiiGezr.save(file="../rdf_data/test.xml", format="rdfxml")
+    global record
+    if record is not None and record is True:
+        print("saving data..")
+        owl.fiiGezr.save(file="../rdf_data/test.xml", format="rdfxml")
 
 
 def create_rdf_instances(gesture, user):
@@ -114,14 +129,15 @@ def create_rdf_instances(gesture, user):
         gest.has_gesture_time.append(datetime.now())
         gest.has_gesture_name.append(gesture)
         user.makes_gesture.append(gest)
+    return gest
 
 
 def get_gesture_instance(gesture):
-    if gesture =='wave':
+    if gesture == 'wave':
         return owl.Wave()
-    elif gesture =='thumbsUp':
+    elif gesture == 'thumbsUp':
         return owl.ThumbsUp()
-    elif gesture =='thumbsDown':
+    elif gesture == 'thumbsDown':
         return owl.ThumbsDown()
     elif gesture == 'one':
         return owl.One()
@@ -140,4 +156,14 @@ def get_gesture_instance(gesture):
     else:
         return None
 
-useScript()
+
+def set_record(val):
+    global record
+    record = val
+
+
+def get_record():
+    global record
+    return record
+
+# useScript()
