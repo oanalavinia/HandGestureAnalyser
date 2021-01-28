@@ -5,7 +5,8 @@ $(document).ready(function(){
     let ctx = canvas.getContext('2d');
     photo = document.getElementById('photo');
     var localMediaStream = null;
-  
+  canvas.width = 640;
+  canvas.height = 480;
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
   
     function sendSnapshot() {
@@ -13,7 +14,7 @@ $(document).ready(function(){
         return;
       }
   
-      ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 300, 150);
+      ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 640, 480);
   
       let dataURL = canvas.toDataURL('image/jpeg');
       socket.emit('input image', dataURL);
