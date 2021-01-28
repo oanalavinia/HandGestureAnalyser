@@ -3,7 +3,8 @@ from io import BytesIO
 import base64
 
 
-def pil_image_to_base64(pil_image):
+def pil_image_to_base64(image):
+    pil_image = Image.fromarray(image)
     buf = BytesIO()
     pil_image.save(buf, format="JPEG")
     return base64.b64encode(buf.getvalue())

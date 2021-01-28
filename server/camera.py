@@ -16,6 +16,7 @@ class Camera(object):
 
     def process_one(self):
         if not self.to_process:
+            #print(len(self.to_process))
             return
 
         # input is an ascii string. 
@@ -26,23 +27,24 @@ class Camera(object):
 
         ################## where the hard work is done ############
         # output_img is an PIL image
-        output_img = gestures.get_gestures(input_img)
+        output_img = gestures.get_gestures_from_frame(input_img)
 
         # output_str is a base64 string in ascii
-        output_str = pil_image_to_base64(output_img)
+        #output_str = pil_image_to_base64(output_img)
 
         # convert eh base64 string in ascii to base64 string in _bytes_
-        self.to_output.append(binascii.a2b_base64(output_str))
+        #self.to_output.append(binascii.a2b_base64(output_str))
+        self.to_output.append(output_img)
 
     def keep_processing(self):
         while True:
             self.process_one()
-            sleep(0.01)
+            sleep(0.05)
 
     def enqueue_input(self, input):
         self.to_process.append(input)
 
     def get_frame(self):
         while not self.to_output:
-            sleep(0.05)
+            sleep(0.1)
         return self.to_output.pop(0)

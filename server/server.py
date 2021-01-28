@@ -10,6 +10,7 @@ from flask import Response
 from flask import render_template
 from flask import request
 from flask_socketio import SocketIO, emit
+from engineio.payload import Payload
 
 from sys import stdout
 from get_gestures_from_webcam import get_gestures_from_webcam as gestures
@@ -19,6 +20,7 @@ app = Flask(__name__)
 app.logger.addHandler(logging.StreamHandler(stdout))
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
+Payload.max_decode_packets = 500
 socketio = SocketIO(app)
 camera = Camera()
 
@@ -26,11 +28,11 @@ camera = Camera()
 def test_message(input):
     input = input.split(",")[1]
     camera.enqueue_input(input)
-    image_data = input # Do your magical Image processing here!!
+    # Do your magical Image processing here!!
     #image_data = image_data.decode("utf-8")
-    image_data = "data:image/jpeg;base64," + image_data
-    print("OUTPUT " + image_data)
-    emit('out-image-event', {'image_data': image_data}, namespace='/test')
+    # image_data = "data:image/jpeg;base64," + camera.get_frame()
+    #print("OUTPUT " + image_data)
+    # emit('out-image-event', {'image_data': image_data}, namespace='/test')
     #camera.enqueue_input(base64_to_pil_image(input))
 
 
@@ -49,7 +51,7 @@ def gen():
     while True:
         frame = camera.get_frame() #pil_image_to_base64(camera.get_frame())
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + frame.tostring() + b'\r\n')
 
 @app.route("/video_feed")
 def video_feed():

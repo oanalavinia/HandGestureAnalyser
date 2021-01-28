@@ -20,16 +20,11 @@ $(document).ready(function(){
   
       socket.emit('output image')
   
-      var img = new Image();
-      socket.on('out-image-event',function(data){
-  
-  
-      img.src = dataURL//data.image_data
-      photo.setAttribute('src', data.image_data);
-  
-      });
-  
-  
+//      var img = new Image();
+//      socket.on('out-image-event',function(data){
+//          img.src = dataURL//data.image_data
+//          photo.setAttribute('src', data.image_data);
+//      });
     }
   
     socket.on('connect', function() {
@@ -49,7 +44,7 @@ $(document).ready(function(){
   
       setInterval(function () {
         sendSnapshot();
-      }, 50);
+      }, 250);
     }).catch(function(error) {
       console.log(error);
     });
