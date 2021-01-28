@@ -6,7 +6,7 @@ Simple users will conect to the application with camera on and they could see, b
 Also, an Admin user could get a JSON-LD with the analysed gestures statistics from all the conected users.  
 
 ## For production: SocketIO Streaming
-We have a separate server implementation dedicated for production environments which uses socket streaming. It can be found on the `socket-streaming` branch.
+We have a separate server implementation dedicated for production environments which uses socket streaming. It can be found on the [`socket-streaming`](https://github.com/FiiGezr/Project/tree/socket-streaming) branch.
 
 ### Project members
 - Baisan Razvan
