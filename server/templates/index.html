@@ -20,6 +20,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/statistics" >Statistics</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="get_info_button">Info</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -91,15 +94,68 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Check your answers</h5>
+            <h5 class="modal-title">Data recording</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            Do you want to stop recording data? Games will not be available during this time.
+            Do you want to stop recording data? Questions will not be available during this time.
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
             <button type="button" class="btn btn-primary" id="close_camera_button" data-bs-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!--  Modal for info-->
+    <div class="modal fade" id="get_info" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <div class="d-flex justify-content-center mb-3">
+                Accepted gestures are:
+                <div>
+                <span class="badge bg-info text-dark">Wave</span>
+                <span class="badge bg-info text-dark">Thumbs up</span>
+                <span class="badge bg-info text-dark">Thumbs down</span>
+                <span class="badge bg-info text-dark">Fist</span>
+                <span class="badge bg-info text-dark">Peace</span>
+                <span class="badge bg-info text-dark">1</span>
+                <span class="badge bg-info text-dark">2</span>
+                <span class="badge bg-info text-dark">3</span>
+                <span class="badge bg-info text-dark">4</span>
+                <span class="badge bg-info text-dark">5</span>
+                </div>
+              </div>
+<!--              <div class="d-flex justify-content-center mb-3">-->
+<!--                Showing Wave for more than 5 seconds will give you the chance to stop recording the data.-->
+<!--                You will have a button for start recording it again.-->
+<!--              </div>-->
+              <div class="container">
+                Showing <span class="badge bg-info text-dark">Wave</span>
+                for more than 5 seconds will give you the chance to stop recording the data.
+                You will have a button for start recording it again.
+              </div>
+              <div class="container">
+                Showing <span class="badge bg-info text-dark">5</span> for more than 5 seconds
+                will open a new tab in the current browser.
+              </div>
+              <div class="container">
+                Test your knowledge with 'Questions' game, but showing a
+                <span class="badge bg-info text-dark">Thumbs up</span>
+                 for the question that you think is false
+                and a <span class="badge bg-info text-dark">Thumbs down</span> for the false ones.
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

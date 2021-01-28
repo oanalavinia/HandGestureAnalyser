@@ -23,8 +23,6 @@ with fiiGezr:
     class Five(Gesture): pass
     class Paper(Gesture): pass
 
-    class gesture_time(AnnotationProperty): pass
-
     class Rule(Thing): pass
     class CloseCamera(Rule): pass
     class OpenBrowser(Rule): pass

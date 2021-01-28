@@ -21,6 +21,10 @@ body {
     margin: 2%;
 }
 
+.container {
+    padding-bottom: 3%;
+}
+
 .video_feed {
     display: block;
     margin-left: auto;

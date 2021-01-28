@@ -3,6 +3,11 @@ $(document).on('click', '#maybe_start_quiz', function() {
     myModal.show();
 });
 
+$(document).on('click', '#get_info_button', function() {
+    var myModal = new bootstrap.Modal(document.getElementById('get_info'));
+    myModal.show();
+});
+
 $(document).on('click', '#start_question_game', function() {
     $('#question_modal').removeData();
     $('#question_modal').data('answersTime', []);
