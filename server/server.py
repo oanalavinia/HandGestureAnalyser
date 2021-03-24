@@ -5,17 +5,17 @@ import cv2
 import json
 import logging
 from camera import Camera
-from flask import Flask
-from flask import Response
-from flask import render_template
-import json
-from io import BytesIO
-from datetime import datetime
-from flask import request, session, send_file
 from flask_socketio import SocketIO, emit
 from engineio.payload import Payload
 
 from sys import stdout
+from flask import Flask
+from flask import Response
+from flask import render_template
+from flask import request, session, send_file
+import json
+from io import BytesIO
+from datetime import datetime
 from get_gestures_from_webcam import get_gestures_from_webcam as gestures
 from scripts import questions as qs
 from scripts import queries as qr
@@ -32,40 +32,44 @@ camera = Camera()
 app.secret_key = '5b7373780e35434090c87dc4c9d15a2d'
 
 
-def serve_streams(recording_start_time):
-    camera = cv2.VideoCapture(0)
-    yield from gestures.get_gestures(camera, recording_start_time)
-    gestures.save_data()
-    camera.release()
+# def serve_streams(recording_start_time):
+#     camera = cv2.VideoCapture(0)
+#     yield from gestures.get_gestures(camera, recording_start_time)
+#     gestures.save_data()
+#     camera.release()
+
 @socketio.on('input image', namespace='/test')
 def test_message(input):
     input = input.split(",")[1]
     camera.enqueue_input(input)
     # Do your magical Image processing here!!
-    #image_data = image_data.decode("utf-8")
+    # image_data = image_data.decode("utf-8")
     # image_data = "data:image/jpeg;base64," + camera.get_frame()
-    #print("OUTPUT " + image_data)
+    # print("OUTPUT " + image_data)
     # emit('out-image-event', {'image_data': image_data}, namespace='/test')
-    #camera.enqueue_input(base64_to_pil_image(input))
+    # camera.enqueue_input(base64_to_pil_image(input))
 
 
 @socketio.on('connect', namespace='/test')
 def test_connect():
     app.logger.info("client connected")
 
-@app.route("/")
-def index():
-    session['startTime'] = datetime.now()
-    return render_template("index.html")
 
 def gen():
     """Video streaming generator function."""
 
     app.logger.info("starting to generate frames!")
     while True:
-        frame = camera.get_frame() #pil_image_to_base64(camera.get_frame())
+        frame = camera.get_frame()  # pil_image_to_base64(camera.get_frame())
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame.tostring() + b'\r\n')
+
+
+@app.route("/")
+def index():
+    session['startTime'] = datetime.now()
+    return render_template("index.html")
+
 
 @app.route("/statistics")
 def statistics():
@@ -84,7 +88,6 @@ def statistics():
 @app.route("/video_feed")
 def video_feed():
     recording_start_time = datetime.now()
-    # return Response(serve_streams(recording_start_time),
     return Response(gen(),
                     mimetype="multipart/x-mixed-replace; boundary=frame")
 
@@ -119,4 +122,6 @@ def do_close_camera():
 
 
 if __name__ == '__main__':
-    socketio.run(app, host="0.0.0.0", port="80", debug=True, use_reloader=False, ssl_context='adhoc')
+    # app.run(port=80, debug=True,
+    #         threaded=True, use_reloader=False)
+    socketio.run(app, host="0.0.0.0", port="5000", debug=True, use_reloader=False, ssl_context='adhoc')

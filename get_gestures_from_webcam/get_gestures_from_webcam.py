@@ -5,15 +5,7 @@ from get_gestures_from_webcam import utilities as ut
 from owl_testing import test_owl as owl
 from scripts import queries as qrs
 
-# def useScript():
-#     cap = cv2.VideoCapture(0)
-#     get_gestures(cap)
-#     cap.release()
-
-global record
-
-
-def get_gestures(cap, recording_start_time):
+def get_gestures(cap):
     user1 = owl.User()
     mp_drawing = mp.solutions.drawing_utils
     mp_hands = mp.solutions.hands
