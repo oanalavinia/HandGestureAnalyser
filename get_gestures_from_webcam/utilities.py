@@ -154,7 +154,7 @@ def is_reversed(keypoints):
 #
 def get_wave_gesture(landmarks, wave_frames, last_hand_x_position, temporary_wave_gestures):
     this_hand_x_position = landmarks[8]['x']
-    if abs(last_hand_x_position - this_hand_x_position) > 0.18:
+    if abs(last_hand_x_position - this_hand_x_position) > 0.28:
         temporary_wave_gestures.append(True)
         last_hand_x_position = this_hand_x_position
     else:

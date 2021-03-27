@@ -92,6 +92,17 @@ def video_feed():
                     mimetype="multipart/x-mixed-replace; boundary=frame")
 
 
+@app.route("/current_gesture", methods=['GET'])
+def current_gesture():
+    return json.dumps({'gesture': camera.get_gesture()})
+
+
+@app.route("/get_gesture", methods=['POST'])
+def get_gesture():
+    landmarks = request.form.get('do_close_camera')
+    return json.dumps({'gesture': camera.get_gesture()})
+
+
 @app.route("/questions", methods=['GET', 'POST'])
 def questions():
     # gestures.save_data()
@@ -103,11 +114,11 @@ def questions():
         return json.dumps({'status': 'OK', 'results': user_answers})
 
 
-@app.route('/check_wave')
-def check_wave():
-    gestures.save_data()
-    close_camera = qr.check_close_camera(datetime.now())
-    return json.dumps({'closeCamera': close_camera})
+# @app.route('/check_wave')
+# def check_wave():
+#     gestures.save_data()
+#     close_camera = qr.check_close_camera(datetime.now())
+#     return json.dumps({'closeCamera': close_camera})
 
 
 @app.route('/do_close_camera', methods=['POST'])

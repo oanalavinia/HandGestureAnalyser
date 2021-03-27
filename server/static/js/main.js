@@ -1,55 +1,55 @@
-$(document).ready(function(){
-    let namespace = "/test";
-    let video = document.querySelector("#videoElement");
-    let canvas = document.querySelector("#canvasElement");
-    let ctx = canvas.getContext('2d');
-    photo = document.getElementById('photo');
-    var localMediaStream = null;
-    canvas.width = 640;
-    canvas.height = 480;
-    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-
-    function sendSnapshot() {
-      if (!localMediaStream) {
-        return;
-      }
-
-      ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 640, 480);
-
-      let dataURL = canvas.toDataURL('image/jpeg');
-      socket.emit('input image', dataURL);
-
-      socket.emit('output image')
-
-//      var img = new Image();
-//      socket.on('out-image-event',function(data){
-//          img.src = dataURL//data.image_data
-//          photo.setAttribute('src', data.image_data);
-//      });
-    }
-
-    socket.on('connect', function() {
-      console.log('Connected!');
-    });
-
-    var constraints = {
-      video: {
-        width: { min: 640 },
-        height: { min: 480 }
-      }
-    };
-
-    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-      video.srcObject = stream;
-      localMediaStream = stream;
-
-      setInterval(function () {
-        sendSnapshot();
-      }, 250);
-    }).catch(function(error) {
-      console.log(error);
-    });
-});
+//$(document).ready(function(){
+//    let namespace = "/test";
+//    let video = document.querySelector("#videoElement");
+//    let canvas = document.querySelector("#canvasElement");
+//    let ctx = canvas.getContext('2d');
+//    photo = document.getElementById('photo');
+//    var localMediaStream = null;
+//    canvas.width = 640;
+//    canvas.height = 480;
+//    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+//
+//    function sendSnapshot() {
+//      if (!localMediaStream) {
+//        return;
+//      }
+//
+//      ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 640, 480);
+//
+//      let dataURL = canvas.toDataURL('image/jpeg');
+////      socket.emit('input image', dataURL);
+////
+////      socket.emit('output image')
+//
+////      var img = new Image();
+////      socket.on('out-image-event',function(data){
+////          img.src = dataURL//data.image_data
+////          photo.setAttribute('src', data.image_data);
+////      });
+//    }
+//
+//    socket.on('connect', function() {
+//      console.log('Connected!');
+//    });
+//
+//    var constraints = {
+//      video: {
+//        width: { min: 640 },
+//        height: { min: 480 }
+//      }
+//    };
+//
+//    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+//      video.srcObject = stream;
+//      localMediaStream = stream;
+//
+//      setInterval(function () {
+//        sendSnapshot();
+//      }, 250);
+//    }).catch(function(error) {
+//      console.log(error);
+//    });
+//});
 
 $(document).on('click', '#maybe_start_quiz', function() {
     var myModal = new bootstrap.Modal(document.getElementById('question_modal'));
@@ -132,6 +132,17 @@ function askQuestion(questionContent) {
         }, 10000);
     });
 }
+
+//setInterval(function() {
+//    $.get('/current_gesture').done(function(data) {
+//        var gestureData = JSON.parse(data);
+//        if(gestureData.gesture) {
+//            $('#current_gesture').html(gestureData.gesture);
+//        } else {
+//            $('#current_gesture').html("No gesture detected");
+//        }
+//    });
+//}, 500)
 
 //setInterval(function() {
 //    if ($('#close_camera_modal').data('is_camera_closed') == false) {

@@ -1,12 +1,7 @@
 import threading
-import binascii
 from time import sleep
-from get_gestures_from_webcam import get_gestures_from_webcam as gestures
-from utils import base64_to_pil_image, pil_image_to_base64, to_cv2
+from utils import to_cv2
 from get_gestures_from_webcam.gestures import Gesture
-import base64
-from io import BytesIO
-
 
 
 class Camera(object):
@@ -21,7 +16,7 @@ class Camera(object):
 
     def process_one(self):
         if not self.to_process:
-            #print(len(self.to_process))
+            # print(len(self.to_process))
             return
 
         # Input is an ascii string.
@@ -33,20 +28,21 @@ class Camera(object):
         # Get the gestures.
         output_img = self.gestures.get_gesture_from_webcam(input_img)
 
-        # convert eh base64 string in ascii to base64 string in _bytes_
-        #self.to_output.append(binascii.a2b_base64(output_str))
+        # Send the annotated image.
         self.to_output.append(output_img)
 
     def keep_processing(self):
         while True:
             self.process_one()
-            sleep(0.001)
+            sleep(0.0001)
 
     def enqueue_input(self, input):
         self.to_process.append(input)
-        # self.process_one()
 
     def get_frame(self):
         while not self.to_output:
             sleep(0.001)
         return self.to_output.pop(0)
+
+    def get_gesture(self):
+        return self.gestures.gesture
