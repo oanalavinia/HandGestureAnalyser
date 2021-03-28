@@ -1,8 +1,8 @@
-def get_gestures(landmarks, is_reversed):
+def get_gestures(landmarks_x, landmarks_y, is_reversed):
     #
     # Get fingers orientation
     #
-    thumb_up, index_up, second_up, third_up, pinky_up = get_fingers_orientation(landmarks, is_reversed)
+    thumb_up, index_up, second_up, third_up, pinky_up = get_fingers_orientation(landmarks_x, landmarks_y, is_reversed)
 
     #
     # Simple gestures
@@ -12,7 +12,7 @@ def get_gestures(landmarks, is_reversed):
     #
     # Get more information about hand
     #
-    thumb_up_oriented, thumb_in_fist, four_fingers_closed = get_hand_info(landmarks)
+    thumb_up_oriented, thumb_in_fist, four_fingers_closed = get_hand_info(landmarks_x, landmarks_y)
 
     # Get more gestures.
     if thumb_in_fist and four_fingers_closed:
@@ -27,34 +27,34 @@ def get_gestures(landmarks, is_reversed):
     return gesture
 
 
-def get_hand_info(landmarks):
+def get_hand_info(landmarks_x, landmarks_y):
     right_hand = True
-    if landmarks[0]['x'] < landmarks[13]['x']:
+    if landmarks_x[0] < landmarks_x[13]:
         right_hand = False
 
-    pseudo_fix_key = landmarks[2]['y']
+    pseudo_fix_key = landmarks_y[2]
     thumb_up_oriented = True
-    if landmarks[3]['y'] < pseudo_fix_key and landmarks[4]['y'] < pseudo_fix_key:
+    if landmarks_y[3] < pseudo_fix_key and landmarks_y[4] < pseudo_fix_key:
         thumb_up_oriented = False
 
     thumb_in_fist = True
-    if abs(landmarks[6]['y'] - landmarks[4]['y']) > 0.16:
+    if abs(landmarks_y[6] - landmarks_y[4]) > 0.16:
         thumb_in_fist = False
 
     # We check to see if the four fingers are closed together, considering the hand used
     if not right_hand:
         four_fingers_closed = False
-        if landmarks[6]['x'] - landmarks[5]['x'] > landmarks[8]['x'] - landmarks[5]['x'] and \
-                landmarks[10]['x'] - landmarks[9]['x'] > landmarks[12]['x'] - landmarks[9]['x'] and \
-                landmarks[14]['x'] - landmarks[13]['x'] > landmarks[16]['x'] - landmarks[13]['x'] and \
-                landmarks[18]['x'] - landmarks[17]['x'] > landmarks[20]['x'] - landmarks[17]['x']:
+        if landmarks_x[6] - landmarks_x[5] > landmarks_x[8] - landmarks_x[5] and \
+                landmarks_x[10] - landmarks_x[9] > landmarks_x[12] - landmarks_x[9] and \
+                landmarks_x[14] - landmarks_x[13] > landmarks_x[16] - landmarks_x[13] and \
+                landmarks_x[18] - landmarks_x[17] > landmarks_x[20] - landmarks_x[17]:
             four_fingers_closed = True
     else:
         four_fingers_closed = False
-        if landmarks[6]['x'] - landmarks[5]['x'] <= landmarks[8]['x'] - landmarks[5]['x'] and \
-                landmarks[10]['x'] - landmarks[9]['x'] <= landmarks[12]['x'] - landmarks[9]['x'] and \
-                landmarks[14]['x'] - landmarks[13]['x'] <= landmarks[16]['x'] - landmarks[13]['x'] and \
-                landmarks[18]['x'] - landmarks[17]['x'] <= landmarks[20]['x'] - landmarks[17]['x']:
+        if landmarks_x[6] - landmarks_x[5] <= landmarks_x[8] - landmarks_x[5] and \
+                landmarks_x[10] - landmarks_x[9] <= landmarks_x[12] - landmarks_x[9] and \
+                landmarks_x[14] - landmarks_x[13] <= landmarks_x[16] - landmarks_x[13] and \
+                landmarks_x[18] - landmarks_x[17] <= landmarks_x[20] - landmarks_x[17]:
             four_fingers_closed = True
 
     return thumb_up_oriented, thumb_in_fist, four_fingers_closed
@@ -63,35 +63,35 @@ def get_hand_info(landmarks):
 #
 # Check which fingers are up oriented.
 #
-def get_fingers_orientation(landmarks, is_reversed):
+def get_fingers_orientation(landmarks_x, landmarks_y, is_reversed):
     thumb_up = False
     index_up = False
     second_up = False
     third_up = False
     pinky_up = False
 
-    pseudo_fix_key = landmarks[2]['x']
+    pseudo_fix_key = landmarks_x[2]
     if not is_reversed:
-        if landmarks[3]['x'] < pseudo_fix_key and landmarks[4]['x'] < pseudo_fix_key:
+        if landmarks_x[3] < pseudo_fix_key and landmarks_x[4] < pseudo_fix_key:
             thumb_up = True
     else:
-        if landmarks[3]['x'] > pseudo_fix_key and landmarks[4]['x'] > pseudo_fix_key:
+        if landmarks_x[3] > pseudo_fix_key and landmarks_x[4] > pseudo_fix_key:
             thumb_up = True
 
-    pseudo_fix_key = landmarks[6]['y']
-    if landmarks[7]['y'] < pseudo_fix_key and landmarks[8]['y'] < pseudo_fix_key:
+    pseudo_fix_key = landmarks_y[6]
+    if landmarks_y[7] < pseudo_fix_key and landmarks_y[8] < pseudo_fix_key:
         index_up = True
 
-    pseudo_fix_key = landmarks[10]['y']
-    if landmarks[11]['y'] < pseudo_fix_key and landmarks[12]['y'] < pseudo_fix_key:
+    pseudo_fix_key = landmarks_y[10]
+    if landmarks_y[11] < pseudo_fix_key and landmarks_y[12] < pseudo_fix_key:
         second_up = True
 
-    pseudo_fix_key = landmarks[14]['y']
-    if landmarks[15]['y'] < pseudo_fix_key and landmarks[16]['y'] < pseudo_fix_key:
+    pseudo_fix_key = landmarks_y[14]
+    if landmarks_y[15] < pseudo_fix_key and landmarks_y[16] < pseudo_fix_key:
         third_up = True
 
-    pseudo_fix_key = landmarks[18]['y']
-    if landmarks[19]['y'] < pseudo_fix_key and landmarks[20]['y'] < pseudo_fix_key:
+    pseudo_fix_key = landmarks_y[18]
+    if landmarks_y[19] < pseudo_fix_key and landmarks_y[20] < pseudo_fix_key:
         pinky_up = True
 
     return thumb_up, index_up, second_up, third_up, pinky_up
@@ -143,7 +143,7 @@ def most_frequent(last_gestures):
 
 
 def is_reversed(keypoints):
-    if keypoints[4]['x'] > keypoints[18]['x']:
+    if keypoints[4] > keypoints[18]:
         return True
     return False
 

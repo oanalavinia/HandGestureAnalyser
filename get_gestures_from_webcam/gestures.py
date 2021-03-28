@@ -5,6 +5,7 @@ from get_gestures_from_webcam import owl_utilities, wave_gesture
 from owl_testing import test_owl as owl
 from datetime import datetime
 
+
 class Gesture(object):
     def __init__(self):
         self.mp_drawing = mp.solutions.drawing_utils
@@ -21,8 +22,50 @@ class Gesture(object):
 
         # Variables needed for registering wave gesture.
         self.wave_gesture_time = datetime.now()
-        self.wave_gesture_identifier = wave_gesture.Wave_Gesture()
+        self.wave_gesture_identifier = wave_gesture.WaveGesture()
         # set_record(True)
+
+    def get_gesture_from_landmarks(self, landmarks_x, landmarks_y):
+        #
+        # We only take gestures from one hand.
+        #
+        is_reversed = False
+        is_wave_gesture = False
+        if len(landmarks_x) != 0:
+            # Wave gesture is handled individually since it is a movement gestures, not a static one.
+            # is_wave_gesture = self.wave_gesture_identifier.get_wave_gesture(landmarks_x, landmarks_y)
+
+            is_reversed = ut.is_reversed(landmarks_x)
+            self.gesture = ut.get_gestures(landmarks_x=landmarks_x, landmarks_y=landmarks_y, is_reversed=is_reversed)
+            if is_wave_gesture:
+                self.gesture = "wave"
+                self.wave_gesture_time = datetime.now()
+            #
+            if len(self.last_gestures) > 55:
+                self.last_gestures.pop(0)
+            self.last_gestures.append(self.gesture)
+        else:
+            self.last_gestures = ['none']
+
+        # Make an average from the last 50 frames. If a wave gesture was registered, consider only this one for 3
+        # seconds.
+        if self.wave_gesture_time and (datetime.now() - self.wave_gesture_time).seconds < 3:
+            self.gesture = "wave"
+
+        else:
+            self.gesture = ut.most_frequent(self.last_gestures)
+
+        # Create rdf instance
+        self.create_rdf_instances(self.gesture)
+
+        # We save data every 10 seconds.
+        if (datetime.now() - self.recording_start_time).seconds > 10:
+            self.recording_start_time = datetime.now()
+            self.owl_utilities.save_data()
+            # last_10_gesture = qrs.query_last_10s_gestures(datetime.now())
+            # save_data()
+
+        return self.gesture
 
     def get_gesture_from_webcam(self, frame):
 
@@ -92,9 +135,9 @@ class Gesture(object):
             # last_10_gesture = qrs.query_last_10s_gestures(datetime.now())
             # save_data()
 
-
         (_, encodedImage) = cv2.imencode(".jpg",
-                                         cv2.putText(image, self.gesture, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0),
+                                         cv2.putText(image, self.gesture, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                                                     (255, 0, 0),
                                                      2, cv2.LINE_AA))
 
         return encodedImage

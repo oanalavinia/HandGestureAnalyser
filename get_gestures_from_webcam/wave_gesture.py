@@ -1,19 +1,15 @@
-import mediapipe as mp
-import cv2
-from get_gestures_from_webcam import utilities as ut
-from get_gestures_from_webcam import owl_utilities
-from owl_testing import test_owl as owl
 from datetime import datetime
 
-class Wave_Gesture(object):
+
+class WaveGesture(object):
     def __init__(self):
         self.temporary_wave_gestures = []
         self.last_hand_x_position = 0
         self.wave_frames = 0
         self.wave_gesture_time = datetime.now()
 
-    def get_wave_gesture(self, landmarks):
-        this_hand_x_position = landmarks[8]['x']
+    def get_wave_gesture(self, landmarks_x, landmarks_y):
+        this_hand_x_position = landmarks_x[8]
         # print(abs(self.last_hand_x_position - this_hand_x_position))
         if abs(self.last_hand_x_position - this_hand_x_position) > 0.15:
             self.temporary_wave_gestures.append(True)
@@ -30,5 +26,3 @@ class Wave_Gesture(object):
                 return True
 
         return False
-
-
