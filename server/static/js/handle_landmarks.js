@@ -32,6 +32,30 @@ $(document).ready(function() {
           const classification = results.multiHandedness[index];
           const isRightHand = classification.label === 'Right';
           const landmarks = results.multiHandLandmarks[index];
+
+          var data = {'landmarks': landmarks};
+          landmarks_x = []
+          landmarks_y = []
+          for (index in landmarks) {
+            landmarks_x.push(landmarks[index]['x'])
+            landmarks_y.push(landmarks[index]['y'])
+          }
+
+          $.post('/get_gesture',
+          {
+            'landmarks_x': landmarks_x,
+            'landmarks_y': landmarks_y
+          }).done(function(data) {
+            var gestureData = JSON.parse(data);
+            if(gestureData.gesture) {
+                console.log(gestureData.gesture)
+                $('#current_gesture').html(gestureData.gesture);
+            } else {
+                console.log("No gesture");
+                $('#current_gesture').html("No gesture detected");
+            }
+          });
+
           drawConnectors(
               canvasCtx, landmarks, HAND_CONNECTIONS,
               {color: isRightHand ? '#00FF00' : '#FF0000'}),

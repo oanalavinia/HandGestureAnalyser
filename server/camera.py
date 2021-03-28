@@ -46,3 +46,6 @@ class Camera(object):
 
     def get_gesture(self):
         return self.gestures.gesture
+
+    def get_gesture_obj(self):
+        return self.gestures

@@ -32,22 +32,10 @@ camera = Camera()
 app.secret_key = '5b7373780e35434090c87dc4c9d15a2d'
 
 
-# def serve_streams(recording_start_time):
-#     camera = cv2.VideoCapture(0)
-#     yield from gestures.get_gestures(camera, recording_start_time)
-#     gestures.save_data()
-#     camera.release()
-
 @socketio.on('input image', namespace='/test')
 def test_message(input):
     input = input.split(",")[1]
     camera.enqueue_input(input)
-    # Do your magical Image processing here!!
-    # image_data = image_data.decode("utf-8")
-    # image_data = "data:image/jpeg;base64," + camera.get_frame()
-    # print("OUTPUT " + image_data)
-    # emit('out-image-event', {'image_data': image_data}, namespace='/test')
-    # camera.enqueue_input(base64_to_pil_image(input))
 
 
 @socketio.on('connect', namespace='/test')
@@ -99,8 +87,14 @@ def current_gesture():
 
 @app.route("/get_gesture", methods=['POST'])
 def get_gesture():
-    landmarks = request.form.get('do_close_camera')
-    return json.dumps({'gesture': camera.get_gesture()})
+    landmarks_x = request.form.getlist("landmarks_x[]")
+    landmarks_y = request.form.getlist("landmarks_y[]")
+    landmarks_x = [float(x) for x in landmarks_x]
+    landmarks_y = [float(y) for y in landmarks_y]
+    if landmarks_x:
+        gesture = camera.get_gesture_obj().get_gesture_from_landmarks(landmarks_x, landmarks_y)
+        return json.dumps({'gesture': gesture})
+    return json.dumps({'gesture': "none"})
 
 
 @app.route("/questions", methods=['GET', 'POST'])
