@@ -4,9 +4,8 @@ $(document).ready(function() {
     const canvasElement = document.getElementsByClassName('output_canvas')[0];
     const controlsElement = document.getElementsByClassName('control-panel')[0];
     const canvasCtx = canvasElement.getContext('2d');
-
-    // We'll add this to our control panel later, but we'll save it here so we can
-    // call tick() each time the graph runs.
+    canvasCtx.font = "bold 30px Arial";
+    canvasCtx.fillStyle = "blue";
     const fpsControl = new FPS();
 
     // Optimization: Turn off animated spinner after its hiding animation is done.
@@ -46,13 +45,12 @@ $(document).ready(function() {
             'landmarks_x': landmarks_x,
             'landmarks_y': landmarks_y
           }).done(function(data) {
-            var gestureData = JSON.parse(data);
-            if(gestureData.gesture) {
-                console.log(gestureData.gesture)
-                $('#current_gesture').html(gestureData.gesture);
+            var gesture = JSON.parse(data).gesture;
+            if(gesture) {
+                console.log(gesture)
+                canvasCtx.fillText(gesture, 10, 25);
             } else {
-                console.log("No gesture");
-                $('#current_gesture').html("No gesture detected");
+                canvasCtx.fillText("No gesture detected", 10, 25);
             }
           });
 
@@ -83,8 +81,8 @@ $(document).ready(function() {
       onFrame: async () => {
         await hands.send({image: videoElement});
       },
-      width: 1280,
-      height: 720
+      width: 1080,
+      height: 650
     });
     camera.start();
 
@@ -92,7 +90,7 @@ $(document).ready(function() {
     // options.
     new ControlPanel(controlsElement, {
       selfieMode: true,
-      maxNumHands: 2,
+      maxNumHands: 1,
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5
     })
@@ -100,8 +98,6 @@ $(document).ready(function() {
       new StaticText({title: 'MediaPipe Hands'}),
       fpsControl,
       new Toggle({title: 'Selfie Mode', field: 'selfieMode'}),
-      new Slider(
-          {title: 'Max Number of Hands', field: 'maxNumHands', range: [1, 4], step: 1}),
       new Slider({
         title: 'Min Detection Confidence',
         field: 'minDetectionConfidence',

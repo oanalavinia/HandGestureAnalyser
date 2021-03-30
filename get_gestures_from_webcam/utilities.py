@@ -2,12 +2,12 @@ def get_gestures(landmarks_x, landmarks_y, is_reversed):
     #
     # Get fingers orientation
     #
-    thumb_up, index_up, second_up, third_up, pinky_up = get_fingers_orientation(landmarks_x, landmarks_y, is_reversed)
+    thumb_closer, thumb_up, index_up, second_up, third_up, pinky_up = get_fingers_orientation(landmarks_x, landmarks_y, is_reversed)
 
     #
     # Simple gestures
     #
-    gesture = check_count_gestures(thumb_up, index_up, second_up, third_up, pinky_up)
+    gesture = check_count_gestures(thumb_closer, index_up, second_up, third_up, pinky_up)
 
     #
     # Get more information about hand
@@ -24,7 +24,22 @@ def get_gestures(landmarks_x, landmarks_y, is_reversed):
     if not thumb_up_oriented and not thumb_in_fist and four_fingers_closed:
         gesture = "thumbsUp"
 
+    # print("thumb {} index {}".format(thumb_up, index_up))
+    if thumb_up and index_up and isZoomInDistance(landmarks_x) and not(second_up or third_up or pinky_up):
+        gesture = "zoomIn"
+
+    if thumb_up and index_up and isZoomOutDistance(landmarks_x) and not(second_up or third_up or pinky_up):
+        gesture = "zoomOut"
+
     return gesture
+
+
+def isZoomInDistance(landmarks_x):
+    return abs(landmarks_x[8] - landmarks_x[4]) < 0.17
+
+
+def isZoomOutDistance(landmarks_x):
+    return abs(landmarks_x[8] - landmarks_x[4]) > 0.17
 
 
 def get_hand_info(landmarks_x, landmarks_y):
@@ -64,6 +79,7 @@ def get_hand_info(landmarks_x, landmarks_y):
 # Check which fingers are up oriented.
 #
 def get_fingers_orientation(landmarks_x, landmarks_y, is_reversed):
+    thumb_closer = False
     thumb_up = False
     index_up = False
     second_up = False
@@ -73,10 +89,14 @@ def get_fingers_orientation(landmarks_x, landmarks_y, is_reversed):
     pseudo_fix_key = landmarks_x[2]
     if not is_reversed:
         if landmarks_x[3] < pseudo_fix_key and landmarks_x[4] < pseudo_fix_key:
-            thumb_up = True
+            thumb_closer = True
     else:
         if landmarks_x[3] > pseudo_fix_key and landmarks_x[4] > pseudo_fix_key:
-            thumb_up = True
+            thumb_closer = True
+
+    pseudo_fix_key = landmarks_y[2]
+    if landmarks_y[3] < pseudo_fix_key and landmarks_y[4] < pseudo_fix_key:
+        thumb_up = True
 
     pseudo_fix_key = landmarks_y[6]
     if landmarks_y[7] < pseudo_fix_key and landmarks_y[8] < pseudo_fix_key:
@@ -94,7 +114,7 @@ def get_fingers_orientation(landmarks_x, landmarks_y, is_reversed):
     if landmarks_y[19] < pseudo_fix_key and landmarks_y[20] < pseudo_fix_key:
         pinky_up = True
 
-    return thumb_up, index_up, second_up, third_up, pinky_up
+    return thumb_closer, thumb_up, index_up, second_up, third_up, pinky_up
 
 
 #
@@ -105,7 +125,7 @@ def check_count_gestures(thumb_up, index_up, second_up, third_up, pinky_up):
     if sum([index_up, second_up, third_up, pinky_up]) == 1 and not thumb_up:
         gesture = "one"
 
-    if sum([thumb_up, index_up, second_up, third_up, pinky_up]) == 2:
+    if sum([index_up, second_up, third_up, pinky_up]) == 2:
         gesture = "two"
 
     if index_up and second_up and not (thumb_up or third_up or pinky_up):

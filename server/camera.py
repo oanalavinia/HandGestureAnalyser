@@ -1,14 +1,14 @@
 import threading
 from time import sleep
 from utils import to_cv2
-from get_gestures_from_webcam.gestures import Gesture
+from get_gestures_from_webcam.gestures import GestureRecognition
 
 
 class Camera(object):
     def __init__(self):
         self.to_process = []
         self.to_output = []
-        self.gestures = Gesture()
+        self.gestures = GestureRecognition()
 
         thread = threading.Thread(target=self.keep_processing, args=())
         thread.daemon = True

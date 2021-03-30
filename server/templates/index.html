@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/test.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/handle_landmarks.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
@@ -38,8 +38,8 @@
       <div>
         <div class="d-flex justify-content-center mb-3">
             <div class="container">
-              <video class="input_video"></video>
-              <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+              <video class="input_video" hidden></video>
+              <canvas class="output_canvas" width="1080px" height="650px"></canvas>
               <div class="loading">
                 <div class="spinner"></div>
                 <div class="message">
@@ -47,21 +47,8 @@
                 </div>
               </div>
             </div>
-            <div class="control-panel">
-            </div>
+            <div class="control-panel"></div>
             <div id="current_gesture"></div>
-<!--          <img src="{{ url_for('video_feed') }}" class="video_feed" id="video_feed">-->
-<!--          <div id="container">-->
-
-<!--            <video autoplay="true" id="videoElement"></video>-->
-<!--            <canvas hidden="true" style="width: 640px; height: 480px;" id="canvasElement"></canvas>-->
-
-<!--            <img style="vertical-align: unset; width: 640px; height: 480px;" id="photo" src="/video_feed">-->
-<!--            <div>-->
-<!--                <div id="current_gesture"></div>-->
-<!--            </div>-->
-
-<!--          </div>-->
         </div>
       </div>
       <div class="d-flex justify-content-center mb-3">
