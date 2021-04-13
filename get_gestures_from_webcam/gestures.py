@@ -1,5 +1,5 @@
 from get_gestures_from_webcam import utilities as ut
-from get_gestures_from_webcam import owl_utilities, wave_gesture, zoom_gestures
+from get_gestures_from_webcam import owl_utilities, wave_gesture
 from owl_testing import test_owl as owl
 from datetime import datetime
 
@@ -11,6 +11,8 @@ class GestureRecognition(object):
         self.user = owl.User()
         self.owl_utilities = owl_utilities.Owl_utilities()
         self.recording_start_time = datetime.now()
+        self.context = "none"
+        self.owl_context = "none"
 
         # Variables needed for registering wave gesture.
         self.wave_gesture_time = datetime.now()
@@ -61,4 +63,20 @@ class GestureRecognition(object):
             gest.has_gesture_time.append(datetime.now())
             gest.has_gesture_name.append(self.gesture)
             self.user.makes_gesture.append(gest)
+            if self.context != "none":
+                self.owl_utilities.get_contexted_rule(self.context, self.gesture, self.owl_context, gest)
         return gest
+
+    def set_context(self, given_context):
+        self.context = given_context
+        if self.context == "QuizGame":
+            self.owl_context = owl.QuizGame()
+        elif self.context == "PDFDocument":
+            self.owl_context = owl.PDFDocument()
+        elif self.context == "Image":
+            self.owl_context = owl.Image()
+        elif self.context == "MarkGame":
+            self.owl_context = owl.MarkGame()
+
+    def get_owl_utilities(self):
+        return self.owl_utilities

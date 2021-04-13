@@ -1,8 +1,6 @@
 # USAGE
 # python server.py
 
-import cv2
-import json
 import logging
 from camera import Camera
 from flask_socketio import SocketIO, emit
@@ -28,6 +26,7 @@ app.config['DEBUG'] = True
 Payload.max_decode_packets = 500
 socketio = SocketIO(app)
 camera = Camera()
+quiz = qs.QuizGame(camera.get_gesture_obj())
 
 app.secret_key = '5b7373780e35434090c87dc4c9d15a2d'
 
@@ -101,10 +100,11 @@ def get_gesture():
 def questions():
     # gestures.save_data()
     if request.method == 'GET':
-        return qs.create_question_game()
+        camera.get_gesture_obj().set_context("QuizGame")
+        return quiz.create_question_game()
     else:
         # gestures.save_data()
-        user_answers = qs.get_correct_answers(request.form.getlist('answersTime[]'))
+        user_answers = quiz.get_correct_answers(request.form.getlist('answersTime[]'))
         return json.dumps({'status': 'OK', 'results': user_answers})
 
 

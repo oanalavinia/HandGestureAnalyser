@@ -23,8 +23,8 @@ class Owl_utilities(object):
             return owl.One()
         elif gesture == 'two':
             return owl.Two()
-        elif gesture == 'peace':
-            return owl.Peace()
+        # elif gesture == 'peace':
+        #     return owl.Peace()
         elif gesture == 'three':
             return owl.Three()
         elif gesture == 'four':
@@ -33,5 +33,32 @@ class Owl_utilities(object):
             return owl.Five()
         elif gesture == 'fist':
             return owl.Fist()
+        elif gesture == 'zoomIn':
+            return owl.CloseFingers()
+        elif gesture == 'zoomOut':
+            return owl.ApartFingers()
         else:
             return None
+
+    def get_contexted_rule(self, context, gesture, owl_context, owl_gesture):
+        if context == "QuizGame" and gesture == "thumbsUp":
+            rule = owl.Approve()
+        elif context == "QuizGame" and gesture == "thumbsDown":
+            rule = owl.Disapprove()
+        elif context == "PDFDocument" and gesture == "wave":
+            rule = owl.CloseFile()
+        elif context == "PDFDocument" and gesture == "five":
+            rule = owl.ChangePage()
+        elif context == "Image" and gesture == "thumbsDown":
+            rule = owl.Disapprove()
+        elif context == "Image" and gesture == "five":
+            rule = owl.NextImage()
+        elif context == "Image" and gesture == "zoomIn":
+            rule = owl.ZoomIn()
+        elif context == "Image" and gesture == "zoomOut":
+            rule = owl.ZoomOut()
+        elif context == "MarkGame" and (
+                gesture == "one" or gesture == "two" or gesture == "three" or gesture == "four" or gesture == "five"):
+            rule = owl.ZoomOut()
+        rule.has_context.append(owl_context)
+        # owl_gesture.has_context(rule)
