@@ -40,7 +40,10 @@ class Owl_utilities(object):
         else:
             return None
 
-    def get_contexted_rule(self, context, gesture, owl_context, owl_gesture):
+    def get_contexted_rule(self, context, gesture, owl_context):
+        if owl_context == 'none':
+            return
+        rule = None
         if context == "QuizGame" and gesture == "thumbsUp":
             rule = owl.Approve()
         elif context == "QuizGame" and gesture == "thumbsDown":
@@ -60,5 +63,7 @@ class Owl_utilities(object):
         elif context == "MarkGame" and (
                 gesture == "one" or gesture == "two" or gesture == "three" or gesture == "four" or gesture == "five"):
             rule = owl.ZoomOut()
-        rule.has_context.append(owl_context)
-        # owl_gesture.has_context(rule)
+
+        if rule is not None:
+            owl_context.includes_rule.append(rule)
+            rule.has_context.append(owl_context)

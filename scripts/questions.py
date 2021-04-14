@@ -23,6 +23,7 @@ class QuizGame(object):
             end_answer_time = answer_time + datetime.timedelta(0, 10)
             answer = self.queries_handler.query_answers(answer_time, end_answer_time)
             answers.append(self.bool_from_gesture(answer))
+            self.gestures_handler.create_rule_instance(answer)
         return answers
 
     def bool_from_gesture(self, gesture):

@@ -1,56 +1,3 @@
-//$(document).ready(function(){
-//    let namespace = "/test";
-//    let video = document.querySelector("#videoElement");
-//    let canvas = document.querySelector("#canvasElement");
-//    let ctx = canvas.getContext('2d');
-//    photo = document.getElementById('photo');
-//    var localMediaStream = null;
-//    canvas.width = 640;
-//    canvas.height = 480;
-//    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
-//
-//    function sendSnapshot() {
-//      if (!localMediaStream) {
-//        return;
-//      }
-//
-//      ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 640, 480);
-//
-//      let dataURL = canvas.toDataURL('image/jpeg');
-////      socket.emit('input image', dataURL);
-////
-////      socket.emit('output image')
-//
-////      var img = new Image();
-////      socket.on('out-image-event',function(data){
-////          img.src = dataURL//data.image_data
-////          photo.setAttribute('src', data.image_data);
-////      });
-//    }
-//
-//    socket.on('connect', function() {
-//      console.log('Connected!');
-//    });
-//
-//    var constraints = {
-//      video: {
-//        width: { min: 640 },
-//        height: { min: 480 }
-//      }
-//    };
-//
-//    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-//      video.srcObject = stream;
-//      localMediaStream = stream;
-//
-//      setInterval(function () {
-//        sendSnapshot();
-//      }, 250);
-//    }).catch(function(error) {
-//      console.log(error);
-//    });
-//});
-
 $(document).on('click', '#maybe_start_quiz', function() {
     var myModal = new bootstrap.Modal(document.getElementById('question_modal'));
     myModal.show();
@@ -59,6 +6,10 @@ $(document).on('click', '#maybe_start_quiz', function() {
 $(document).on('click', '#get_info_button', function() {
     var myModal = new bootstrap.Modal(document.getElementById('get_info'));
     myModal.show();
+});
+
+$(document).on('click', '#work_with_images', function() {
+    $('#upload_image').removeAttr('hidden');
 });
 
 $(document).on('click', '#start_question_game', function() {
@@ -105,6 +56,24 @@ $(document).on('click', '#start_question_game', function() {
         });
     });
 });
+
+$(document).on('click', '#submit_file', function(event) {
+    event.preventDefault();
+    var input = $('#input_file').get(0).files[0];
+    var fd = new FormData();
+    fd.append( 'file', input);
+
+    $.ajax({
+      url: '/uploader',
+      data: fd,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+      success: function(data){
+        alert(data);
+      }
+    });
+})
 
 function askQuestion(questionContent) {
     $('.question_container').prop('hidden', false);

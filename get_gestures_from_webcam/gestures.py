@@ -63,8 +63,8 @@ class GestureRecognition(object):
             gest.has_gesture_time.append(datetime.now())
             gest.has_gesture_name.append(self.gesture)
             self.user.makes_gesture.append(gest)
-            if self.context != "none":
-                self.owl_utilities.get_contexted_rule(self.context, self.gesture, self.owl_context, gest)
+            #if self.context != "none":
+                #self.owl_utilities.get_contexted_rule(self.context, self.gesture, self.owl_context)
         return gest
 
     def set_context(self, given_context):
@@ -77,6 +77,9 @@ class GestureRecognition(object):
             self.owl_context = owl.Image()
         elif self.context == "MarkGame":
             self.owl_context = owl.MarkGame()
+
+    def create_rule_instance(self, gesture):
+        self.owl_utilities.get_contexted_rule(self.context, gesture, self.owl_context)
 
     def get_owl_utilities(self):
         return self.owl_utilities

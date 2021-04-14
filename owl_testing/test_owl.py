@@ -77,11 +77,12 @@ with fiiGezr:
         domain = [Rule]
         range = [str]
 
+    class includes_rule(ObjectProperty):
+        domain = [Context]
+        range = [Rule]
+
     class has_context(ObjectProperty):
         domain = [Rule]
         range = [Context]
+        inverse_property = includes_rule
 
-    # class includes_rule(ObjectProperty):
-    #     domain = [Context]
-    #     range = [Rule]
-    #     inverse_property = has_context

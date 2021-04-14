@@ -2,6 +2,7 @@
 # python server.py
 
 import logging
+import os
 from camera import Camera
 from flask_socketio import SocketIO, emit
 from engineio.payload import Payload
@@ -11,6 +12,7 @@ from flask import Flask
 from flask import Response
 from flask import render_template
 from flask import request, session, send_file
+from werkzeug.utils import secure_filename
 import json
 from io import BytesIO
 from datetime import datetime
@@ -23,6 +25,7 @@ app = Flask(__name__)
 app.logger.addHandler(logging.StreamHandler(stdout))
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
+app.config['UPLOAD_FOLDER'] = '/home/oanalavinia/Documents/Master/WADe/Disertatie/HandGestureAnalyser/server/static/files'
 Payload.max_decode_packets = 500
 socketio = SocketIO(app)
 camera = Camera()
@@ -113,6 +116,15 @@ def questions():
 #     gestures.save_data()
 #     close_camera = qr.check_close_camera(datetime.now())
 #     return json.dumps({'closeCamera': close_camera})
+
+@app.route('/uploader', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        # f.save(secure_filename(f.filename))
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return 'file uploaded successfully'
 
 
 @app.route('/do_close_camera', methods=['POST'])

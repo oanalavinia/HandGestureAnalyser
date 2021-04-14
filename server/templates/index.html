@@ -24,6 +24,9 @@
               <a class="nav-link" id="maybe_start_quiz" aria-current="page" href="#" aria-label="Start a quiz game">Quiz</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="work_with_images" aria-current="page" href="#" aria-label="Work with images">Images</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/statistics" >Statistics</a>
             </li>
             <li class="nav-item">
@@ -34,7 +37,7 @@
       </div>
     </nav>
 
-    <div class="test">
+    <div class="camera">
       <div>
         <div class="d-flex justify-content-center mb-3">
             <div class="container">
@@ -47,7 +50,7 @@
                 </div>
               </div>
             </div>
-            <div class="control-panel"></div>
+            <div class="control-panel" hidden></div>
             <div id="current_gesture"></div>
         </div>
       </div>
@@ -56,6 +59,16 @@
           <div class="card-header">Answer in 10 seconds</div>
           <div class="card-body">
             <h5 class="card-title" id="question_content">Danger card title</h5>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mb-3">
+        <div id="upload_image" class="text-white mb-3" style="max-width: 18rem;" hidden>
+          <div>
+            <form action="/uploader" method="POST" enctype="multipart/form-data" id="file_form">
+               <input type="file" name="file" id="input_file"/>
+               <input type="submit" id="submit_file"/>
+            </form>
           </div>
         </div>
       </div>
