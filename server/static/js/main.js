@@ -10,6 +10,12 @@ $(document).on('click', '#get_info_button', function() {
 
 $(document).on('click', '#work_with_images', function() {
     $('#upload_image').removeAttr('hidden');
+    $('.parent').css('width', $('img').width());
+
+//    $('img').parent().zoom({
+//        magnify: 1,
+//        target: $('.contain').get(0)
+//    });
 });
 
 $(document).on('click', '#start_question_game', function() {
@@ -57,6 +63,48 @@ $(document).on('click', '#start_question_game', function() {
     });
 });
 
+$(document).on('click', '#zoomIn', function(evt) {
+//    Get image info.
+    var canvas = $('#myCanvas');
+    var fileUrl = canvas.attr('fileUrl');
+    var width = canvas.attr('fileWidth');
+    var height = canvas.attr('fileHeight');
+//    Do the zoom out on the original image.
+    fetch(fileUrl).then(function(response) {
+      return response.blob();
+    }).then(function(myBlob) {
+        var ctx = canvas[0].getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var img = new Image();
+
+        img.onload = function() {
+          ctx.drawImage(img, 0, 0, width*1.5, height*1.5);
+        }
+        img.src = URL.createObjectURL(myBlob);
+    });
+});
+
+$(document).on('click', '#zoomOut', function(evt) {
+//    Get image info.
+    var canvas = $('#myCanvas');
+    var fileUrl = canvas.attr('fileUrl');
+    var width = canvas.attr('fileWidth');
+    var height = canvas.attr('fileHeight');
+//    Do the zoom out on the original image.
+    fetch(fileUrl).then(function(response) {
+      return response.blob();
+    }).then(function(myBlob) {
+        var ctx = canvas[0].getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var img = new Image();
+
+        img.onload = function() {
+          ctx.drawImage(img, 0, 0, width*0.5, height*0.5);
+        }
+        img.src = URL.createObjectURL(myBlob);
+    });
+});
+
 $(document).on('click', '#submit_file', function(event) {
     event.preventDefault();
     var input = $('#input_file').get(0).files[0];
@@ -69,11 +117,34 @@ $(document).on('click', '#submit_file', function(event) {
       processData: false,
       contentType: false,
       type: 'POST',
-      success: function(data){
-        alert(data);
+      success: function(data) {
+        var fileUrl ='/static/files/' + data.fileName;
+        $('#uploaded_image').attr('src', fileUrl);
+
+        fetch(fileUrl).then(function(response) {
+          return response.blob();
+        }).then(function(myBlob) {
+            var canvas = $('#myCanvas');
+            canvas.attr('width', data.width);
+            canvas.attr('height', data.height);
+            canvas.attr('fileUrl', fileUrl);
+            canvas.attr('fileWidth', data.width);
+            canvas.attr('fileHeight', data.height);
+            var ctx = canvas[0].getContext('2d');
+            var img = new Image();
+
+            img.onload = function() {
+              ctx.drawImage(img, 0, 0, data.width, data.height)
+            }
+            img.src = URL.createObjectURL(myBlob);
+        });
       }
     });
 })
+
+var zoomInImage = function() {
+    var image = $('#uploaded_image');
+};
 
 function askQuestion(questionContent) {
     $('.question_container').prop('hidden', false);

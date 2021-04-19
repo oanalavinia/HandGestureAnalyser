@@ -20,6 +20,7 @@ from get_gestures_from_webcam import get_gestures_from_webcam as gestures
 from scripts import questions as qs
 from scripts import queries as qr
 from scripts import statistics as st
+from PIL import Image
 
 app = Flask(__name__)
 app.logger.addHandler(logging.StreamHandler(stdout))
@@ -124,7 +125,11 @@ def upload_file():
         # f.save(secure_filename(f.filename))
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return 'file uploaded successfully'
+        image = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        width, height = image.size
+        print(width, height)
+
+        return {'fileName':file.filename, 'width':width, 'height':height}
 
 
 @app.route('/do_close_camera', methods=['POST'])
