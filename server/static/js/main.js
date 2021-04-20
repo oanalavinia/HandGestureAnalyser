@@ -1,21 +1,97 @@
-$(document).on('click', '#maybe_start_quiz', function() {
-    var myModal = new bootstrap.Modal(document.getElementById('question_modal'));
-    myModal.show();
-});
-
 $(document).on('click', '#get_info_button', function() {
     var myModal = new bootstrap.Modal(document.getElementById('get_info'));
     myModal.show();
 });
 
+//
+// Working with images.
+//
 $(document).on('click', '#work_with_images', function() {
-    $('#upload_image').removeAttr('hidden');
+    $('#images_game').removeAttr('hidden');
     $('.parent').css('width', $('img').width());
+});
 
-//    $('img').parent().zoom({
-//        magnify: 1,
-//        target: $('.contain').get(0)
-//    });
+var applyZoom = function(widthRatio, heightRatio) {
+    //    Get image info.
+    var canvas = $('#uploaded_image_canvas');
+    var fileUrl = canvas.attr('fileUrl');
+    var width = canvas.attr('fileWidth');
+    var height = canvas.attr('fileHeight');
+
+    //    Do the zoom on the original image.
+    fetch(fileUrl).then(function(response) {
+      return response.blob();
+    }).then(function(myBlob) {
+        canvas.attr('width', width);
+        canvas.attr('height', height);
+        var ctx = canvas[0].getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var img = new Image();
+
+        img.onload = function() {
+            var newWidth = width * widthRatio;
+            var newHeight = height * heightRatio;
+            ctx.drawImage(img, 0, 0, newWidth, newHeight);
+            canvas.attr('fileWidth', newWidth);
+            canvas.attr('fileHeight', newHeight);
+        }
+        img.src = URL.createObjectURL(myBlob);
+    });
+};
+
+$(document).on('click', '#zoomIn', function(evt) {
+    applyZoom(1.1, 1.1);
+});
+
+$(document).on('click', '#zoomOut', function(evt) {
+    applyZoom(0.9, 0.9)
+});
+
+// When a file is submitted upload it to the server. On success display it on canvas.
+// Also, save info about the image.
+$(document).on('click', '#submit_file', function(event) {
+    event.preventDefault();
+    var input = $('#input_file').get(0).files[0];
+    var fd = new FormData();
+    fd.append( 'file', input);
+
+    $.ajax({
+      url: '/uploader',
+      data: fd,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+      success: function(data) {
+        var fileUrl ='/static/files/' + data.fileName;
+        $('#uploaded_image').attr('src', fileUrl);
+
+        fetch(fileUrl).then(function(response) {
+          return response.blob();
+        }).then(function(myBlob) {
+            var canvas = $('#uploaded_image_canvas');
+            canvas.attr('width', data.width);
+            canvas.attr('height', data.height);
+            canvas.attr('fileUrl', fileUrl);
+            canvas.attr('fileWidth', data.width);
+            canvas.attr('fileHeight', data.height);
+            var ctx = canvas[0].getContext('2d');
+            var img = new Image();
+
+            img.onload = function() {
+              ctx.drawImage(img, 0, 0, data.width, data.height)
+            }
+            img.src = URL.createObjectURL(myBlob);
+        });
+      }
+    });
+})
+
+//
+// Quiz game.
+//
+$(document).on('click', '#maybe_start_quiz', function() {
+    var myModal = new bootstrap.Modal(document.getElementById('question_modal'));
+    myModal.show();
 });
 
 $(document).on('click', '#start_question_game', function() {
@@ -62,89 +138,6 @@ $(document).on('click', '#start_question_game', function() {
         });
     });
 });
-
-$(document).on('click', '#zoomIn', function(evt) {
-//    Get image info.
-    var canvas = $('#myCanvas');
-    var fileUrl = canvas.attr('fileUrl');
-    var width = canvas.attr('fileWidth');
-    var height = canvas.attr('fileHeight');
-//    Do the zoom out on the original image.
-    fetch(fileUrl).then(function(response) {
-      return response.blob();
-    }).then(function(myBlob) {
-        var ctx = canvas[0].getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        var img = new Image();
-
-        img.onload = function() {
-          ctx.drawImage(img, 0, 0, width*1.5, height*1.5);
-        }
-        img.src = URL.createObjectURL(myBlob);
-    });
-});
-
-$(document).on('click', '#zoomOut', function(evt) {
-//    Get image info.
-    var canvas = $('#myCanvas');
-    var fileUrl = canvas.attr('fileUrl');
-    var width = canvas.attr('fileWidth');
-    var height = canvas.attr('fileHeight');
-//    Do the zoom out on the original image.
-    fetch(fileUrl).then(function(response) {
-      return response.blob();
-    }).then(function(myBlob) {
-        var ctx = canvas[0].getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        var img = new Image();
-
-        img.onload = function() {
-          ctx.drawImage(img, 0, 0, width*0.5, height*0.5);
-        }
-        img.src = URL.createObjectURL(myBlob);
-    });
-});
-
-$(document).on('click', '#submit_file', function(event) {
-    event.preventDefault();
-    var input = $('#input_file').get(0).files[0];
-    var fd = new FormData();
-    fd.append( 'file', input);
-
-    $.ajax({
-      url: '/uploader',
-      data: fd,
-      processData: false,
-      contentType: false,
-      type: 'POST',
-      success: function(data) {
-        var fileUrl ='/static/files/' + data.fileName;
-        $('#uploaded_image').attr('src', fileUrl);
-
-        fetch(fileUrl).then(function(response) {
-          return response.blob();
-        }).then(function(myBlob) {
-            var canvas = $('#myCanvas');
-            canvas.attr('width', data.width);
-            canvas.attr('height', data.height);
-            canvas.attr('fileUrl', fileUrl);
-            canvas.attr('fileWidth', data.width);
-            canvas.attr('fileHeight', data.height);
-            var ctx = canvas[0].getContext('2d');
-            var img = new Image();
-
-            img.onload = function() {
-              ctx.drawImage(img, 0, 0, data.width, data.height)
-            }
-            img.src = URL.createObjectURL(myBlob);
-        });
-      }
-    });
-})
-
-var zoomInImage = function() {
-    var image = $('#uploaded_image');
-};
 
 function askQuestion(questionContent) {
     $('.question_container').prop('hidden', false);

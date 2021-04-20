@@ -62,20 +62,24 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center mb-3">
-        <div id="upload_image" class="text-white mb-3" style="max-width: 18rem;" hidden>
-          <div>
-            <form action="/uploader" method="POST" enctype="multipart/form-data" id="file_form">
-               <input type="file" name="file" id="input_file"/>
-               <input type="submit" id="submit_file"/>
-            </form>
-            <div id="uploaded_image_content">
-<!--              <img id="uploaded_image" src="/static/files/face.png"/>-->
-              <canvas id="myCanvas" width="500" height="500"></canvas>
-              <div id="zoomIn">zoomIn</div>
-              <div id="zoomOut">zoomOut</div>
+      <div id="images_game" hidden>
+        <div class="d-flex justify-content-center mb-3">
+          <div id="upload_image" class="text-white mb-3" style="max-width: 18rem;">
+            <div>
+              <form action="/uploader" method="POST" enctype="multipart/form-data" id="file_form">
+                 <input type="file" name="file" id="input_file"/>
+                 <input type="submit" id="submit_file"/>
+              </form>
             </div>
           </div>
+        </div>
+        <div class="d-flex justify-content-center mb-3">
+          <div id="uploaded_image_content">
+            <canvas id="uploaded_image_canvas" width="600" height="700"></canvas>
+          </div>
+  <!--        Will be deleted-->
+          <div id="zoomIn">zoomIn</div>
+          <div id="zoomOut">zoomOut</div>
         </div>
       </div>
       <div>

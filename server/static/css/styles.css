@@ -31,3 +31,9 @@ body {
     margin-right: auto;
     max-width: 100%;
 }
+
+#uploaded_image_content {
+    max-width: 600;
+    max-height: 600;
+    overflow: auto;
+}
