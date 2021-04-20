@@ -96,7 +96,8 @@ def get_gesture():
     landmarks_y = [float(y) for y in landmarks_y]
     if landmarks_x:
         gesture = camera.get_gesture_obj().get_gesture_from_landmarks(landmarks_x, landmarks_y)
-        return json.dumps({'gesture': gesture})
+        context = camera.get_gesture_obj().get_context()
+        return json.dumps({'gesture': gesture, 'context': context})
     return json.dumps({'gesture': "none"})
 
 
@@ -121,6 +122,7 @@ def questions():
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+        camera.get_gesture_obj().set_context("Image")
         file = request.files['file']
         # f.save(secure_filename(f.filename))
         filename = secure_filename(file.filename)

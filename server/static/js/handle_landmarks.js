@@ -45,10 +45,18 @@ $(document).ready(function() {
             'landmarks_x': landmarks_x,
             'landmarks_y': landmarks_y
           }).done(function(data) {
-            var gesture = JSON.parse(data).gesture;
+            var result = JSON.parse(data);
+            var gesture = result.gesture;
+            var context = result.context;
             if(gesture) {
                 console.log(gesture)
                 canvasCtx.fillText(gesture, 10, 25);
+                // If we are in the image context, it may be needed, depending on the gesture,
+                // to zoom in or zoom out on the image.
+//                context = 'Image';
+                if (context == 'Image') {
+                    maybeZoom(gesture);
+                }
             } else {
                 canvasCtx.fillText("No gesture detected", 10, 25);
             }
