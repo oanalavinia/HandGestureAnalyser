@@ -8,13 +8,16 @@ $(document).on('click', '#get_info_button', function() {
 //
 $(document).on('click', '#work_with_images', function() {
     $('#images_game').removeAttr('hidden');
-    $('.parent').css('width', $('img').width());
-    $('.output_canvas').css('position', 'absolute');
-    $('.output_canvas').css('top', '5px');
-    $('.output_canvas').css('left', '5px');
-    $('.output_canvas').css('text-align', 'left');
-    $('.output_canvas').attr('width', '500');
-    $('.output_canvas').attr('height', '350');
+//    $('.parent').css('width', $('img').width());
+});
+
+$(document).on('click', '#go_back', function(evt) {
+    $('#images_game').prop("hidden", !this.checked);
+    $('#go_back').prop("hidden", !this.checked);
+    $('#uploaded_image_content').prop("hidden", !this.checked);
+    $('.output_canvas').removeClass('fix_canvas');
+    $('.output_canvas').attr('width', '1080px');
+    $('.output_canvas').attr('height', '650px');
 });
 
 var applyZoom = function(widthRatio, heightRatio) {
@@ -68,7 +71,14 @@ $(document).on('click', '#submit_file', function(event) {
       contentType: false,
       type: 'POST',
       success: function(data) {
-        $('#uploaded_image_container').removeAttr('hidden');
+        // Set-up the display.
+        $('.output_canvas').addClass('fix_canvas');
+        $('.output_canvas').attr('width', '500');
+        $('.output_canvas').attr('height', '350');
+        $('#uploaded_image_content').removeAttr('hidden');
+        $('#go_back').removeAttr('hidden');
+
+        // Add image info.
         var fileUrl ='/static/files/' + data.fileName;
         $('#uploaded_image').attr('src', fileUrl);
 
@@ -93,12 +103,20 @@ $(document).on('click', '#submit_file', function(event) {
     });
 })
 
+var lastGestures = {};
 var maybeZoom = function(gesture) {
-    if (gesture == 'zoomIn') {
+    if (lastGestures[gesture] == undefined) {
+        lastGestures[gesture] = 1;
+    } else {
+        lastGestures[gesture]++;
+    }
+    if (gesture == 'zoomIn' && lastGestures[gesture] == 15) {
+        lastGestures = {};
         if (Date.now() % 3) {
             applyZoom(1.1, 1.1);
         }
-    } else if (gesture == 'zoomOut') {
+    } else if (gesture == 'zoomOut' && lastGestures[gesture] == 15) {
+        lastGestures = {};
         if (Date.now() % 3) {
             applyZoom(0.9, 0.9);
         }

@@ -37,3 +37,20 @@ body {
     max-height: 600;
     overflow: auto;
 }
+
+#go_back {
+    position: absolute;
+    top: 1%;
+    right: 1%;
+}
+
+.fix_canvas {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    text-align: left;
+}
+
+#uploaded_image_content {
+    margin: 5%;
+}

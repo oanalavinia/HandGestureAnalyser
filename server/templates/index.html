@@ -60,6 +60,13 @@
         </div>
       </div>
       <div id="images_game" hidden>
+        <!-- The uploaded image. -->
+        <div id="uploaded_image_container" class="d-flex justify-content-center mb-3">
+          <div id="uploaded_image_content" hidden>
+            <canvas id="uploaded_image_canvas" width="600" height="700"></canvas>
+          </div>
+        </div>
+        <!-- Form to upload the image. -->
         <div class="d-flex justify-content-center mb-3">
           <div id="upload_image" class="text-white mb-3" style="max-width: 18rem;">
             <div>
@@ -70,15 +77,8 @@
             </div>
           </div>
         </div>
-        <div id="uploaded_image_container" class="d-flex justify-content-center mb-3" hidden>
-          <div id="uploaded_image_content">
-            <canvas id="uploaded_image_canvas" width="600" height="700"></canvas>
-          </div>
-  <!--        Will be deleted-->
-<!--          <div id="zoomIn">zoomIn</div>-->
-<!--          <div id="zoomOut">zoomOut</div>-->
-        </div>
       </div>
+      <div id="go_back" class="btn btn-light" hidden>Exit image context</div>
       <div>
         <div class="d-flex justify-content-center mb-3">
           <button class='btn btn-light' id='open_camera_button' hidden>Start data recording</button>
