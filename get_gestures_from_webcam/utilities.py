@@ -25,20 +25,20 @@ def get_gestures(landmarks_x, landmarks_y, is_reversed):
         gesture = "thumbsUp"
 
     # print("thumb {} index {}".format(thumb_up, index_up))
-    if thumb_up and index_up and isZoomInDistance(landmarks_x) and not(second_up or third_up or pinky_up):
-        gesture = "zoomIn"
-
     if thumb_up and index_up and isZoomOutDistance(landmarks_x) and not(second_up or third_up or pinky_up):
         gesture = "zoomOut"
+
+    if thumb_up and index_up and isZoomInDistance(landmarks_x) and not(second_up or third_up or pinky_up):
+        gesture = "zoomIn"
 
     return gesture
 
 
-def isZoomInDistance(landmarks_x):
+def isZoomOutDistance(landmarks_x):
     return abs(landmarks_x[8] - landmarks_x[4]) < 0.17
 
 
-def isZoomOutDistance(landmarks_x):
+def isZoomInDistance(landmarks_x):
     return abs(landmarks_x[8] - landmarks_x[4]) > 0.17
 
 

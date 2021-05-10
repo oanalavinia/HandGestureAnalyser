@@ -86,3 +86,6 @@ class GestureRecognition(object):
 
     def get_context(self):
         return self.context
+
+    def get_owl_context(self):
+        return self.owl_context

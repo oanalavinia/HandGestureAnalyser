@@ -14,6 +14,7 @@ from flask import render_template
 from flask import request, session, send_file
 from werkzeug.utils import secure_filename
 import json
+import pdfplumber
 from io import BytesIO
 from datetime import datetime
 from get_gestures_from_webcam import get_gestures_from_webcam as gestures
@@ -26,7 +27,8 @@ app = Flask(__name__)
 app.logger.addHandler(logging.StreamHandler(stdout))
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
-app.config['UPLOAD_FOLDER'] = '/home/oanalavinia/Documents/Master/WADe/Disertatie/HandGestureAnalyser/server/static/files'
+app.config[
+    'UPLOAD_FOLDER'] = '/home/oanalavinia/Documents/Master/WADe/Disertatie/HandGestureAnalyser/server/static/files'
 Payload.max_decode_packets = 500
 socketio = SocketIO(app)
 camera = Camera()
@@ -122,16 +124,43 @@ def questions():
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        camera.get_gesture_obj().set_context("Image")
+        context = request.form.get('context')
         file = request.files['file']
-        # f.save(secure_filename(f.filename))
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        image = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        width, height = image.size
-        print(width, height)
+        if context == "Image":
+            camera.get_gesture_obj().set_context("Image")
+            image = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            width, height = image.size
+            print(width, height)
 
-        return {'fileName':file.filename, 'width':width, 'height':height}
+            return {'fileName': file.filename, 'width': width, 'height': height}
+        elif context == "PDFDocument":
+            camera.get_gesture_obj().set_context("PDFDocument")
+            with pdfplumber.open(os.path.join(app.config['UPLOAD_FOLDER'], filename)) as pdf:
+                page_1 = pdf.pages[0]
+                nr_pages = len(pdf.pages)
+
+            return {'fileName': file.filename, 'width': str(page_1.width), 'height': str(page_1.height),
+                    'nr_pages': str(nr_pages)}
+
+
+@app.route('/add_image_rule', methods=['POST'])
+def add_image_rule():
+    gesture = request.form.get('gesture')
+    gesture_obj = camera.get_gesture_obj()
+    gesture_obj.get_owl_utilities().get_contexted_rule("Image", gesture, gesture_obj.get_owl_context())
+
+    return {'response': "done"}
+
+
+@app.route('/add_file_rule', methods=['POST'])
+def add_file_rule():
+    gesture = request.form.get('gesture')
+    gesture_obj = camera.get_gesture_obj()
+    gesture_obj.get_owl_utilities().get_contexted_rule("PDFDocument", gesture, gesture_obj.get_owl_context())
+
+    return {'response': "done"}
 
 
 @app.route('/do_close_camera', methods=['POST'])

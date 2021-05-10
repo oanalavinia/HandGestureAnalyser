@@ -8,7 +8,6 @@ $(document).on('click', '#get_info_button', function() {
 //
 $(document).on('click', '#work_with_images', function() {
     $('#images_game').removeAttr('hidden');
-//    $('.parent').css('width', $('img').width());
 });
 
 $(document).on('click', '#go_back', function(evt) {
@@ -48,21 +47,36 @@ var applyZoom = function(widthRatio, heightRatio) {
     });
 };
 
-$(document).on('click', '#zoomIn', function(evt) {
+$(document).on('click', '#zoomOut', function(evt) {
     applyZoom(1.1, 1.1);
+    $.post({
+        url: '/add_image_rule',
+        data: {gesture: 'zoomOut'},
+        success: function(data) {
+            console.log(data);
+        }
+    });
 });
 
-$(document).on('click', '#zoomOut', function(evt) {
-    applyZoom(0.9, 0.9)
+$(document).on('click', '#zoomIn', function(evt) {
+    applyZoom(0.9, 0.9);
+    $.post({
+        url: '/add_image_rule',
+        data: {gesture: 'zoomIn'},
+        success: function(data) {
+            console.log(data);
+        }
+    });
 });
 
 // When a file is submitted upload it to the server. On success display it on canvas.
 // Also, save info about the image.
-$(document).on('click', '#submit_file', function(event) {
+$(document).on('click', '#submit_image', function(event) {
     event.preventDefault();
-    var input = $('#input_file').get(0).files[0];
+    var input = $('#input_image').get(0).files[0];
     var fd = new FormData();
     fd.append( 'file', input);
+    fd.append( 'context', "Image");
 
     $.ajax({
       url: '/uploader',
@@ -101,7 +115,7 @@ $(document).on('click', '#submit_file', function(event) {
         });
       }
     });
-})
+});
 
 var lastGestures = {};
 var maybeZoom = function(gesture) {
@@ -110,15 +124,29 @@ var maybeZoom = function(gesture) {
     } else {
         lastGestures[gesture]++;
     }
-    if (gesture == 'zoomIn' && lastGestures[gesture] == 15) {
-        lastGestures = {};
-        if (Date.now() % 3) {
-            applyZoom(1.1, 1.1);
-        }
-    } else if (gesture == 'zoomOut' && lastGestures[gesture] == 15) {
+    if (gesture == 'zoomOut' && lastGestures[gesture] == 15) {
         lastGestures = {};
         if (Date.now() % 3) {
             applyZoom(0.9, 0.9);
+            $.post({
+                url: '/add_image_rule',
+                data: {gesture: 'zoomOut'},
+                success: function(data) {
+                    console.log(data);
+                }
+            });
+        }
+    } else if (gesture == 'zoomIn' && lastGestures[gesture] == 15) {
+        lastGestures = {};
+        if (Date.now() % 3) {
+            applyZoom(1.1, 1.1);
+            $.post({
+                url: '/add_image_rule',
+                data: {gesture: 'zoomIn'},
+                success: function(data) {
+                    console.log(data);
+                }
+            });
         }
     }
 };

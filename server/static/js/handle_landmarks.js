@@ -53,9 +53,12 @@ $(document).ready(function() {
                 canvasCtx.fillText(gesture, 10, 25);
                 // If we are in the image context, it may be needed, depending on the gesture,
                 // to zoom in or zoom out on the image.
-//                context = 'Image';
+                context = 'PDFDocument';
                 if (context == 'Image') {
                     maybeZoom(gesture);
+                }
+                if (context == 'PDFDocument') {
+                    maybeChangePage(gesture);
                 }
             } else {
                 canvasCtx.fillText("No gesture detected", 10, 25);

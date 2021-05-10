@@ -44,6 +44,12 @@ body {
     right: 1%;
 }
 
+#go_back_file {
+    position: absolute;
+    top: 1%;
+    right: 1%;
+}
+
 .fix_canvas {
     position: absolute;
     top: 1%;
@@ -53,4 +59,8 @@ body {
 
 #uploaded_image_content {
     margin: 5%;
+}
+
+#uploaded_file_content {
+    overflow: auto;
 }

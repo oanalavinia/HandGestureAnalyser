@@ -1,4 +1,5 @@
 from owl_testing import test_owl as owl
+from datetime import datetime
 
 
 class Owl_utilities(object):
@@ -33,9 +34,9 @@ class Owl_utilities(object):
             return owl.Five()
         elif gesture == 'fist':
             return owl.Fist()
-        elif gesture == 'zoomIn':
-            return owl.CloseFingers()
         elif gesture == 'zoomOut':
+            return owl.CloseFingers()
+        elif gesture == 'zoomIn':
             return owl.ApartFingers()
         else:
             return None
@@ -67,3 +68,4 @@ class Owl_utilities(object):
         if rule is not None:
             owl_context.includes_rule.append(rule)
             rule.has_context.append(owl_context)
+            rule.has_rule_time(datetime.now())
