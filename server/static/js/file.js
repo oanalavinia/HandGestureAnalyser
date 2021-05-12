@@ -71,13 +71,13 @@ var maybeChangePage = function(gesture) {
         lastGestures = {};
         if (Date.now() % 3) {
             previousPage();
-//            $.post({
-//                url: '/add_image_rule',
-//                data: {gesture: 'zoomOut'},
-//                success: function(data) {
-//                    console.log(data);
-//                }
-//            });
+            $.post({
+                url: '/add_file_rule',
+                data: {gesture: 'four'},
+                success: function(data) {
+                    console.log(data);
+                }
+            });
         }
     }
 };

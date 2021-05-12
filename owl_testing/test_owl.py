@@ -31,7 +31,8 @@ with fiiGezr:
     class Approve(Rule): pass
     class Disapprove(Rule): pass
     class CloseFile(Rule): pass
-    class ChangePage(Rule): pass
+    class NextPage(Rule): pass
+    class PreviousPage(Rule): pass
     class NextImage(Rule): pass
     class ZoomIn(Rule): pass
     class ZoomOut(Rule): pass

@@ -9,6 +9,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/file.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/handle_landmarks.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/movies.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
@@ -29,6 +30,9 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" id="work_with_files" aria-current="page" href="#" aria-label="Work with files">Files</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="rec_movies" aria-current="page" href="#" aria-label="Get movies">Movies</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/statistics" >Statistics</a>
@@ -117,6 +121,48 @@
       </div>
     </div>
 
+    <!--    Modal for starting movies game-->
+    <div class="modal fade" id="start_movies_modal" tabindex="-1" aria-labelledby="movies_title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="movies_title">Movies recommendation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Choose one movie using the gesture correspondent to it's index:
+              <span class="badge bg-danger">1</span> for index 1
+              <span class="badge bg-danger">2</span> for index 2
+              <span class="badge bg-danger">3</span> for index 3
+              <span class="badge bg-danger">4</span> for index 4
+              <span class="badge bg-danger">5</span> for index 5
+            </p>
+            You will get a recommendation based on your selection
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="start_movies_game">Start</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="movies_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Choose one movie</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="movies_body"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Get recommendation</button>
+          </div>
+        </div>
+      </div>
+    </div>
 <!--    Modal for questions-->
     <div class="modal fade" id="question_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">

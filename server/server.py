@@ -4,7 +4,7 @@
 import logging
 import os
 from camera import Camera
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 from engineio.payload import Payload
 
 from sys import stdout
@@ -19,8 +19,8 @@ from io import BytesIO
 from datetime import datetime
 from get_gestures_from_webcam import get_gestures_from_webcam as gestures
 from scripts import questions as qs
-from scripts import queries as qr
 from scripts import statistics as st
+from scripts.recommendation import recommendation as rc
 from PIL import Image
 
 app = Flask(__name__)
@@ -113,6 +113,13 @@ def questions():
         # gestures.save_data()
         user_answers = quiz.get_correct_answers(request.form.getlist('answersTime[]'))
         return json.dumps({'status': 'OK', 'results': user_answers})
+
+
+@app.route("/movies", methods=['GET', 'POST'])
+def movies():
+    if request.method == 'GET':
+        camera.get_gesture_obj().set_context("Marks")
+        return json.dumps({'movies': rc.get_random_movies()})
 
 
 # @app.route('/check_wave')

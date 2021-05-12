@@ -7,8 +7,6 @@ class Owl_utilities(object):
         self.to_process = []
 
     def save_data(self):
-        # global record
-        # if record is not None and record is True:
         print("saving data..")
         with open("../rdf_data/test.xml", 'wb') as f:
             owl.fiiGezr.save(file=f, format="rdfxml")
@@ -52,7 +50,9 @@ class Owl_utilities(object):
         elif context == "PDFDocument" and gesture == "wave":
             rule = owl.CloseFile()
         elif context == "PDFDocument" and gesture == "five":
-            rule = owl.ChangePage()
+            rule = owl.NextPage()
+        elif context == "PDFDocument" and gesture == "four":
+            rule = owl.PreviousPage()
         elif context == "Image" and gesture == "thumbsDown":
             rule = owl.Disapprove()
         elif context == "Image" and gesture == "five":
@@ -66,6 +66,7 @@ class Owl_utilities(object):
             rule = owl.ZoomOut()
 
         if rule is not None:
+            # The inverse has_context is automatically inferred from rule.
             owl_context.includes_rule.append(rule)
-            rule.has_context.append(owl_context)
-            rule.has_rule_time(datetime.now())
+            # rule.has_context.append(owl_context)
+            rule.has_rule_time.append(datetime.now())
