@@ -98,3 +98,4 @@ __pycache__/
 # End of https://www.toptal.com/developers/gitignore/api/pycharm+all
 owl_testing/__pycache__/test_owl.cpython-38.pyc
 server/__pycache__/camera.cpython-38.pyc
+server/static/files/*

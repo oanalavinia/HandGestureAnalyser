@@ -115,10 +115,17 @@ def questions():
         return json.dumps({'status': 'OK', 'results': user_answers})
 
 
-@app.route("/movies", methods=['GET', 'POST'])
-def movies():
+@app.route("/random_movies", methods=['GET'])
+def random_movies():
     if request.method == 'GET':
         camera.get_gesture_obj().set_context("Marks")
+        return json.dumps({'movies': rc.get_random_movies()})
+
+
+@app.route("/rec_movies", methods=['GET'])
+def rec_movies():
+    if request.method == 'GET':
+        context = request.form.get('movieTime')
         return json.dumps({'movies': rc.get_random_movies()})
 
 

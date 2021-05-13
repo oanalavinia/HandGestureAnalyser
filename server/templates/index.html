@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>FiiGezr</title>
+    <title>Gesture analyser</title>
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <!-- JavaScript Bundle with Popper -->
@@ -32,7 +32,7 @@
               <a class="nav-link" id="work_with_files" aria-current="page" href="#" aria-label="Work with files">Files</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="rec_movies" aria-current="page" href="#" aria-label="Get movies">Movies</a>
+              <a class="nav-link" id="work_with_movies" aria-current="page" href="#" aria-label="Get movies">Movies</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/statistics" >Statistics</a>
@@ -119,10 +119,26 @@
           <button class='btn btn-light' id='open_camera_button' hidden>Start data recording</button>
         </div>
       </div>
+
+      <!-- Movies -->
+      <div class="d-flex justify-content-center mb-3">
+        <div class="card w-50"  id="given_movies" hidden>
+          <div class="card-body">
+            <h5 class="card-title">Choose one movie</h5>
+            <div class="card-body">
+              <ol id="random_movies_container">
+
+              </ol>
+            </div>
+            <button type="button" class="btn btn-secondary" id="other_movies">Get other movies</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!--    Modal for starting movies game-->
-    <div class="modal fade" id="start_movies_modal" tabindex="-1" aria-labelledby="movies_title" aria-hidden="true">
+    <div class="modal fade" id="info_movies" tabindex="-1" aria-labelledby="movies_title" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -131,38 +147,40 @@
           </div>
           <div class="modal-body">
             <p>Choose one movie using the gesture correspondent to it's index:
-              <span class="badge bg-danger">1</span> for index 1
-              <span class="badge bg-danger">2</span> for index 2
-              <span class="badge bg-danger">3</span> for index 3
-              <span class="badge bg-danger">4</span> for index 4
+              <span class="badge bg-danger">1</span> for index 1 </br>
+              <span class="badge bg-danger">2</span> for index 2 </br>
+              <span class="badge bg-danger">3</span> for index 3 </br>
+              <span class="badge bg-danger">4</span> for index 4 </br>
               <span class="badge bg-danger">5</span> for index 5
             </p>
             You will get a recommendation based on your selection
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="start_movies_game">Start</button>
+            <button type="button" class="btn btn-primary" id="get_movies" data-bs-dismiss="modal">Start</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="modal fade" id="movies_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!--  Modal for the resulted recommendation  -->
+    <div class="modal fade" id="result_movies" tabindex="-1" aria-labelledby="movies_title" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Choose one movie</h5>
+            <h5 class="modal-title">Your recommendation</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div id="movies_body"></div>
+            <ol id="result_movies_container"></ol>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Get recommendation</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
+
 <!--    Modal for questions-->
     <div class="modal fade" id="question_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">

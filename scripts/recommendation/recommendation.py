@@ -37,16 +37,20 @@ def get_recommendation_ids(movie_name):
     return rec_movies
 
 
-def get_movie_name_by_id(database_movie_id):
+def get_movie_name_by_database_id(database_movie_id):
     movie_id = dataset.iloc[database_movie_id]['movieId']
     movie_line = movies[movies['movieId'] == movie_id]
     return movie_line['title'].values[0]
 
 
+def get_movie_name_by_movie_id(movie_id):
+    return movies[movies['movieId'] == movie_id]['title'].values[0]
+
+
 def get_recommendation_titles(rec_movies):
     movies = []
     for movie in rec_movies:
-        movie_title = get_movie_name_by_id(movie[0])
+        movie_title = get_movie_name_by_database_id(movie[0])
         movies.append(movie_title)
 
     return movies
@@ -59,14 +63,13 @@ def get_recommendation(movie_name):
 
 def get_random_movies():
     random_movies = []
-    max_length = movies.shape[0]
+    movie_ids = dataset['movieId'].tolist()
     while len(random_movies) != 5:
-        nr = random.randint(0, max_length)
+        nr = random.choice(movie_ids)
         if nr not in random_movies:
-            random_movies.append(get_movie_name_by_id(nr))
+            random_movies.append(get_movie_name_by_movie_id(nr))
 
     return random_movies
-
 
 # print(get_recommendation('Iron Man'))
 #
