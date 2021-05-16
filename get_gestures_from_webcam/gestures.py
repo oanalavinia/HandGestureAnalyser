@@ -60,8 +60,8 @@ class GestureRecognition(object):
     def create_rdf_instances(self):
         gest = self.owl_utilities.get_gesture_instance(self.gesture)
         if gest:
-            gest.has_gesture_time.append(datetime.now())
-            gest.has_gesture_name.append(self.gesture)
+            gest.has_gesture_time = datetime.now()
+            gest.has_gesture_name = self.gesture
             self.user.makes_gesture.append(gest)
             #if self.context != "none":
                 #self.owl_utilities.get_contexted_rule(self.context, self.gesture, self.owl_context)

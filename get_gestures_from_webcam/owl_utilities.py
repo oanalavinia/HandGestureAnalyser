@@ -13,29 +13,29 @@ class Owl_utilities(object):
 
     def get_gesture_instance(self, gesture):
         if gesture == 'wave':
-            return owl.Wave()
+            return owl.WaveDetected()
         elif gesture == 'thumbsUp':
-            return owl.ThumbsUp()
+            return owl.ThumbsUpDetected()
         elif gesture == 'thumbsDown':
-            return owl.ThumbsDown()
+            return owl.ThumbsDownDetected()
         elif gesture == 'one':
-            return owl.One()
+            return owl.OneFingerDetected()
         elif gesture == 'two':
-            return owl.Two()
+            return owl.TwoFingersDetected()
         # elif gesture == 'peace':
         #     return owl.Peace()
         elif gesture == 'three':
-            return owl.Three()
+            return owl.ThreeFingersDetected()
         elif gesture == 'four':
-            return owl.Four()
+            return owl.FourFingersDetected()
         elif gesture == 'five':
-            return owl.Five()
+            return owl.FiveFingersDetected()
         elif gesture == 'fist':
-            return owl.Fist()
+            return owl.FistDetected()
         elif gesture == 'zoomOut':
-            return owl.CloseFingers()
+            return owl.CloseFingersDetected()
         elif gesture == 'zoomIn':
-            return owl.ApartFingers()
+            return owl.ApartFingersDetected()
         else:
             return None
 
@@ -63,10 +63,23 @@ class Owl_utilities(object):
             rule = owl.ZoomOut()
         elif context == "MarkGame" and (
                 gesture == "one" or gesture == "two" or gesture == "three" or gesture == "four" or gesture == "five"):
-            rule = owl.ZoomOut()
+            rule = self.get_mark_rule(gesture)
 
         if rule is not None:
             # The inverse has_context is automatically inferred from rule.
             owl_context.includes_rule.append(rule)
             # rule.has_context.append(owl_context)
-            rule.has_rule_time.append(datetime.now())
+            rule.has_rule_time = datetime.now()
+            self.save_data()
+
+    def get_mark_rule(self, gesture):
+        if gesture == "one":
+            return owl.ChooseFirst()
+        elif gesture == "two":
+            return owl.ChooseSecond()
+        elif gesture == "three":
+            return owl.ChooseThird()
+        elif gesture == "four":
+            return owl.ChooseFourth()
+        elif gesture == "five":
+            return owl.ChooseFifth()

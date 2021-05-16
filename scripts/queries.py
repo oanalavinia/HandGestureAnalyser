@@ -54,7 +54,13 @@ class Queries(object):
                   ?x gezr:has_gesture_time ?data .
                   ?x gezr:has_gesture_name ?name .
                   FILTER (?data > '""" + movie_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
-                  && ?data < '""" + end_movie_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime)
+                  && ?data < '""" + end_movie_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
+                  && 
+                  (regex(?name, "one", "i") ||
+                  regex(?name, "two", "i") ||
+                  regex(?name, "three", "i") ||
+                  regex(?name, "four", "i") ||
+                  regex(?name, "five", "i")))
                }"""
         qres = g.query(query_str)
 

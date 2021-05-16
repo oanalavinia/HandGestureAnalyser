@@ -119,7 +119,7 @@ def questions():
 @app.route("/random_movies", methods=['GET'])
 def random_movies():
     if request.method == 'GET':
-        camera.get_gesture_obj().set_context("Marks")
+        camera.get_gesture_obj().set_context("MarkGame")
         result = movie.get_rec_system().get_random_movies()
         return json.dumps({'movies': result[0], 'movie_ids': result[1]})
 
@@ -132,14 +132,14 @@ def rec_movies():
         movie_ids = request.form.getlist('movie_ids[]')
         # Get gesture based on startTime and endTime.
         gesture = movie.queries_handler.query_movies(start_time, end_time)
-        # gesture = "paper"
         # Get recommendation.
         rec_movies = movie.get_recommendations(gesture, movie_ids)
         print(rec_movies)
+        # Add rule to owl.
+        gesture_obj = camera.get_gesture_obj()
+        gesture_obj.get_owl_utilities().get_contexted_rule("MarkGame", gesture, gesture_obj.get_owl_context())
 
         return json.dumps({'status': 'OK', 'movies': rec_movies})
-        # Add rule to owl.
-        # return json.dumps({'movies': rc.get_random_movies()})
 
 
 # @app.route('/check_wave')
