@@ -168,13 +168,16 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Your recommendation</h5>
+            <h5 class="modal-title">Top recommendations</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <ol id="result_movies_container"></ol>
+            <ol id="result_movies_container" list-group list-group-flush>
+              <li class="list-group-item">You didn't selected any movie. Do you want to try again?</li>
+            </ol>
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="try_again" hidden>Try again</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>

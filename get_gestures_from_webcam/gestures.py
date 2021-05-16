@@ -49,11 +49,11 @@ class GestureRecognition(object):
         self.create_rdf_instances()
 
         # We save data every 10 seconds.
-        if (datetime.now() - self.recording_start_time).seconds > 10:
-            self.recording_start_time = datetime.now()
-            self.owl_utilities.save_data()
-            # last_10_gesture = qrs.query_last_10s_gestures(datetime.now())
-            # save_data()
+        # if (datetime.now() - self.recording_start_time).seconds > 10:
+        #     self.recording_start_time = datetime.now()
+        #     self.owl_utilities.save_data()
+        #     # last_10_gesture = qrs.query_last_10s_gestures(datetime.now())
+        #     # save_data()
 
         return self.gesture
 

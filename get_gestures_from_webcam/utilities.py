@@ -25,7 +25,8 @@ def get_gestures(landmarks_x, landmarks_y, is_reversed):
         gesture = "thumbsUp"
 
     # print("thumb {} index {}".format(thumb_up, index_up))
-    if thumb_up and index_up and isZoomOutDistance(landmarks_x) and not(second_up or third_up or pinky_up):
+    ti = landmarks_x[4] - landmarks_x[8]
+    if thumb_up and index_up and isZoomOutDistance(landmarks_x) and not(second_up or third_up or pinky_up) and ti < 0:
         gesture = "zoomOut"
 
     if thumb_up and index_up and isZoomInDistance(landmarks_x) and not(second_up or third_up or pinky_up):
@@ -129,7 +130,7 @@ def check_count_gestures(thumb_up, index_up, second_up, third_up, pinky_up):
         gesture = "two"
 
     if index_up and second_up and not (thumb_up or third_up or pinky_up):
-        gesture = "peace"
+        gesture = "two"
 
     if sum([thumb_up, index_up, second_up, third_up, pinky_up]) == 3:
         gesture = "three"

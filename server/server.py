@@ -20,7 +20,7 @@ from datetime import datetime
 from get_gestures_from_webcam import get_gestures_from_webcam as gestures
 from scripts import questions as qs
 from scripts import statistics as st
-from scripts.recommendation import recommendation as rc
+from scripts import movies as mv
 from PIL import Image
 
 app = Flask(__name__)
@@ -33,6 +33,7 @@ Payload.max_decode_packets = 500
 socketio = SocketIO(app)
 camera = Camera()
 quiz = qs.QuizGame(camera.get_gesture_obj())
+movie = mv.Movie(camera.get_gesture_obj())
 
 app.secret_key = '5b7373780e35434090c87dc4c9d15a2d'
 
@@ -119,14 +120,26 @@ def questions():
 def random_movies():
     if request.method == 'GET':
         camera.get_gesture_obj().set_context("Marks")
-        return json.dumps({'movies': rc.get_random_movies()})
+        result = movie.get_rec_system().get_random_movies()
+        return json.dumps({'movies': result[0], 'movie_ids': result[1]})
 
 
-@app.route("/rec_movies", methods=['GET'])
+@app.route("/rec_movies", methods=['POST'])
 def rec_movies():
-    if request.method == 'GET':
-        context = request.form.get('movieTime')
-        return json.dumps({'movies': rc.get_random_movies()})
+    if request.method == 'POST':
+        start_time = datetime.fromtimestamp(int(request.form.get('startTime')) / 1000.0)
+        end_time = datetime.fromtimestamp(int(request.form.get('endTime')) / 1000.0)
+        movie_ids = request.form.getlist('movie_ids[]')
+        # Get gesture based on startTime and endTime.
+        gesture = movie.queries_handler.query_movies(start_time, end_time)
+        # gesture = "paper"
+        # Get recommendation.
+        rec_movies = movie.get_recommendations(gesture, movie_ids)
+        print(rec_movies)
+
+        return json.dumps({'status': 'OK', 'movies': rec_movies})
+        # Add rule to owl.
+        # return json.dumps({'movies': rc.get_random_movies()})
 
 
 # @app.route('/check_wave')

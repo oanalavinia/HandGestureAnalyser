@@ -25,11 +25,21 @@ dataset.reset_index(inplace=True)
 movies_model = joblib.load(model_path)
 
 
-def get_recommendation_ids(movie_name):
+def get_recommendation_ids_on_name(movie_name):
     n_movies_to_recommend = 3
     movie_list = movies[movies['title'].str.contains(movie_name)]
     movie_idx = movie_list.iloc[0]['movieId']
     movie_idx = dataset[dataset['movieId'] == movie_idx].index[0]
+    neigh_dist, neigh_ind = movies_model.kneighbors(csr_data[movie_idx], n_neighbors=n_movies_to_recommend + 1)
+    rec_movies = sorted(list(zip(neigh_ind.squeeze().tolist(), neigh_dist.squeeze().tolist())), key=lambda x: x[1])[
+                 :0:-1]
+
+    return rec_movies
+
+
+def get_recommendation_ids_on_id(movie_id):
+    n_movies_to_recommend = 3
+    movie_idx = dataset[dataset['movieId'] == movie_id].index[0]
     neigh_dist, neigh_ind = movies_model.kneighbors(csr_data[movie_idx], n_neighbors=n_movies_to_recommend + 1)
     rec_movies = sorted(list(zip(neigh_ind.squeeze().tolist(), neigh_dist.squeeze().tolist())), key=lambda x: x[1])[
                  :0:-1]
@@ -63,13 +73,15 @@ def get_recommendation(movie_name):
 
 def get_random_movies():
     random_movies = []
+    random_ids = []
     movie_ids = dataset['movieId'].tolist()
     while len(random_movies) != 5:
         nr = random.choice(movie_ids)
         if nr not in random_movies:
             random_movies.append(get_movie_name_by_movie_id(nr))
+            random_ids.append(nr)
 
-    return random_movies
+    return (random_movies, random_ids)
 
 # print(get_recommendation('Iron Man'))
 #

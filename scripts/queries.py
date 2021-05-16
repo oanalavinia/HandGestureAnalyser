@@ -39,6 +39,34 @@ class Queries(object):
         else:
             return []
 
+    def query_movies(self, movie_time, end_movie_time):
+        g = rdflib.Graph()
+        self.owl_utilities.save_data()
+        f = open("../rdf_data/test.xml", "r")
+        g.parse(f, format="application/rdf+xml")
+        f.close()
+
+        query_str = """
+               PREFIX gezr: <http://fiigezr.org/fiiGezr.owl#>
+               SELECT ?x ?name
+               WHERE {
+                  ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
+                  ?x gezr:has_gesture_time ?data .
+                  ?x gezr:has_gesture_name ?name .
+                  FILTER (?data > '""" + movie_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
+                  && ?data < '""" + end_movie_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime)
+               }"""
+        qres = g.query(query_str)
+
+        gestures = []
+        for row in qres:
+            gestures.append(str(row.asdict()['name']))
+
+        if len(gestures) > 0:
+            return utilities.most_frequent(gestures)
+        else:
+            return []
+
     def queryGesturesInSession(self, start_time):
         g = rdflib.Graph()
         f = open("../rdf_data/test.xml", "r")
