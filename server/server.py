@@ -141,13 +141,6 @@ def rec_movies():
 
         return json.dumps({'status': 'OK', 'movies': rec_movies})
 
-
-# @app.route('/check_wave')
-# def check_wave():
-#     gestures.save_data()
-#     close_camera = qr.check_close_camera(datetime.now())
-#     return json.dumps({'closeCamera': close_camera})
-
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
