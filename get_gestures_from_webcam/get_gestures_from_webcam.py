@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 from datetime import datetime
 from get_gestures_from_webcam import utilities as ut
-from owl_testing import test_owl as owl
+from owl import ontology_manipulations as owl
 from scripts import queries as qrs
 
 def get_gestures(cap):

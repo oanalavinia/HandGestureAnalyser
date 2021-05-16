@@ -1,6 +1,6 @@
 from get_gestures_from_webcam import utilities as ut
 from get_gestures_from_webcam import owl_utilities, wave_gesture
-from owl_testing import test_owl as owl
+from owl import ontology_manipulations as owl
 from datetime import datetime
 
 

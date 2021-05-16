@@ -1,4 +1,4 @@
-from owl_testing import test_owl as owl
+from owl import ontology_manipulations as owl
 from datetime import datetime
 
 

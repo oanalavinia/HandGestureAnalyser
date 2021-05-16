@@ -2,7 +2,7 @@ import rdflib
 import datetime
 from get_gestures_from_webcam import utilities
 from get_gestures_from_webcam import get_gestures_from_webcam as gst_module
-from owl_testing import test_owl as owl
+from owl import ontology_manipulations as owl
 import webbrowser
 
 
