@@ -15,9 +15,9 @@ class Owl_utilities(object):
         if gesture == 'wave':
             return owl.WaveDetected()
         elif gesture == 'thumbsUp':
-            return owl.ThumbsUpDetected()
+            return owl.ThumbsUp()
         elif gesture == 'thumbsDown':
-            return owl.ThumbsDownDetected()
+            return owl.ThumbsDown()
         elif gesture == 'one':
             return owl.OneFingerDetected()
         elif gesture == 'two':

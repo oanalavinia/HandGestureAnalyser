@@ -71,21 +71,23 @@
 
 <owl:Class rdf:about="#User">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A person that uses the ontology.</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#Gesture">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A hand gesture made by an user to a webcam. Example includes TwoFingersDetected or ThumbsUp</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#WaveDetected">
   <rdfs:subClassOf rdf:resource="#Gesture"/>
 </owl:Class>
 
-<owl:Class rdf:about="#ThumbsUpDetected">
+<owl:Class rdf:about="#ThumbsUp">
   <rdfs:subClassOf rdf:resource="#Gesture"/>
 </owl:Class>
 
-<owl:Class rdf:about="#ThumbsDownDetected">
+<owl:Class rdf:about="#ThumbsDown">
   <rdfs:subClassOf rdf:resource="#Gesture"/>
 </owl:Class>
 
@@ -123,14 +125,17 @@
 
 <owl:Class rdf:about="#Rule">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">An action resulted from a made gesture, in a specific context, since the same gesture could havedifferent consequences. For example, ThumbsUp could either mean approve or changing the page in a direction.</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#Context">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The context in which a rule was created.</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#QuizGame">
   <rdfs:subClassOf rdf:resource="#Context"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A trivia game where the user can say if a statement is true or false through ThumbsUp or ThumbsDown</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#NoGame">
@@ -139,14 +144,17 @@
 
 <owl:Class rdf:about="#PDFDocument">
   <rdfs:subClassOf rdf:resource="#Context"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">It refers to the situation where, through ThumbsUp or ThumbsDown, the user can change the page of a PDF document</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#Image">
   <rdfs:subClassOf rdf:resource="#Context"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">It describes the circumstances where an image can be zoomed in or zoomed out by bringing fingers together or apart</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#MarkGame">
   <rdfs:subClassOf rdf:resource="#Context"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A game where the user can select a favorite movie from a list of 5 by using counting gestures, like TwoFingersDetected.</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#ImageRule">
@@ -160,15 +168,16 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#is_caused_by"/>
-      <owl:someValuesFrom rdf:resource="#ApartFingersDetected"/>
+      <owl:someValuesFrom rdf:resource="#CloseFingersDetected"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#is_caused_by"/>
-      <owl:someValuesFrom rdf:resource="#CloseFingersDetected"/>
+      <owl:someValuesFrom rdf:resource="#ApartFingersDetected"/>
     </owl:Restriction>
   </rdfs:subClassOf>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A rule applied in an Image context</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#ZoomIn">
@@ -202,15 +211,16 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#is_caused_by"/>
-      <owl:someValuesFrom rdf:resource="#ThumbsUpDetected"/>
+      <owl:someValuesFrom rdf:resource="#ThumbsUp"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#is_caused_by"/>
-      <owl:someValuesFrom rdf:resource="#ThumbsDownDetected"/>
+      <owl:someValuesFrom rdf:resource="#ThumbsDown"/>
     </owl:Restriction>
   </rdfs:subClassOf>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A rule applied in a PDFDocument context</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#NextPage">
@@ -218,7 +228,7 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#is_caused_by"/>
-      <owl:someValuesFrom rdf:resource="#ThumbsUpDetected"/>
+      <owl:someValuesFrom rdf:resource="#ThumbsUp"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
@@ -228,7 +238,7 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#is_caused_by"/>
-      <owl:someValuesFrom rdf:resource="#ThumbsUpDetected"/>
+      <owl:someValuesFrom rdf:resource="#ThumbsUp"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
@@ -239,6 +249,18 @@
     <owl:Restriction>
       <owl:onProperty rdf:resource="#has_context"/>
       <owl:someValuesFrom rdf:resource="#MarkGame"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#is_caused_by"/>
+      <owl:someValuesFrom rdf:resource="#ThreeFingersDetected"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#is_caused_by"/>
+      <owl:someValuesFrom rdf:resource="#FiveFingersDetected"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -259,18 +281,7 @@
       <owl:someValuesFrom rdf:resource="#OneFingerDetected"/>
     </owl:Restriction>
   </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#is_caused_by"/>
-      <owl:someValuesFrom rdf:resource="#ThreeFingersDetected"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#is_caused_by"/>
-      <owl:someValuesFrom rdf:resource="#FiveFingersDetected"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A rule applied in a MarkGame context</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#Mark">
