@@ -23,8 +23,8 @@ class Queries(object):
                SELECT ?x ?name
                WHERE {
                   ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
-                  ?x gezr:has_gesture_time ?data .
-                  ?x gezr:has_gesture_name ?name .
+                  ?x gezr:hasGestureTime ?data .
+                  ?x gezr:hasGestureName ?name .
                   FILTER (?data > '""" + answer_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
                   && ?data < '""" + end_answer_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime)
                }"""
@@ -51,8 +51,8 @@ class Queries(object):
                SELECT ?x ?name
                WHERE {
                   ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
-                  ?x gezr:has_gesture_time ?data .
-                  ?x gezr:has_gesture_name ?name .
+                  ?x gezr:hasGestureTime ?data .
+                  ?x gezr:hasGestureName ?name .
                   FILTER (?data > '""" + movie_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
                   && ?data < '""" + end_movie_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
                   && 
@@ -83,8 +83,8 @@ class Queries(object):
                    SELECT ?x ?name
                    WHERE {
                       ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
-                      ?x gezr:has_gesture_time ?data .
-                      ?x gezr:has_gesture_name ?name .
+                      ?x gezr:hasGestureTime ?data .
+                      ?x gezr:hasGestureName ?name .
                       FILTER (?data > '""" + start_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
                       && ?data < '""" + datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime)
                    }"""
@@ -111,8 +111,8 @@ class Queries(object):
                    SELECT ?x ?name (count(distinct ?x) as ?count)
                    WHERE {
                       ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
-                      ?x gezr:has_gesture_time ?data .
-                      ?x gezr:has_gesture_name ?name .
+                      ?x gezr:hasGestureTime ?data .
+                      ?x gezr:hasGestureName ?name .
                       FILTER (?data > '""" + start_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
                       && ?data < '""" + current_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime)
                    }
@@ -140,62 +140,62 @@ class Queries(object):
 
     def create_close_camera_rule(self, g, gesture):
         camera_rule = owl.CloseCamera()
-        camera_rule.has_gesture.append(gesture)
+        camera_rule.hasGesture.append(gesture)
         print("create close_camera rule {}".format(camera_rule))
         query_str = """
                         PREFIX gezr: <http://fiigezr.org/fiiGezr.owl#>
                         CONSTRUCT {
-                          ?x gezr:causes_rule ?r
+                          ?x gezr:causesRule ?r
                         }
                         WHERE {
                           ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
                           ?r rdf:type/rdfs:subClassOf* gezr:Rule .
-                          ?x gezr:has_gesture_name ?name .
-                          ?r gezr:has_gesture ?name .
+                          ?x gezr:hasGestureName ?name .
+                          ?r gezr:hasGesture ?name .
                         }
                     """
         qres = g.query(query_str)
         for row in qres:
             # Create camera rule.
-            camera_rule.has_rule_time.append(datetime.datetime.now())
+            camera_rule.hasRuleTime.append(datetime.datetime.now())
             # print("wave '{}' prop {} rule {}".format(row[0], row[1], row[2]))
             # Get existing wave and bind it to the rule.
             # wave = owl.Wave(str(row[0])[31:])
             name = str(row[0])
             wave = owl.Wave('#' + name.split('#')[1])
             print(wave)
-            wave.causes_rule.append(camera_rule)
-            camera_rule.is_caused_by.append(wave)
+            wave.causesRule.append(camera_rule)
+            camera_rule.isCausedByGesture.append(wave)
             break
 
     def create_open_browser_rule(self, g, gesture):
         # Create browser rule.
         browser_rule = owl.OpenBrowser()
-        browser_rule.has_gesture.append(gesture)
+        browser_rule.hasGesture.append(gesture)
         print("create open_browser rule {}".format(browser_rule))
         # Query.
         query_str = """
                         PREFIX gezr: <http://fiigezr.org/fiiGezr.owl#>
                         CONSTRUCT {
-                          ?x gezr:causes_rule ?r
+                          ?x gezr:causesRule ?r
                         }
                         WHERE {
                           ?x rdf:type/rdfs:subClassOf* gezr:Gesture .
                           ?r rdf:type/rdfs:subClassOf* gezr:Rule .
-                          ?x gezr:has_gesture_name ?name .
-                          ?r gezr:has_gesture ?name .
+                          ?x gezr:hasGestureName ?name .
+                          ?r gezr:hasGesture ?name .
                         }
                     """
         qres = g.query(query_str)
         for row in qres:
-            browser_rule.has_rule_time.append(datetime.datetime.now())
+            browser_rule.hasRuleTime.append(datetime.datetime.now())
             # Get existing five and bind it to the rule.
             # five = owl.Five(str(row[0])[31:])
             name = str(row[0])
             five = owl.Five('#' + name.split('#')[1])
             print("open browser sesame {}".format(five))
-            five.causes_rule.append(browser_rule)
-            browser_rule.is_caused_by.append(five)
+            five.causesRule.append(browser_rule)
+            browser_rule.isCausedByGesture.append(five)
 
             webbrowser.open("https://google.com")
             break
@@ -213,7 +213,7 @@ class Queries(object):
                        SELECT (count(distinct ?r) as ?count)
                        WHERE {
                           ?r rdf:type/rdfs:subClassOf* gezr:Rule .
-                          ?r gezr:has_rule_time ?data .
+                          ?r gezr:hasRuleTime ?data .
                           FILTER (?data > '""" + start_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime
                           && ?data < '""" + current_time.strftime("%Y-%m-%dT%H:%M:%S.%f") + """'^^xsd:dateTime)
                        }

@@ -34,9 +34,9 @@ def to_cv2(data):
 def create_rdf_instances(gesture, user):
     gest = get_gesture_instance(gesture)
     if gest:
-        gest.has_gesture_time.append(datetime.now())
-        gest.has_gesture_name.append(gesture)
-        user.makes_gesture.append(gest)
+        gest.hasGestureTime.append(datetime.now())
+        gest.hasGestureName.append(gesture)
+        user.makesGesture.append(gest)
     return gest
 
 

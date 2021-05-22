@@ -141,6 +141,7 @@ def rec_movies():
 
         return json.dumps({'status': 'OK', 'movies': rec_movies})
 
+
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':

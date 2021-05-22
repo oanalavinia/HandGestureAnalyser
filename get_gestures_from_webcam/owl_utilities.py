@@ -66,10 +66,10 @@ class Owl_utilities(object):
             rule = self.get_mark_rule(gesture)
 
         if rule is not None:
-            # The inverse has_context is automatically inferred from rule.
-            owl_context.includes_rule.append(rule)
-            # rule.has_context.append(owl_context)
-            rule.has_rule_time = datetime.now()
+            # The inverse hasContext is automatically inferred from rule.
+            owl_context.includesRule.append(rule)
+            # rule.hasContext.append(owl_context)
+            rule.hasRuleTime = datetime.now()
             self.save_data()
 
     def get_mark_rule(self, gesture):

@@ -58,53 +58,57 @@ with fiiGezr:
     class Context(Thing): pass
 
 
-    class is_caused_by(ObjectProperty):
+    class isCausedByGesture(ObjectProperty):
         domain = [Rule]
         range = [Gesture]
-        owlready_class_property_type = ["only"]
+        class_property_type = ["only"]
 
 
-    class causes_rule(ObjectProperty):
+    class causesRule(ObjectProperty):
         domain = [Gesture]
         range = [Rule]
-        inverse_property = is_caused_by
+        inverse_property = isCausedByGesture
 
 
-    class makes_gesture(ObjectProperty):
+    class makesGesture(ObjectProperty):
         domain = [User]
         range = [Gesture]
 
 
-    class has_gesture_time(DataProperty, FunctionalProperty):
+    class hasGestureTime(DataProperty, FunctionalProperty):
         domain = [Gesture]
         range = [datetime.datetime]
 
 
-    class has_rule_time(DataProperty, FunctionalProperty):
+    class hasRuleTime(DataProperty, FunctionalProperty):
         domain = [Rule]
         range = [datetime.datetime]
 
 
-    class has_gesture_name(DataProperty, FunctionalProperty):
+    class hasGestureName(DataProperty, FunctionalProperty):
         domain = [Gesture]
         range = [str]
 
 
-    class has_gesture(DataProperty, FunctionalProperty):
+    class hasGesture(DataProperty, FunctionalProperty):
         domain = [Rule]
         range = [str]
 
 
-    class includes_rule(ObjectProperty):
+    class includesRule(ObjectProperty):
         domain = [Context]
         range = [Rule]
 
 
-    class has_context(ObjectProperty):
+    class hasContext(ObjectProperty):
         domain = [Rule]
         range = [Context]
-        inverse_property = includes_rule
-        owlready_class_property_type = ["only"]
+        inverse_property = includesRule
+        class_property_type = ["only"]
+
+
+    AllDifferent([isCausedByGesture, makesGesture, hasGestureTime, hasRuleTime, hasGestureName, hasGesture,
+                  hasContext])
 
 
     # Context
@@ -127,50 +131,50 @@ with fiiGezr:
 
     # QuizGame
     class QuizGameRule:
-        has_context = [QuizGame]
-        is_caused_by = [ThumbsUp, ThumbsDown]
+        hasContext = [QuizGame]
+        isCausedByGesture = [ThumbsUp, ThumbsDown]
 
 
     class Approve(QuizGameRule):
-        is_caused_by = [ThumbsUp]
+        isCausedByGesture = [ThumbsUp]
 
 
     class Disapprove(QuizGameRule):
-        is_caused_by = [ThumbsDown]
+        isCausedByGesture = [ThumbsDown]
 
 
     # Image
     class ImageRule(Rule):
-        has_context = [Image]
-        is_caused_by = [ApartFingersDetected, CloseFingersDetected]
+        hasContext = [Image]
+        isCausedByGesture = [ApartFingersDetected, CloseFingersDetected]
 
 
     class ZoomIn(ImageRule):
-        is_caused_by = [ApartFingersDetected]
+        isCausedByGesture = [ApartFingersDetected]
 
 
     class ZoomOut(ImageRule):
-        is_caused_by = [CloseFingersDetected]
+        isCausedByGesture = [CloseFingersDetected]
 
 
     # PDFDocument
     class PDFDocumentRule(Rule):
-        has_context = [PDFDocument]
-        is_caused_by = [ThumbsUp, ThumbsDown]
+        hasContext = [PDFDocument]
+        isCausedByGesture = [ThumbsUp, ThumbsDown]
 
 
     class NextPage(PDFDocumentRule):
-        is_caused_by = [ThumbsUp]
+        isCausedByGesture = [ThumbsUp]
 
 
     class PreviousPage(PDFDocumentRule):
-        is_caused_by = [ThumbsUp]
+        isCausedByGesture = [ThumbsUp]
 
 
     # MarkGame
     class MarkGameRule(Rule):
-        has_context = [MarkGame]
-        is_caused_by = [OneFingerDetected, TwoFingersDetected, ThreeFingersDetected, FourFingersDetected,
+        hasContext = [MarkGame]
+        isCausedByGesture = [OneFingerDetected, TwoFingersDetected, ThreeFingersDetected, FourFingersDetected,
                         FiveFingersDetected]
 
 
@@ -178,23 +182,23 @@ with fiiGezr:
 
 
     class ChooseFirst(Mark):
-        is_caused_by = [OneFingerDetected]
+        isCausedByGesture = [OneFingerDetected]
 
 
     class ChooseSecond(Mark):
-        is_caused_by = [TwoFingersDetected]
+        isCausedByGesture = [TwoFingersDetected]
 
 
     class ChooseThird(Mark):
-        is_caused_by = [ThreeFingersDetected]
+        isCausedByGesture = [ThreeFingersDetected]
 
 
     class ChooseFourth(Mark):
-        is_caused_by = [FourFingersDetected]
+        isCausedByGesture = [FourFingersDetected]
 
 
     class ChooseFifth(Mark):
-        is_caused_by = [FiveFingersDetected]
+        isCausedByGesture = [FiveFingersDetected]
 
 
     AllDisjoint([User, Gesture, Context, Rule])
@@ -214,7 +218,6 @@ with fiiGezr:
 
 
     class NextImage(ImageRule): pass
-
 
 User.comment = ["A person that uses the ontology."]
 Gesture.comment = ["A hand gesture made by an user to a webcam. Example includes TwoFingersDetected or ThumbsUp"]
