@@ -55,25 +55,25 @@ var maybeChangePage = function(gesture) {
     } else {
         lastGestures[gesture]++;
     }
-    if (gesture == 'five' && lastGestures[gesture] == 25) {
+    if (gesture == 'thumbsDown' && lastGestures[gesture] == 25) {
         lastGestures = {};
         if (Date.now() % 3) {
             nextPage();
             $.post({
                 url: '/add_file_rule',
-                data: {gesture: 'five'},
+                data: {gesture: 'thumbsDown'},
                 success: function(data) {
                     console.log(data);
                 }
             });
         }
-    } else if (gesture == 'four' && lastGestures[gesture] == 25) {
+    } else if (gesture == 'thumbsUp' && lastGestures[gesture] == 25) {
         lastGestures = {};
         if (Date.now() % 3) {
             previousPage();
             $.post({
                 url: '/add_file_rule',
-                data: {gesture: 'four'},
+                data: {gesture: 'thumbsUp'},
                 success: function(data) {
                     console.log(data);
                 }

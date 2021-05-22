@@ -133,13 +133,13 @@ def rec_movies():
         # Get gesture based on startTime and endTime.
         gesture = movie.queries_handler.query_movies(start_time, end_time)
         # Get recommendation.
-        rec_movies = movie.get_recommendations(gesture, movie_ids)
+        rec_movies, movie_name = movie.get_recommendations(gesture, movie_ids)
         print(rec_movies)
         # Add rule to owl.
         gesture_obj = camera.get_gesture_obj()
         gesture_obj.get_owl_utilities().get_contexted_rule("MarkGame", gesture, gesture_obj.get_owl_context())
 
-        return json.dumps({'status': 'OK', 'movies': rec_movies})
+        return json.dumps({'status': 'OK', 'movies': rec_movies, 'selected_movie': movie_name})
 
 
 @app.route('/uploader', methods=['GET', 'POST'])

@@ -98,8 +98,8 @@
           </div>
         </div>
 
-        <div id="next_page" class="btn btn-primary">Next</div>
-        <div id="previous_page" class="btn btn-primary">Previous</div>
+        <div id="next_page" class="btn btn-primary" hidden>Next</div>
+        <div id="previous_page" class="btn btn-primary" hidden>Previous</div>
         <!-- Form to upload the file. -->
         <div class="d-flex justify-content-center mb-3">
           <div id="upload_file" class="text-white mb-3" style="max-width: 18rem;">
@@ -168,7 +168,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Top recommendations</h5>
+            <h5 class="modal-title">Top recommendations based on <i id="selected_movie"></i></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">

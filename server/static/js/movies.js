@@ -31,6 +31,7 @@ var askAndGiveRec = function(movies, movie_ids) {
                     'movie_ids': movie_ids
                 }
             }).done(function(data) {
+                var selected_movie = JSON.parse(data).selected_movie;
                 var rec_movies = JSON.parse(data).movies;
                 console.log(rec_movies);
                 changeCameraToDefault();
@@ -40,16 +41,15 @@ var askAndGiveRec = function(movies, movie_ids) {
 
                 if (rec_movies.length > 0) {
                     $('#try_again').prop("hidden", true);
+                    $('#selected_movie').html(selected_movie);
                     $.each(rec_movies, function(idx) {
                         var el = $('<li></li>').text(this).addClass('list-group-item');
-//                        if (idx == 0) {
-//                            el.addClass('list-group-item-success');
-//                        }
 
                         container.append(el);
                     });
                 } else {
                     $('#try_again').prop("hidden", false);
+                    $('#selected_movie').html('');
 
                     var el = $('<li></li>')
                         .text("You didn't selected any movie. Do you want to try again?")

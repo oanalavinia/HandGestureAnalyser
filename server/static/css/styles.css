@@ -40,19 +40,19 @@ body {
 
 #go_back {
     position: absolute;
-    top: 1%;
+    top: 30%;
     right: 1%;
 }
 
 #go_back_file {
     position: absolute;
-    top: 1%;
+    top: 30%;
     right: 1%;
 }
 
 .fix_canvas {
     position: absolute;
-    top: 1%;
+    top: 30%;
     left: 1%;
     text-align: left;
 }

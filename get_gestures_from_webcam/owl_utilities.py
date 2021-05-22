@@ -49,9 +49,9 @@ class Owl_utilities(object):
             rule = owl.Disapprove()
         elif context == "PDFDocument" and gesture == "wave":
             rule = owl.CloseFile()
-        elif context == "PDFDocument" and gesture == "five":
+        elif context == "PDFDocument" and gesture == "thumbsDown":
             rule = owl.NextPage()
-        elif context == "PDFDocument" and gesture == "four":
+        elif context == "PDFDocument" and gesture == "thumbsUp":
             rule = owl.PreviousPage()
         elif context == "Image" and gesture == "thumbsDown":
             rule = owl.Disapprove()

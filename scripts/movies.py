@@ -23,7 +23,7 @@ class Movie(object):
 
     def get_selected_movie_id(self, movie_ids):
         if self.gesture is not None and 1 <= self.gesture <= 5:
-            return int(movie_ids[self.gesture])
+            return int(movie_ids[self.gesture - 1])
 
         return None
 
@@ -31,6 +31,7 @@ class Movie(object):
         self.reset_object()
         self.get_gesture(str_gesture)
         movie_id = self.get_selected_movie_id(movie_ids)
+        movie_name = rec.get_movie_name_by_movie_id(movie_id)
 
         rec_movies = []
         if isinstance(movie_id, int):
@@ -38,7 +39,7 @@ class Movie(object):
             for id in rec_ids:
                 rec_movies.append(rec.get_movie_name_by_database_id(id[0]))
 
-        return rec_movies
+        return rec_movies, movie_name
 
     def get_rec_system(self):
         return rec

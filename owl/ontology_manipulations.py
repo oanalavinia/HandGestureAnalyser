@@ -33,7 +33,6 @@ with fiiGezr:
     class TwoFingersDetected(Gesture): pass
 
 
-    # class Peace(Gesture): pass
     class ThreeFingersDetected(Gesture): pass
 
 
@@ -43,7 +42,6 @@ with fiiGezr:
     class FiveFingersDetected(Gesture): pass
 
 
-    # class PaperDetected(Gesture): pass
     class CloseFingersDetected(Gesture): pass
 
 
@@ -52,8 +50,6 @@ with fiiGezr:
 
     class Rule(Thing): pass
 
-
-    # equivalent_to = [Thing & is_caused_by.only(1, Gesture)]
 
     class Context(Thing): pass
 
@@ -130,7 +126,7 @@ with fiiGezr:
     # Rules
 
     # QuizGame
-    class QuizGameRule:
+    class QuizGameRule(Rule):
         hasContext = [QuizGame]
         isCausedByGesture = [ThumbsUp, ThumbsDown]
 
@@ -164,7 +160,7 @@ with fiiGezr:
 
 
     class NextPage(PDFDocumentRule):
-        isCausedByGesture = [ThumbsUp]
+        isCausedByGesture = [ThumbsDown]
 
 
     class PreviousPage(PDFDocumentRule):
@@ -175,7 +171,7 @@ with fiiGezr:
     class MarkGameRule(Rule):
         hasContext = [MarkGame]
         isCausedByGesture = [OneFingerDetected, TwoFingersDetected, ThreeFingersDetected, FourFingersDetected,
-                        FiveFingersDetected]
+                             FiveFingersDetected]
 
 
     class Mark(MarkGameRule): pass
