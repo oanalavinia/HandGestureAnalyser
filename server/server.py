@@ -34,19 +34,9 @@ socketio = SocketIO(app)
 camera = Camera()
 quiz = qs.QuizGame(camera.get_gesture_obj())
 movie = mv.Movie(camera.get_gesture_obj())
+file_name = "/home/oanalavinia/Documents/Master/WADe/Disertatie/HandGestureAnalyser/server/static/experiments/" + str(datetime.now())
 
 app.secret_key = '5b7373780e35434090c87dc4c9d15a2d'
-
-
-@socketio.on('input image', namespace='/test')
-def test_message(input):
-    input = input.split(",")[1]
-    camera.enqueue_input(input)
-
-
-@socketio.on('connect', namespace='/test')
-def test_connect():
-    app.logger.info("client connected")
 
 
 def gen():
@@ -102,6 +92,23 @@ def get_gesture():
         context = camera.get_gesture_obj().get_context()
         return json.dumps({'gesture': gesture, 'context': context})
     return json.dumps({'gesture': "none"})
+
+
+@app.route("/save_data", methods=['POST'])
+def save_data():
+    camera.get_gesture_obj().get_owl_utilities().save_data()
+
+    return json.dumps({'response': "done"})
+
+
+@app.route("/save_gesture_start_time", methods=['POST'])
+def save_gesture_start_time():
+    context = camera.get_gesture_obj().get_context()
+    start_time = request.form.get('start_time')
+    with open(file_name, 'a') as f:
+        f.write(context + '  ' + start_time + '\n')
+
+    return json.dumps({'response': "done"})
 
 
 @app.route("/questions", methods=['GET', 'POST'])

@@ -68,3 +68,9 @@ body {
 #uploaded_file_content {
     overflow: auto;
 }
+
+#gesture_container {
+    background-color: red;
+    min-width: 2px;
+    min-height: 2px;
+}

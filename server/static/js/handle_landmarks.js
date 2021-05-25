@@ -48,9 +48,9 @@ $(document).ready(function() {
             var result = JSON.parse(data);
             var gesture = result.gesture;
             var context = result.context;
-            if(gesture) {
+            if (gesture && gesture != 'none') {
                 console.log(gesture)
-                canvasCtx.fillText(gesture, 10, 25);
+//                canvasCtx.fillText(gesture, 10, 25);
                 // If we are in the image context, it may be needed, depending on the gesture,
                 // to zoom in or zoom out on the image.
                 if (context == 'Image') {
@@ -60,7 +60,7 @@ $(document).ready(function() {
                     maybeChangePage(gesture);
                 }
             } else {
-                canvasCtx.fillText("No gesture detected", 10, 25);
+//                canvasCtx.fillText("No gesture detected", 10, 25);
             }
           });
 
@@ -126,3 +126,22 @@ $(document).ready(function() {
       hands.setOptions(options);
     });
 });
+
+//var lastNoneTime = Date.now() / 1000.0;
+//var drawGesture = function(gesture, ctx) {
+//    if (gesture && gesture != 'none') {
+//        canvasCtx.fillText(gesture, 10, 25);
+//        $('#thisGesture').html(gesture);
+////        lastNoneTime = Date.now();
+//    }
+//    setTimeout(function() {
+//        $('#thisGesture').html("No gesture detected");
+//    }, 5000)
+////    else {
+////        lastNoneTime = Date.now() / 1000.0;
+////
+////        if (Date.now() / 1000.0 - lastNoneTime > 1) {
+////            $('#thisGesture').html("No gesture detected");
+////        }
+////    }
+//};

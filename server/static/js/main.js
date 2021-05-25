@@ -124,30 +124,26 @@ var maybeZoom = function(gesture) {
     } else {
         lastGestures[gesture]++;
     }
-    if (gesture == 'zoomOut' && lastGestures[gesture] == 15) {
+    if (gesture == 'zoomOut') {
         lastGestures = {};
-        if (Date.now() % 3) {
-            applyZoom(0.9, 0.9);
-            $.post({
-                url: '/add_image_rule',
-                data: {gesture: 'zoomOut'},
-                success: function(data) {
-                    console.log(data);
-                }
-            });
-        }
-    } else if (gesture == 'zoomIn' && lastGestures[gesture] == 15) {
+        applyZoom(0.9, 0.9);
+        $.post({
+            url: '/add_image_rule',
+            data: {gesture: 'zoomOut'},
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    } else if (gesture == 'zoomIn') {
         lastGestures = {};
-        if (Date.now() % 3) {
-            applyZoom(1.1, 1.1);
-            $.post({
-                url: '/add_image_rule',
-                data: {gesture: 'zoomIn'},
-                success: function(data) {
-                    console.log(data);
-                }
-            });
-        }
+        applyZoom(1.1, 1.1);
+        $.post({
+            url: '/add_image_rule',
+            data: {gesture: 'zoomIn'},
+            success: function(data) {
+                console.log(data);
+            }
+        });
     }
 };
 
@@ -231,29 +227,6 @@ function askQuestion(questionContent) {
     });
 }
 
-//setInterval(function() {
-//    $.get('/current_gesture').done(function(data) {
-//        var gestureData = JSON.parse(data);
-//        if(gestureData.gesture) {
-//            $('#current_gesture').html(gestureData.gesture);
-//        } else {
-//            $('#current_gesture').html("No gesture detected");
-//        }
-//    });
-//}, 500)
-
-//setInterval(function() {
-//    if ($('#close_camera_modal').data('is_camera_closed') == false) {
-//        $.get('/check_wave').done(function(data) {
-//            console.log(JSON.parse(data));
-//            if(JSON.parse(data).closeCamera) {
-//                var myModal = new bootstrap.Modal(document.getElementById('close_camera_modal'));
-//                myModal.show();
-//            }
-//        });
-//    }
-//}, 10000)
-
 // Close camera data recording.
 $(document).on('click', '#close_camera_button', function() {
     $('#close_camera_modal').data('is_camera_closed', true);
@@ -272,4 +245,17 @@ $(document).on('click', '#open_camera_button', function() {
         $('#maybe_start_quiz')[0].setAttribute('aria-disabled', false);
         $('#maybe_start_quiz').removeClass('disabled');
     });
+});
+
+$(document).on('keypress',function(e) {
+    if(e.which == 115) {
+        $.post('/save_data').done(function() {
+            console.log("Data saved.");
+        });
+    }
+    if(e.which == 116) {
+        $.post('/save_gesture_start_time', {'start_time': Date.now()}).done(function() {
+            console.log("Gesture started time saved.");
+        });
+    }
 });

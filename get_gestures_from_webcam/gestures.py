@@ -13,6 +13,7 @@ class GestureRecognition(object):
         self.recording_start_time = datetime.now()
         self.context = "none"
         self.owl_context = "none"
+        self.gesture_time = datetime.now()
 
         # Variables needed for registering wave gesture.
         self.wave_gesture_time = datetime.now()
@@ -33,12 +34,21 @@ class GestureRecognition(object):
                 self.wave_gesture_time = datetime.now()
 
             #
-            if len(self.last_gestures) > 70:
-                self.last_gestures.pop(0)
-            self.last_gestures.append(self.gesture)
+            if len(self.last_gestures) == 40:
+                self.gesture_time = datetime.now()
+
+            if len(self.last_gestures) >= 40:
+                self.last_gestures = []
+
+            if (datetime.now() - self.gesture_time).seconds > 0.5:
+                self.last_gestures.append(self.gesture)
+
+            if len(self.last_gestures) < 40:
+                return 'none'
         else:
             self.last_gestures = ['none']
 
+        self.gesture_time = datetime.now()
         # Make an average from the last 70 frames. If a wave gesture was registered, consider only this one for 3
         # seconds.
         if self.wave_gesture_time and (datetime.now() - self.wave_gesture_time).seconds < 3:

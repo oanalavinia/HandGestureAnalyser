@@ -55,30 +55,27 @@ var maybeChangePage = function(gesture) {
     } else {
         lastGestures[gesture]++;
     }
-    if (gesture == 'thumbsDown' && lastGestures[gesture] == 25) {
+    if (gesture == 'thumbsDown') {
         lastGestures = {};
-        if (Date.now() % 3) {
-            nextPage();
-            $.post({
-                url: '/add_file_rule',
-                data: {gesture: 'thumbsDown'},
-                success: function(data) {
-                    console.log(data);
-                }
-            });
-        }
-    } else if (gesture == 'thumbsUp' && lastGestures[gesture] == 25) {
+        nextPage();
+        $.post({
+            url: '/add_file_rule',
+            data: {gesture: 'thumbsDown'},
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    } else if (gesture == 'thumbsUp') {
         lastGestures = {};
-        if (Date.now() % 3) {
-            previousPage();
-            $.post({
-                url: '/add_file_rule',
-                data: {gesture: 'thumbsUp'},
-                success: function(data) {
-                    console.log(data);
-                }
-            });
-        }
+        previousPage();
+        $.post({
+            url: '/add_file_rule',
+            data: {gesture: 'thumbsUp'},
+            success: function(data) {
+                console.log(data);
+            }
+        });
+
     }
 };
 
