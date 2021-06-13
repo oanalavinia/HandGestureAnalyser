@@ -44,7 +44,7 @@ def gen():
 
     app.logger.info("starting to generate frames!")
     while True:
-        frame = camera.get_frame()  # pil_image_to_base64(camera.get_frame())
+        frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame.tostring() + b'\r\n')
 
@@ -71,7 +71,6 @@ def statistics():
 
 @app.route("/video_feed")
 def video_feed():
-    recording_start_time = datetime.now()
     return Response(gen(),
                     mimetype="multipart/x-mixed-replace; boundary=frame")
 

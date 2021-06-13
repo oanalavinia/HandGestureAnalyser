@@ -128,7 +128,7 @@
 
 <owl:Class rdf:about="#Rule">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">An action resulted from a made gesture, in a specific context, since the same gesture could havedifferent consequences. For example, ThumbsUp could either mean approve or changing the page in a direction.</rdfs:comment>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">An action resulted from a made gesture, in a specific context, since the same gesture could have different consequences. For example, ThumbsUp could either mean approve or changing the page in a direction.</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#Context">

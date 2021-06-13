@@ -1,0 +1,2261 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://fiigezr.org/fiiGezr.owl"
+         xmlns="http://fiigezr.org/fiiGezr.owl#"
+         xmlns:owlr="http://www.lesfleursdunormal.fr/static/_downloads/owlready_ontology.owl#">
+
+<owl:Ontology rdf:about="http://fiigezr.org/fiiGezr.owl"/>
+
+<owl:ObjectProperty rdf:about="#isCausedByGesture">
+  <rdfs:domain rdf:resource="#Rule"/>
+  <rdfs:range rdf:resource="#Gesture"/>
+  <owl:inverseOf rdf:resource="#causesRule"/>
+  <owlr:class_property_type>only</owlr:class_property_type>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#causesRule">
+  <rdfs:domain rdf:resource="#Gesture"/>
+  <rdfs:range rdf:resource="#Rule"/>
+  <owl:inverseOf rdf:resource="#isCausedByGesture"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#makesGesture">
+  <rdfs:domain rdf:resource="#User"/>
+  <rdfs:range rdf:resource="#Gesture"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#includesRule">
+  <rdfs:domain rdf:resource="#Context"/>
+  <rdfs:range rdf:resource="#Rule"/>
+  <owl:inverseOf rdf:resource="#hasContext"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasContext">
+  <rdfs:domain rdf:resource="#Rule"/>
+  <rdfs:range rdf:resource="#Context"/>
+  <owl:inverseOf rdf:resource="#includesRule"/>
+  <owlr:class_property_type>only</owlr:class_property_type>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#hasGestureTime">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Gesture"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasRuleTime">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Rule"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasGestureName">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Gesture"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasGesture">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Rule"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#WebCam">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Data">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#User">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A person that uses the ontology.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Gesture">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A hand gesture made by an user to a webcam. Example includes TwoFingersDetected or ThumbsUp</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#WaveDetected">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ThumbsUp">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ThumbsDown">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FistDetected">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#OneFingerDetected">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TwoFingersDetected">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ThreeFingersDetected">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FourFingersDetected">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FiveFingersDetected">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#CloseFingersDetected">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ApartFingersDetected">
+  <rdfs:subClassOf rdf:resource="#Gesture"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Rule">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">An action resulted from a made gesture, in a specific context, since the same gesture could havedifferent consequences. For example, ThumbsUp could either mean approve or changing the page in a direction.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Context">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The context in which a rule was created.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#QuizGame">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A trivia game where the user can say if a statement is true or false through ThumbsUp or ThumbsDown</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#NoGame">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PDFDocument">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">It refers to the situation where, through ThumbsUp or ThumbsDown, the user can change the page of a PDF document</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Image">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">It describes the circumstances where an image can be zoomed in or zoomed out by bringing fingers together or apart</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#MarkGame">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A game where the user can select a favorite movie from a list of 5 by using counting gestures, like TwoFingersDetected.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#QuizGameRule">
+  <rdfs:subClassOf rdf:resource="#Rule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasContext"/>
+      <owl:allValuesFrom rdf:resource="#QuizGame"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom>
+        <owl:Class>
+          <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#ThumbsUp"/>
+            <rdf:Description rdf:about="#ThumbsDown"/>
+          </owl:unionOf>
+        </owl:Class>
+      </owl:allValuesFrom>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A rule applied in a QuizGame context</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Approve">
+  <rdfs:subClassOf rdf:resource="#QuizGameRule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#ThumbsUp"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Disapprove">
+  <rdfs:subClassOf rdf:resource="#QuizGameRule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#ThumbsDown"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#ImageRule">
+  <rdfs:subClassOf rdf:resource="#Rule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasContext"/>
+      <owl:allValuesFrom rdf:resource="#Image"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom>
+        <owl:Class>
+          <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#CloseFingersDetected"/>
+            <rdf:Description rdf:about="#ApartFingersDetected"/>
+          </owl:unionOf>
+        </owl:Class>
+      </owl:allValuesFrom>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A rule applied in an Image context</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ZoomIn">
+  <rdfs:subClassOf rdf:resource="#ImageRule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#ApartFingersDetected"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#ZoomOut">
+  <rdfs:subClassOf rdf:resource="#ImageRule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#CloseFingersDetected"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#PDFDocumentRule">
+  <rdfs:subClassOf rdf:resource="#Rule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasContext"/>
+      <owl:allValuesFrom rdf:resource="#PDFDocument"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom>
+        <owl:Class>
+          <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#ThumbsUp"/>
+            <rdf:Description rdf:about="#ThumbsDown"/>
+          </owl:unionOf>
+        </owl:Class>
+      </owl:allValuesFrom>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A rule applied in a PDFDocument context</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#NextPage">
+  <rdfs:subClassOf rdf:resource="#PDFDocumentRule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#ThumbsDown"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#PreviousPage">
+  <rdfs:subClassOf rdf:resource="#PDFDocumentRule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#ThumbsUp"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#MarkGameRule">
+  <rdfs:subClassOf rdf:resource="#Rule"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasContext"/>
+      <owl:allValuesFrom rdf:resource="#MarkGame"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom>
+        <owl:Class>
+          <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#FiveFingersDetected"/>
+            <rdf:Description rdf:about="#TwoFingersDetected"/>
+            <rdf:Description rdf:about="#FourFingersDetected"/>
+            <rdf:Description rdf:about="#OneFingerDetected"/>
+            <rdf:Description rdf:about="#ThreeFingersDetected"/>
+          </owl:unionOf>
+        </owl:Class>
+      </owl:allValuesFrom>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A rule applied in a MarkGame context</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Mark">
+  <rdfs:subClassOf rdf:resource="#MarkGameRule"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ChooseFirst">
+  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#OneFingerDetected"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#ChooseSecond">
+  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#TwoFingersDetected"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#ChooseThird">
+  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#ThreeFingersDetected"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#ChooseFourth">
+  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#FourFingersDetected"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#ChooseFifth">
+  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#isCausedByGesture"/>
+      <owl:allValuesFrom rdf:resource="#FiveFingersDetected"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#FreeRule">
+  <rdfs:subClassOf rdf:resource="#Rule"/>
+</owl:Class>
+
+<owl:Class rdf:about="#CloseCamera">
+  <rdfs:subClassOf rdf:resource="#FreeRule"/>
+</owl:Class>
+
+<owl:Class rdf:about="#OpenBrowser">
+  <rdfs:subClassOf rdf:resource="#FreeRule"/>
+</owl:Class>
+
+<owl:Class rdf:about="#CloseFile">
+  <rdfs:subClassOf rdf:resource="#Rule"/>
+</owl:Class>
+
+<owl:Class rdf:about="#NextImage">
+  <rdfs:subClassOf rdf:resource="#ImageRule"/>
+</owl:Class>
+
+<User rdf:about="#user1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <makesGesture rdf:resource="#fistdetected1"/>
+  <makesGesture rdf:resource="#fistdetected2"/>
+  <makesGesture rdf:resource="#fistdetected3"/>
+  <makesGesture rdf:resource="#fistdetected4"/>
+  <makesGesture rdf:resource="#fistdetected5"/>
+  <makesGesture rdf:resource="#fivefingersdetected1"/>
+  <makesGesture rdf:resource="#threefingersdetected1"/>
+  <makesGesture rdf:resource="#fivefingersdetected2"/>
+  <makesGesture rdf:resource="#fourfingersdetected1"/>
+  <makesGesture rdf:resource="#fivefingersdetected3"/>
+  <makesGesture rdf:resource="#twofingersdetected1"/>
+  <makesGesture rdf:resource="#fivefingersdetected4"/>
+  <makesGesture rdf:resource="#fourfingersdetected2"/>
+  <makesGesture rdf:resource="#thumbsdown1"/>
+  <makesGesture rdf:resource="#thumbsup1"/>
+  <makesGesture rdf:resource="#thumbsup2"/>
+  <makesGesture rdf:resource="#thumbsup3"/>
+  <makesGesture rdf:resource="#thumbsup4"/>
+  <makesGesture rdf:resource="#thumbsdown2"/>
+  <makesGesture rdf:resource="#thumbsdown3"/>
+  <makesGesture rdf:resource="#thumbsdown4"/>
+  <makesGesture rdf:resource="#thumbsup5"/>
+  <makesGesture rdf:resource="#thumbsdown5"/>
+  <makesGesture rdf:resource="#thumbsup6"/>
+  <makesGesture rdf:resource="#thumbsdown6"/>
+  <makesGesture rdf:resource="#thumbsup7"/>
+  <makesGesture rdf:resource="#thumbsup8"/>
+  <makesGesture rdf:resource="#closefingersdetected1"/>
+  <makesGesture rdf:resource="#thumbsdown7"/>
+  <makesGesture rdf:resource="#thumbsdown8"/>
+  <makesGesture rdf:resource="#thumbsdown9"/>
+  <makesGesture rdf:resource="#thumbsup9"/>
+  <makesGesture rdf:resource="#thumbsdown10"/>
+  <makesGesture rdf:resource="#thumbsdown11"/>
+  <makesGesture rdf:resource="#thumbsdown12"/>
+  <makesGesture rdf:resource="#thumbsdown13"/>
+  <makesGesture rdf:resource="#thumbsdown14"/>
+  <makesGesture rdf:resource="#thumbsup10"/>
+  <makesGesture rdf:resource="#thumbsup11"/>
+  <makesGesture rdf:resource="#thumbsup12"/>
+  <makesGesture rdf:resource="#thumbsdown15"/>
+  <makesGesture rdf:resource="#thumbsdown16"/>
+  <makesGesture rdf:resource="#thumbsdown17"/>
+  <makesGesture rdf:resource="#thumbsdown18"/>
+  <makesGesture rdf:resource="#thumbsup13"/>
+  <makesGesture rdf:resource="#thumbsup14"/>
+  <makesGesture rdf:resource="#thumbsdown19"/>
+  <makesGesture rdf:resource="#thumbsdown20"/>
+  <makesGesture rdf:resource="#thumbsdown21"/>
+  <makesGesture rdf:resource="#thumbsdown22"/>
+  <makesGesture rdf:resource="#thumbsup15"/>
+  <makesGesture rdf:resource="#thumbsup16"/>
+  <makesGesture rdf:resource="#thumbsup17"/>
+  <makesGesture rdf:resource="#thumbsdown23"/>
+  <makesGesture rdf:resource="#fivefingersdetected5"/>
+  <makesGesture rdf:resource="#fourfingersdetected3"/>
+  <makesGesture rdf:resource="#fivefingersdetected6"/>
+  <makesGesture rdf:resource="#fourfingersdetected4"/>
+  <makesGesture rdf:resource="#fourfingersdetected5"/>
+  <makesGesture rdf:resource="#fourfingersdetected6"/>
+  <makesGesture rdf:resource="#thumbsdown24"/>
+  <makesGesture rdf:resource="#thumbsdown25"/>
+  <makesGesture rdf:resource="#thumbsdown26"/>
+  <makesGesture rdf:resource="#thumbsdown27"/>
+  <makesGesture rdf:resource="#fourfingersdetected7"/>
+  <makesGesture rdf:resource="#thumbsdown28"/>
+  <makesGesture rdf:resource="#thumbsdown29"/>
+  <makesGesture rdf:resource="#thumbsdown30"/>
+  <makesGesture rdf:resource="#thumbsdown31"/>
+  <makesGesture rdf:resource="#thumbsup18"/>
+  <makesGesture rdf:resource="#thumbsup19"/>
+  <makesGesture rdf:resource="#thumbsdown32"/>
+  <makesGesture rdf:resource="#thumbsdown33"/>
+  <makesGesture rdf:resource="#thumbsdown34"/>
+  <makesGesture rdf:resource="#thumbsdown35"/>
+  <makesGesture rdf:resource="#thumbsdown36"/>
+  <makesGesture rdf:resource="#thumbsup20"/>
+  <makesGesture rdf:resource="#thumbsup21"/>
+  <makesGesture rdf:resource="#thumbsup22"/>
+  <makesGesture rdf:resource="#thumbsdown37"/>
+  <makesGesture rdf:resource="#thumbsdown38"/>
+  <makesGesture rdf:resource="#thumbsup23"/>
+  <makesGesture rdf:resource="#thumbsup24"/>
+  <makesGesture rdf:resource="#thumbsdown39"/>
+  <makesGesture rdf:resource="#thumbsdown40"/>
+  <makesGesture rdf:resource="#thumbsdown41"/>
+  <makesGesture rdf:resource="#thumbsdown42"/>
+  <makesGesture rdf:resource="#thumbsdown43"/>
+  <makesGesture rdf:resource="#thumbsup25"/>
+  <makesGesture rdf:resource="#thumbsup26"/>
+  <makesGesture rdf:resource="#thumbsup27"/>
+  <makesGesture rdf:resource="#fivefingersdetected7"/>
+  <makesGesture rdf:resource="#closefingersdetected2"/>
+  <makesGesture rdf:resource="#closefingersdetected3"/>
+  <makesGesture rdf:resource="#closefingersdetected4"/>
+  <makesGesture rdf:resource="#closefingersdetected5"/>
+  <makesGesture rdf:resource="#closefingersdetected6"/>
+  <makesGesture rdf:resource="#closefingersdetected7"/>
+  <makesGesture rdf:resource="#closefingersdetected8"/>
+  <makesGesture rdf:resource="#closefingersdetected9"/>
+  <makesGesture rdf:resource="#apartfingersdetected1"/>
+  <makesGesture rdf:resource="#closefingersdetected10"/>
+  <makesGesture rdf:resource="#apartfingersdetected2"/>
+  <makesGesture rdf:resource="#apartfingersdetected3"/>
+  <makesGesture rdf:resource="#closefingersdetected11"/>
+  <makesGesture rdf:resource="#closefingersdetected12"/>
+  <makesGesture rdf:resource="#closefingersdetected13"/>
+  <makesGesture rdf:resource="#threefingersdetected2"/>
+  <makesGesture rdf:resource="#apartfingersdetected4"/>
+  <makesGesture rdf:resource="#apartfingersdetected5"/>
+  <makesGesture rdf:resource="#closefingersdetected14"/>
+  <makesGesture rdf:resource="#apartfingersdetected6"/>
+  <makesGesture rdf:resource="#apartfingersdetected7"/>
+  <makesGesture rdf:resource="#closefingersdetected15"/>
+  <makesGesture rdf:resource="#apartfingersdetected8"/>
+  <makesGesture rdf:resource="#fistdetected6"/>
+  <makesGesture rdf:resource="#onefingerdetected1"/>
+  <makesGesture rdf:resource="#onefingerdetected2"/>
+  <makesGesture rdf:resource="#onefingerdetected3"/>
+  <makesGesture rdf:resource="#closefingersdetected16"/>
+  <makesGesture rdf:resource="#onefingerdetected4"/>
+  <makesGesture rdf:resource="#fistdetected7"/>
+  <makesGesture rdf:resource="#fistdetected8"/>
+  <makesGesture rdf:resource="#onefingerdetected5"/>
+  <makesGesture rdf:resource="#fistdetected9"/>
+  <makesGesture rdf:resource="#apartfingersdetected9"/>
+  <makesGesture rdf:resource="#apartfingersdetected10"/>
+  <makesGesture rdf:resource="#apartfingersdetected11"/>
+  <makesGesture rdf:resource="#fistdetected10"/>
+  <makesGesture rdf:resource="#apartfingersdetected12"/>
+  <makesGesture rdf:resource="#apartfingersdetected13"/>
+  <makesGesture rdf:resource="#closefingersdetected17"/>
+  <makesGesture rdf:resource="#closefingersdetected18"/>
+  <makesGesture rdf:resource="#apartfingersdetected14"/>
+  <makesGesture rdf:resource="#closefingersdetected19"/>
+  <makesGesture rdf:resource="#closefingersdetected20"/>
+  <makesGesture rdf:resource="#closefingersdetected21"/>
+  <makesGesture rdf:resource="#closefingersdetected22"/>
+  <makesGesture rdf:resource="#apartfingersdetected15"/>
+  <makesGesture rdf:resource="#apartfingersdetected16"/>
+  <makesGesture rdf:resource="#closefingersdetected23"/>
+  <makesGesture rdf:resource="#closefingersdetected24"/>
+  <makesGesture rdf:resource="#apartfingersdetected17"/>
+  <makesGesture rdf:resource="#closefingersdetected25"/>
+  <makesGesture rdf:resource="#closefingersdetected26"/>
+  <makesGesture rdf:resource="#closefingersdetected27"/>
+  <makesGesture rdf:resource="#closefingersdetected28"/>
+  <makesGesture rdf:resource="#closefingersdetected29"/>
+  <makesGesture rdf:resource="#closefingersdetected30"/>
+  <makesGesture rdf:resource="#closefingersdetected31"/>
+  <makesGesture rdf:resource="#closefingersdetected32"/>
+  <makesGesture rdf:resource="#closefingersdetected33"/>
+  <makesGesture rdf:resource="#apartfingersdetected18"/>
+  <makesGesture rdf:resource="#apartfingersdetected19"/>
+  <makesGesture rdf:resource="#apartfingersdetected20"/>
+  <makesGesture rdf:resource="#apartfingersdetected21"/>
+  <makesGesture rdf:resource="#closefingersdetected34"/>
+  <makesGesture rdf:resource="#closefingersdetected35"/>
+  <makesGesture rdf:resource="#apartfingersdetected22"/>
+  <makesGesture rdf:resource="#closefingersdetected36"/>
+  <makesGesture rdf:resource="#apartfingersdetected23"/>
+  <makesGesture rdf:resource="#apartfingersdetected24"/>
+  <makesGesture rdf:resource="#closefingersdetected37"/>
+  <makesGesture rdf:resource="#apartfingersdetected25"/>
+  <makesGesture rdf:resource="#closefingersdetected38"/>
+  <makesGesture rdf:resource="#closefingersdetected39"/>
+  <makesGesture rdf:resource="#closefingersdetected40"/>
+  <makesGesture rdf:resource="#apartfingersdetected26"/>
+  <makesGesture rdf:resource="#fistdetected11"/>
+</User>
+
+<FistDetected rdf:about="#fistdetected1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:45:13.677013</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<MarkGame rdf:about="#markgame1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</MarkGame>
+
+<FistDetected rdf:about="#fistdetected2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:46:06.236115</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<FistDetected rdf:about="#fistdetected3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:46:08.568266</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<FistDetected rdf:about="#fistdetected4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:46:11.444941</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<FistDetected rdf:about="#fistdetected5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:46:14.515477</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<FiveFingersDetected rdf:about="#fivefingersdetected1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:46:16.997277</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">five</hasGestureName>
+</FiveFingersDetected>
+
+<MarkGame rdf:about="#markgame2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#choosethird1"/>
+</MarkGame>
+
+<ThreeFingersDetected rdf:about="#threefingersdetected1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:47:03.582587</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">three</hasGestureName>
+</ThreeFingersDetected>
+
+<ChooseThird rdf:about="#choosethird1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:47:08.650999</hasRuleTime>
+</ChooseThird>
+
+<MarkGame rdf:about="#markgame3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#choosefifth1"/>
+</MarkGame>
+
+<FiveFingersDetected rdf:about="#fivefingersdetected2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:47:23.256450</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">five</hasGestureName>
+</FiveFingersDetected>
+
+<ChooseFifth rdf:about="#choosefifth1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:47:27.780086</hasRuleTime>
+</ChooseFifth>
+
+<MarkGame rdf:about="#markgame4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#choosefourth1"/>
+</MarkGame>
+
+<FourFingersDetected rdf:about="#fourfingersdetected1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:47:39.208961</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">four</hasGestureName>
+</FourFingersDetected>
+
+<ChooseFourth rdf:about="#choosefourth1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:47:45.396532</hasRuleTime>
+</ChooseFourth>
+
+<MarkGame rdf:about="#markgame5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#choosefifth2"/>
+</MarkGame>
+
+<FiveFingersDetected rdf:about="#fivefingersdetected3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:47:56.841749</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">five</hasGestureName>
+</FiveFingersDetected>
+
+<ChooseFifth rdf:about="#choosefifth2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:48:01.772070</hasRuleTime>
+</ChooseFifth>
+
+<MarkGame rdf:about="#markgame6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#choosesecond1"/>
+</MarkGame>
+
+<TwoFingersDetected rdf:about="#twofingersdetected1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:48:13.627445</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">two</hasGestureName>
+</TwoFingersDetected>
+
+<ChooseSecond rdf:about="#choosesecond1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:48:19.157821</hasRuleTime>
+</ChooseSecond>
+
+<FiveFingersDetected rdf:about="#fivefingersdetected4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:48:35.936484</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">five</hasGestureName>
+</FiveFingersDetected>
+
+<FourFingersDetected rdf:about="#fourfingersdetected2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:48:56.825896</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">four</hasGestureName>
+</FourFingersDetected>
+
+<QuizGame rdf:about="#quizgame1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#disapprove1"/>
+  <includesRule rdf:resource="#approve1"/>
+  <includesRule rdf:resource="#approve2"/>
+</QuizGame>
+
+<ThumbsDown rdf:about="#thumbsdown1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:50:15.570609</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<ThumbsUp rdf:about="#thumbsup1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:50:25.471792</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<ThumbsUp rdf:about="#thumbsup2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:50:35.066548</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<Disapprove rdf:about="#disapprove1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:50:41.572496</hasRuleTime>
+</Disapprove>
+
+<Approve rdf:about="#approve1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:50:41.661400</hasRuleTime>
+</Approve>
+
+<Approve rdf:about="#approve2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:50:41.754274</hasRuleTime>
+</Approve>
+
+<QuizGame rdf:about="#quizgame2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#approve3"/>
+  <includesRule rdf:resource="#approve4"/>
+</QuizGame>
+
+<ThumbsUp rdf:about="#thumbsup3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:50:55.082818</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<ThumbsUp rdf:about="#thumbsup4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:51:15.370457</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<Approve rdf:about="#approve3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:51:19.673529</hasRuleTime>
+</Approve>
+
+<Approve rdf:about="#approve4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:51:19.935688</hasRuleTime>
+</Approve>
+
+<QuizGame rdf:about="#quizgame3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#disapprove2"/>
+  <includesRule rdf:resource="#disapprove3"/>
+  <includesRule rdf:resource="#disapprove4"/>
+</QuizGame>
+
+<ThumbsDown rdf:about="#thumbsdown2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:51:30.690657</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<ThumbsDown rdf:about="#thumbsdown3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:51:40.857223</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<ThumbsDown rdf:about="#thumbsdown4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:51:50.599563</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<Disapprove rdf:about="#disapprove2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:51:56.849269</hasRuleTime>
+</Disapprove>
+
+<Disapprove rdf:about="#disapprove3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:51:56.946025</hasRuleTime>
+</Disapprove>
+
+<Disapprove rdf:about="#disapprove4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:51:57.064622</hasRuleTime>
+</Disapprove>
+
+<QuizGame rdf:about="#quizgame4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#approve5"/>
+  <includesRule rdf:resource="#disapprove5"/>
+  <includesRule rdf:resource="#approve6"/>
+</QuizGame>
+
+<ThumbsUp rdf:about="#thumbsup5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:52:15.436030</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<ThumbsDown rdf:about="#thumbsdown5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:52:22.020709</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<ThumbsUp rdf:about="#thumbsup6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:52:29.666010</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<Approve rdf:about="#approve5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:52:34.920760</hasRuleTime>
+</Approve>
+
+<Disapprove rdf:about="#disapprove5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:52:35.013990</hasRuleTime>
+</Disapprove>
+
+<Approve rdf:about="#approve6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:52:35.129535</hasRuleTime>
+</Approve>
+
+<QuizGame rdf:about="#quizgame5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#disapprove6"/>
+  <includesRule rdf:resource="#approve7"/>
+  <includesRule rdf:resource="#approve8"/>
+</QuizGame>
+
+<ThumbsDown rdf:about="#thumbsdown6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:52:48.009594</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<ThumbsUp rdf:about="#thumbsup7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:52:57.737326</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<ThumbsUp rdf:about="#thumbsup8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:53:06.683251</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<Disapprove rdf:about="#disapprove6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:53:13.362522</hasRuleTime>
+</Disapprove>
+
+<Approve rdf:about="#approve7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:53:13.458798</hasRuleTime>
+</Approve>
+
+<Approve rdf:about="#approve8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:53:13.567947</hasRuleTime>
+</Approve>
+
+<CloseFingersDetected rdf:about="#closefingersdetected1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:54:39.483074</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<PDFDocument rdf:about="#pdfdocument1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#nextpage1"/>
+  <includesRule rdf:resource="#nextpage2"/>
+  <includesRule rdf:resource="#nextpage3"/>
+  <includesRule rdf:resource="#previouspage1"/>
+  <includesRule rdf:resource="#nextpage4"/>
+  <includesRule rdf:resource="#nextpage5"/>
+  <includesRule rdf:resource="#nextpage6"/>
+  <includesRule rdf:resource="#nextpage7"/>
+  <includesRule rdf:resource="#nextpage8"/>
+  <includesRule rdf:resource="#previouspage2"/>
+  <includesRule rdf:resource="#previouspage3"/>
+  <includesRule rdf:resource="#previouspage4"/>
+  <includesRule rdf:resource="#nextpage9"/>
+  <includesRule rdf:resource="#nextpage10"/>
+  <includesRule rdf:resource="#nextpage11"/>
+  <includesRule rdf:resource="#nextpage12"/>
+  <includesRule rdf:resource="#previouspage5"/>
+  <includesRule rdf:resource="#previouspage6"/>
+  <includesRule rdf:resource="#nextpage13"/>
+  <includesRule rdf:resource="#nextpage14"/>
+  <includesRule rdf:resource="#nextpage15"/>
+  <includesRule rdf:resource="#nextpage16"/>
+  <includesRule rdf:resource="#previouspage7"/>
+  <includesRule rdf:resource="#previouspage8"/>
+  <includesRule rdf:resource="#previouspage9"/>
+  <includesRule rdf:resource="#nextpage17"/>
+</PDFDocument>
+
+<ThumbsDown rdf:about="#thumbsdown7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:23.040353</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:23.056351</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:27.087176</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:27.114498</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:31.183047</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:31.194107</hasRuleTime>
+</NextPage>
+
+<ThumbsUp rdf:about="#thumbsup9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:35.240886</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:35.280239</hasRuleTime>
+</PreviousPage>
+
+<ThumbsDown rdf:about="#thumbsdown10">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:41.379930</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:41.390989</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:45.192939</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:45.203548</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown12">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:49.262667</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:49.325887</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown13">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:56.456240</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:55:56.468373</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown14">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:02.707897</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:02.720724</hasRuleTime>
+</NextPage>
+
+<ThumbsUp rdf:about="#thumbsup10">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:07.401679</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:07.412138</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:11.094932</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:11.123119</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup12">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:14.977865</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:15.020980</hasRuleTime>
+</PreviousPage>
+
+<ThumbsDown rdf:about="#thumbsdown15">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:18.896707</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:18.907833</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown16">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:22.946598</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage10">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:22.961002</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown17">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:26.969354</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:27.006652</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown18">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:30.991356</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage12">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:31.001694</hasRuleTime>
+</NextPage>
+
+<ThumbsUp rdf:about="#thumbsup13">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:35.039223</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:35.051411</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup14">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:38.931486</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:38.969721</hasRuleTime>
+</PreviousPage>
+
+<ThumbsDown rdf:about="#thumbsdown19">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:42.686342</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage13">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:42.737572</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown20">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:46.136183</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage14">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:46.147585</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown21">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:49.668804</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage15">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:49.700261</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown22">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:53.316002</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage16">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:53.327966</hasRuleTime>
+</NextPage>
+
+<ThumbsUp rdf:about="#thumbsup15">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:57.296859</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:56:57.308102</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup16">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:57:00.794884</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:57:00.805063</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup17">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:57:05.644588</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:57:05.661306</hasRuleTime>
+</PreviousPage>
+
+<ThumbsDown rdf:about="#thumbsdown23">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:57:09.734341</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage17">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:57:09.772484</hasRuleTime>
+</NextPage>
+
+<FiveFingersDetected rdf:about="#fivefingersdetected5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:57:52.285038</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">five</hasGestureName>
+</FiveFingersDetected>
+
+<FourFingersDetected rdf:about="#fourfingersdetected3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:58:11.640535</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">four</hasGestureName>
+</FourFingersDetected>
+
+<FiveFingersDetected rdf:about="#fivefingersdetected6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:58:14.279171</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">five</hasGestureName>
+</FiveFingersDetected>
+
+<FourFingersDetected rdf:about="#fourfingersdetected4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:58:19.447281</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">four</hasGestureName>
+</FourFingersDetected>
+
+<FourFingersDetected rdf:about="#fourfingersdetected5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:58:22.707529</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">four</hasGestureName>
+</FourFingersDetected>
+
+<FourFingersDetected rdf:about="#fourfingersdetected6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:58:37.783855</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">four</hasGestureName>
+</FourFingersDetected>
+
+<PDFDocument rdf:about="#pdfdocument2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#nextpage18"/>
+  <includesRule rdf:resource="#nextpage19"/>
+  <includesRule rdf:resource="#nextpage20"/>
+  <includesRule rdf:resource="#nextpage21"/>
+  <includesRule rdf:resource="#nextpage22"/>
+  <includesRule rdf:resource="#nextpage23"/>
+  <includesRule rdf:resource="#nextpage24"/>
+  <includesRule rdf:resource="#nextpage25"/>
+  <includesRule rdf:resource="#previouspage10"/>
+  <includesRule rdf:resource="#previouspage11"/>
+  <includesRule rdf:resource="#nextpage26"/>
+  <includesRule rdf:resource="#nextpage27"/>
+  <includesRule rdf:resource="#nextpage28"/>
+  <includesRule rdf:resource="#nextpage29"/>
+  <includesRule rdf:resource="#nextpage30"/>
+  <includesRule rdf:resource="#previouspage12"/>
+  <includesRule rdf:resource="#previouspage13"/>
+  <includesRule rdf:resource="#previouspage14"/>
+  <includesRule rdf:resource="#nextpage31"/>
+  <includesRule rdf:resource="#nextpage32"/>
+  <includesRule rdf:resource="#previouspage15"/>
+  <includesRule rdf:resource="#previouspage16"/>
+  <includesRule rdf:resource="#nextpage33"/>
+  <includesRule rdf:resource="#nextpage34"/>
+  <includesRule rdf:resource="#nextpage35"/>
+  <includesRule rdf:resource="#nextpage36"/>
+  <includesRule rdf:resource="#nextpage37"/>
+  <includesRule rdf:resource="#previouspage17"/>
+  <includesRule rdf:resource="#previouspage18"/>
+  <includesRule rdf:resource="#previouspage19"/>
+</PDFDocument>
+
+<ThumbsDown rdf:about="#thumbsdown24">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:59:35.062881</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage18">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:59:35.086770</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown25">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:59:38.931667</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage19">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:59:38.981953</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown26">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:59:43.066881</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage20">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:59:43.097866</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown27">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:59:46.862357</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage21">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T18:59:46.876803</hasRuleTime>
+</NextPage>
+
+<FourFingersDetected rdf:about="#fourfingersdetected7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:00.950754</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">four</hasGestureName>
+</FourFingersDetected>
+
+<ThumbsDown rdf:about="#thumbsdown28">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:34.521244</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage22">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:34.554788</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown29">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:38.332616</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage23">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:38.375372</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown30">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:42.747573</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage24">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:42.759990</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown31">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:46.536339</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage25">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:46.574007</hasRuleTime>
+</NextPage>
+
+<ThumbsUp rdf:about="#thumbsup18">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:51.023425</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage10">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:51.065597</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup19">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:55.410944</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:55.445346</hasRuleTime>
+</PreviousPage>
+
+<ThumbsDown rdf:about="#thumbsdown32">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:58.988583</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage26">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:00:59.010329</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown33">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:02.775215</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage27">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:02.792812</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown34">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:06.507209</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage28">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:06.562947</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown35">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:10.427833</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage29">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:10.468832</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown36">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:14.435840</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage30">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:14.472764</hasRuleTime>
+</NextPage>
+
+<ThumbsUp rdf:about="#thumbsup20">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:19.199924</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage12">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:19.235918</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup21">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:23.909246</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage13">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:23.920985</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup22">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:28.558475</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage14">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:28.590350</hasRuleTime>
+</PreviousPage>
+
+<ThumbsDown rdf:about="#thumbsdown37">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:32.416247</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage31">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:32.453364</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown38">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:36.647963</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage32">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:36.684500</hasRuleTime>
+</NextPage>
+
+<ThumbsUp rdf:about="#thumbsup23">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:41.155856</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage15">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:41.171341</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup24">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:45.232492</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage16">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:45.255368</hasRuleTime>
+</PreviousPage>
+
+<ThumbsDown rdf:about="#thumbsdown39">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:49.174915</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage33">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:49.211799</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown40">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:53.078438</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage34">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:53.136639</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown41">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:57.568312</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage35">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:01:57.585250</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown42">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:01.831388</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage36">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:01.846506</hasRuleTime>
+</NextPage>
+
+<ThumbsDown rdf:about="#thumbsdown43">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:06.072994</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsDown</hasGestureName>
+</ThumbsDown>
+
+<NextPage rdf:about="#nextpage37">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:06.110337</hasRuleTime>
+</NextPage>
+
+<ThumbsUp rdf:about="#thumbsup25">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:10.559305</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage17">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:10.574254</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup26">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:15.090196</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage18">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:15.131615</hasRuleTime>
+</PreviousPage>
+
+<ThumbsUp rdf:about="#thumbsup27">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:20.579345</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thumbsUp</hasGestureName>
+</ThumbsUp>
+
+<PreviousPage rdf:about="#previouspage19">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:02:20.610191</hasRuleTime>
+</PreviousPage>
+
+<FiveFingersDetected rdf:about="#fivefingersdetected7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:00.585978</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">five</hasGestureName>
+</FiveFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:20.403494</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:26.460864</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:29.903937</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:33.386896</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:37.353077</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:41.429176</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:44.953288</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:47.848110</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:51.451128</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected10">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:57.626196</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:03:59.944277</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:02.263886</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:05.924003</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected12">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:09.209075</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected13">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:11.546340</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ThreeFingersDetected rdf:about="#threefingersdetected2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:14.135242</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">three</hasGestureName>
+</ThreeFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:16.489693</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:18.820208</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected14">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:21.185370</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:23.564066</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:26.790790</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected15">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:30.615481</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:33.957474</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<FistDetected rdf:about="#fistdetected6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:36.877674</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<OneFingerDetected rdf:about="#onefingerdetected1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:39.261135</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">one</hasGestureName>
+</OneFingerDetected>
+
+<OneFingerDetected rdf:about="#onefingerdetected2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:41.577062</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">one</hasGestureName>
+</OneFingerDetected>
+
+<OneFingerDetected rdf:about="#onefingerdetected3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:45.646452</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">one</hasGestureName>
+</OneFingerDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected16">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:49.435062</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<OneFingerDetected rdf:about="#onefingerdetected4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:53.135879</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">one</hasGestureName>
+</OneFingerDetected>
+
+<FistDetected rdf:about="#fistdetected7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:56.299770</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<FistDetected rdf:about="#fistdetected8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:04:58.648428</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<OneFingerDetected rdf:about="#onefingerdetected5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:00.988807</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">one</hasGestureName>
+</OneFingerDetected>
+
+<FistDetected rdf:about="#fistdetected9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:05.696062</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:12.753267</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected10">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:15.393498</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:24.138053</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<FistDetected rdf:about="#fistdetected10">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:27.462431</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected12">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:37.336784</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected13">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:40.388978</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected17">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:43.282799</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected18">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:46.172813</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected14">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:49.031747</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected19">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:52.785370</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected20">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:55.623781</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected21">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:05:58.528156</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected22">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:00.883192</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected15">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:04.044781</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected16">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:06.374351</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected23">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:09.750350</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<CloseFingersDetected rdf:about="#closefingersdetected24">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:12.915471</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected17">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:15.899424</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<Image rdf:about="#image1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <includesRule rdf:resource="#zoomout1"/>
+  <includesRule rdf:resource="#zoomout2"/>
+  <includesRule rdf:resource="#zoomout3"/>
+  <includesRule rdf:resource="#zoomout4"/>
+  <includesRule rdf:resource="#zoomout5"/>
+  <includesRule rdf:resource="#zoomout6"/>
+  <includesRule rdf:resource="#zoomout7"/>
+  <includesRule rdf:resource="#zoomout8"/>
+  <includesRule rdf:resource="#zoomout9"/>
+  <includesRule rdf:resource="#zoomin1"/>
+  <includesRule rdf:resource="#zoomin2"/>
+  <includesRule rdf:resource="#zoomin3"/>
+  <includesRule rdf:resource="#zoomin4"/>
+  <includesRule rdf:resource="#zoomout10"/>
+  <includesRule rdf:resource="#zoomout11"/>
+  <includesRule rdf:resource="#zoomin5"/>
+  <includesRule rdf:resource="#zoomout12"/>
+  <includesRule rdf:resource="#zoomin6"/>
+  <includesRule rdf:resource="#zoomin7"/>
+  <includesRule rdf:resource="#zoomout13"/>
+  <includesRule rdf:resource="#zoomin8"/>
+  <includesRule rdf:resource="#zoomout14"/>
+  <includesRule rdf:resource="#zoomout15"/>
+  <includesRule rdf:resource="#zoomout16"/>
+  <includesRule rdf:resource="#zoomin9"/>
+</Image>
+
+<CloseFingersDetected rdf:about="#closefingersdetected25">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:46.828230</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:46.878014</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected26">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:51.354928</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:51.378242</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected27">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:55.178151</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:55.214588</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected28">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:58.423470</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:06:58.450305</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected29">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:01.946423</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:01.963647</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected30">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:05.281231</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:05.298473</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected31">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:08.703895</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:08.737874</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected32">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:14.272948</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:14.294029</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected33">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:17.541971</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:17.573138</hasRuleTime>
+</ZoomOut>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected18">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:21.238300</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ZoomIn rdf:about="#zoomin1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:21.281315</hasRuleTime>
+</ZoomIn>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected19">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:24.757069</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ZoomIn rdf:about="#zoomin2">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:24.797187</hasRuleTime>
+</ZoomIn>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected20">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:28.239377</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ZoomIn rdf:about="#zoomin3">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:28.259533</hasRuleTime>
+</ZoomIn>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected21">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:31.566277</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ZoomIn rdf:about="#zoomin4">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:31.606744</hasRuleTime>
+</ZoomIn>
+
+<CloseFingersDetected rdf:about="#closefingersdetected34">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:34.924431</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout10">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:34.970941</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected35">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:38.330904</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:38.358455</hasRuleTime>
+</ZoomOut>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected22">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:42.033989</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ZoomIn rdf:about="#zoomin5">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:42.055123</hasRuleTime>
+</ZoomIn>
+
+<CloseFingersDetected rdf:about="#closefingersdetected36">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:45.814004</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout12">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:45.834777</hasRuleTime>
+</ZoomOut>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected23">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:49.829896</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ZoomIn rdf:about="#zoomin6">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:49.856196</hasRuleTime>
+</ZoomIn>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected24">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:53.688426</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ZoomIn rdf:about="#zoomin7">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:53.783412</hasRuleTime>
+</ZoomIn>
+
+<CloseFingersDetected rdf:about="#closefingersdetected37">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:57.470729</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout13">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:07:57.486918</hasRuleTime>
+</ZoomOut>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected25">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:01.200651</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ZoomIn rdf:about="#zoomin8">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:01.251492</hasRuleTime>
+</ZoomIn>
+
+<CloseFingersDetected rdf:about="#closefingersdetected38">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:04.614344</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout14">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:04.646491</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected39">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:08.178674</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout15">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:08.222271</hasRuleTime>
+</ZoomOut>
+
+<CloseFingersDetected rdf:about="#closefingersdetected40">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:11.513855</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomOut</hasGestureName>
+</CloseFingersDetected>
+
+<ZoomOut rdf:about="#zoomout16">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:11.555092</hasRuleTime>
+</ZoomOut>
+
+<ApartFingersDetected rdf:about="#apartfingersdetected26">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:15.086005</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">zoomIn</hasGestureName>
+</ApartFingersDetected>
+
+<ZoomIn rdf:about="#zoomin9">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasRuleTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:08:15.109965</hasRuleTime>
+</ZoomIn>
+
+<FistDetected rdf:about="#fistdetected11">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <hasGestureTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2021-06-13T19:09:07.856958</hasGestureTime>
+  <hasGestureName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fist</hasGestureName>
+</FistDetected>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#User"/>
+    <rdf:Description rdf:about="#Gesture"/>
+    <rdf:Description rdf:about="#Context"/>
+    <rdf:Description rdf:about="#Rule"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointProperties>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#isCausedByGesture"/>
+    <rdf:Description rdf:about="#makesGesture"/>
+    <rdf:Description rdf:about="#hasGestureTime"/>
+    <rdf:Description rdf:about="#hasRuleTime"/>
+    <rdf:Description rdf:about="#hasGestureName"/>
+    <rdf:Description rdf:about="#hasGesture"/>
+    <rdf:Description rdf:about="#hasContext"/>
+  </owl:members>
+</owl:AllDisjointProperties>
+
+
+</rdf:RDF>

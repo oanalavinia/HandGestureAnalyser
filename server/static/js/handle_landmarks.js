@@ -50,6 +50,7 @@ $(document).ready(function() {
             var context = result.context;
             if (gesture && gesture != 'none') {
                 console.log(gesture)
+                drawGesture(gesture);
 //                canvasCtx.fillText(gesture, 10, 25);
                 // If we are in the image context, it may be needed, depending on the gesture,
                 // to zoom in or zoom out on the image.
@@ -127,21 +128,46 @@ $(document).ready(function() {
     });
 });
 
-//var lastNoneTime = Date.now() / 1000.0;
-//var drawGesture = function(gesture, ctx) {
-//    if (gesture && gesture != 'none') {
-//        canvasCtx.fillText(gesture, 10, 25);
-//        $('#thisGesture').html(gesture);
-////        lastNoneTime = Date.now();
+var lastNoneTime = Date.now() / 1000.0;
+var timeout;
+var drawGesture = function(gesture, ctx) {
+    if (gesture && gesture != 'none') {
+        clearTimeout(timeout);
+        //canvasCtx.fillText(gesture, 10, 25);
+        $('#thisGesture').html(getGestureName(gesture));
+//        lastNoneTime = Date.now();
+        timeout = setTimeout(function() {
+            $('#thisGesture').html("");
+        }, 1000)
+    }
+//    else {
+//        lastNoneTime = Date.now() / 1000.0;
+//
+//        if (Date.now() / 1000.0 - lastNoneTime > 1) {
+//            $('#thisGesture').html("No gesture detected");
+//        }
 //    }
-//    setTimeout(function() {
-//        $('#thisGesture').html("No gesture detected");
-//    }, 5000)
-////    else {
-////        lastNoneTime = Date.now() / 1000.0;
-////
-////        if (Date.now() / 1000.0 - lastNoneTime > 1) {
-////            $('#thisGesture').html("No gesture detected");
-////        }
-////    }
-//};
+};
+
+var getGestureName = function(gesture) {
+    if (gesture == "one") {
+        return "One Finger Detected";
+    } else if(gesture == "two") {
+        return "Two Fingers Detected";
+    } else if(gesture == "three") {
+        return "Three Fingers Detected";
+    } else if(gesture == "four") {
+        return "Four Fingers Detected";
+    } else if(gesture == "five") {
+        return "Five Fingers Detected";
+    } else if(gesture == "thumbsUp") {
+        return "Thumbs Up Detected";
+    } else if(gesture == "thumbsDown") {
+        return "Thumbs Down Detected";
+    } else if(gesture == "zoomOut") {
+        return "Zoom Out";
+    } else if(gesture == "zoomIn") {
+        return "Zoom In";
+    }
+    return "";
+};
