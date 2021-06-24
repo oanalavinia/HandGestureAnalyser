@@ -85,8 +85,8 @@ class GestureRecognition(object):
             self.owl_context = owl.PDFDocument()
         elif self.context == "Image":
             self.owl_context = owl.Image()
-        elif self.context == "MarkGame":
-            self.owl_context = owl.MarkGame()
+        elif self.context == "SelectionGame":
+            self.owl_context = owl.SelectionGame()
 
     def create_rule_instance(self, gesture):
         self.owl_utilities.get_contexted_rule(self.context, gesture, self.owl_context)

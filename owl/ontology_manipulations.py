@@ -120,7 +120,7 @@ with fiiGezr:
     class Image(Context): pass
 
 
-    class MarkGame(Context): pass
+    class SelectionGame(Context): pass
 
 
     # Rules
@@ -167,33 +167,30 @@ with fiiGezr:
         isCausedByGesture = [ThumbsUp]
 
 
-    # MarkGame
-    class MarkGameRule(Rule):
-        hasContext = [MarkGame]
+    # SelectionGame
+    class SelectionGameRule(Rule):
+        hasContext = [SelectionGame]
         isCausedByGesture = [OneFingerDetected, TwoFingersDetected, ThreeFingersDetected, FourFingersDetected,
                              FiveFingersDetected]
 
 
-    class Mark(MarkGameRule): pass
-
-
-    class ChooseFirst(Mark):
+    class ChooseFirst(SelectionGameRule):
         isCausedByGesture = [OneFingerDetected]
 
 
-    class ChooseSecond(Mark):
+    class ChooseSecond(SelectionGameRule):
         isCausedByGesture = [TwoFingersDetected]
 
 
-    class ChooseThird(Mark):
+    class ChooseThird(SelectionGameRule):
         isCausedByGesture = [ThreeFingersDetected]
 
 
-    class ChooseFourth(Mark):
+    class ChooseFourth(SelectionGameRule):
         isCausedByGesture = [FourFingersDetected]
 
 
-    class ChooseFifth(Mark):
+    class ChooseFifth(SelectionGameRule):
         isCausedByGesture = [FiveFingersDetected]
 
 
@@ -224,7 +221,7 @@ Rule.comment = [
 QuizGameRule.comment = ["A rule applied in a QuizGame context"]
 PDFDocumentRule.comment = ["A rule applied in a PDFDocument context"]
 ImageRule.comment = ["A rule applied in an Image context"]
-MarkGameRule.comment = ["A rule applied in a MarkGame context"]
+SelectionGameRule.comment = ["A rule applied in a SelectionGame context"]
 
 Context.comment = ["The context in which a rule was created."]
 QuizGame.comment = ["A trivia game where the user can say if a statement is true or false through ThumbsUp or " +
@@ -233,5 +230,5 @@ PDFDocument.comment = ["It refers to the situation where, through ThumbsUp or Th
                        "page of a PDF document"]
 Image.comment = ["It describes the circumstances where an image can be zoomed in or zoomed out by bringing fingers " +
                  "together or apart"]
-MarkGame.comment = ["A game where the user can select a favorite movie from a list of 5 by using counting gestures, " +
+SelectionGame.comment = ["A game where the user can select a favorite movie from a list of 5 by using counting gestures, " +
                     "like TwoFingersDetected."]

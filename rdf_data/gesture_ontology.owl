@@ -155,7 +155,7 @@
   <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">It describes the circumstances where an image can be zoomed in or zoomed out by bringing fingers together or apart</rdfs:comment>
 </owl:Class>
 
-<owl:Class rdf:about="#MarkGame">
+<owl:Class rdf:about="#SelectionGame">
   <rdfs:subClassOf rdf:resource="#Context"/>
   <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A game where the user can select a favorite movie from a list of 5 by using counting gestures, like TwoFingersDetected.</rdfs:comment>
 </owl:Class>
@@ -218,8 +218,8 @@
       <owl:allValuesFrom>
         <owl:Class>
           <owl:unionOf rdf:parseType="Collection">
-            <rdf:Description rdf:about="#CloseFingersDetected"/>
             <rdf:Description rdf:about="#ApartFingersDetected"/>
+            <rdf:Description rdf:about="#CloseFingersDetected"/>
           </owl:unionOf>
         </owl:Class>
       </owl:allValuesFrom>
@@ -292,12 +292,12 @@
   </rdfs:subClassOf>
 </owl:Class>
 
-<owl:Class rdf:about="#MarkGameRule">
+<owl:Class rdf:about="#SelectionGameRule">
   <rdfs:subClassOf rdf:resource="#Rule"/>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasContext"/>
-      <owl:allValuesFrom rdf:resource="#MarkGame"/>
+      <owl:allValuesFrom rdf:resource="#SelectionGame"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -316,15 +316,11 @@
       </owl:allValuesFrom>
     </owl:Restriction>
   </rdfs:subClassOf>
-  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A rule applied in a MarkGame context</rdfs:comment>
-</owl:Class>
-
-<owl:Class rdf:about="#Mark">
-  <rdfs:subClassOf rdf:resource="#MarkGameRule"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A rule applied in a SelectionGame context</rdfs:comment>
 </owl:Class>
 
 <owl:Class rdf:about="#ChooseFirst">
-  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf rdf:resource="#SelectionGameRule"/>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#isCausedByGesture"/>
@@ -334,7 +330,7 @@
 </owl:Class>
 
 <owl:Class rdf:about="#ChooseSecond">
-  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf rdf:resource="#SelectionGameRule"/>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#isCausedByGesture"/>
@@ -344,7 +340,7 @@
 </owl:Class>
 
 <owl:Class rdf:about="#ChooseThird">
-  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf rdf:resource="#SelectionGameRule"/>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#isCausedByGesture"/>
@@ -354,7 +350,7 @@
 </owl:Class>
 
 <owl:Class rdf:about="#ChooseFourth">
-  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf rdf:resource="#SelectionGameRule"/>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#isCausedByGesture"/>
@@ -364,7 +360,7 @@
 </owl:Class>
 
 <owl:Class rdf:about="#ChooseFifth">
-  <rdfs:subClassOf rdf:resource="#Mark"/>
+  <rdfs:subClassOf rdf:resource="#SelectionGameRule"/>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#isCausedByGesture"/>

@@ -61,9 +61,9 @@ class Owl_utilities(object):
             rule = owl.ZoomIn()
         elif context == "Image" and gesture == "zoomOut":
             rule = owl.ZoomOut()
-        elif context == "MarkGame" and (
+        elif context == "SelectionGame" and (
                 gesture == "one" or gesture == "two" or gesture == "three" or gesture == "four" or gesture == "five"):
-            rule = self.get_mark_rule(gesture)
+            rule = self.get_selection_rule(gesture)
 
         if rule is not None:
             # The inverse hasContext is automatically inferred from rule.
@@ -72,7 +72,7 @@ class Owl_utilities(object):
             rule.hasRuleTime = datetime.now()
             self.save_data()
 
-    def get_mark_rule(self, gesture):
+    def get_selection_rule(self, gesture):
         if gesture == "one":
             return owl.ChooseFirst()
         elif gesture == "two":

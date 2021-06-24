@@ -125,7 +125,7 @@ def questions():
 @app.route("/random_movies", methods=['GET'])
 def random_movies():
     if request.method == 'GET':
-        camera.get_gesture_obj().set_context("MarkGame")
+        camera.get_gesture_obj().set_context("SelectionGame")
         result = movie.get_rec_system().get_random_movies()
         return json.dumps({'movies': result[0], 'movie_ids': result[1]})
 
@@ -143,7 +143,7 @@ def rec_movies():
         print(rec_movies)
         # Add rule to owl.
         gesture_obj = camera.get_gesture_obj()
-        gesture_obj.get_owl_utilities().get_contexted_rule("MarkGame", gesture, gesture_obj.get_owl_context())
+        gesture_obj.get_owl_utilities().get_contexted_rule("SelectionGame", gesture, gesture_obj.get_owl_context())
 
         return json.dumps({'status': 'OK', 'movies': rec_movies, 'selected_movie': movie_name})
 

@@ -15,8 +15,8 @@ def get_gestures(landmarks_x, landmarks_y, is_reversed):
     thumb_up_oriented, thumb_in_fist, four_fingers_closed = get_hand_info(landmarks_x, landmarks_y)
 
     # Get more gestures.
-    if thumb_in_fist and four_fingers_closed:
-        gesture = "fist"
+    # if thumb_in_fist and four_fingers_closed:
+    #     gesture = "fist"
 
     if thumb_up_oriented and not thumb_in_fist and four_fingers_closed:
         gesture = "thumbsDown"
